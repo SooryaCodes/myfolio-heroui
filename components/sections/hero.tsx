@@ -277,7 +277,7 @@ export const Hero = () => {
           
           {/* Image content - 5 columns */}
           <motion.div 
-            className="lg:col-span-5 flex justify-center lg:justify-end relative mt-8 lg:mt-0"
+            className="lg:col-span-5 hidden lg:flex justify-center lg:justify-end relative mt-8 lg:mt-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}

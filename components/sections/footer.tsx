@@ -18,13 +18,7 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="space-y-4 md:col-span-2">
             <div className="flex items-center gap-3 mb-3">
-              <Image 
-                src="/logos/logo.svg" 
-                alt="Developer Logo" 
-                width={40} 
-                height={40}
-                className="rounded-lg"
-              />
+             
               <h2 className="text-2xl font-bold dark:text-white text-gray-900">{developerName}</h2>
             </div>
             <p className="dark:text-white/70 text-gray-600 max-w-md">
@@ -149,7 +143,7 @@ export const Footer = () => {
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10 rounded-full overflow-hidden">
               <Image 
-                src="/images/avatar.jpg" 
+                src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80" 
                 alt={developerName} 
                 fill
                 className="object-cover"

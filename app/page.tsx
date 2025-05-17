@@ -12,6 +12,7 @@ import { Services } from "@/components/sections/services";
 import { Marketplace } from "@/components/sections/marketplace";
 import { Playground } from "@/components/sections/playground";
 import { FloatingNavbar } from "@/components/floating-navbar";
+import { Blog } from "@/components/sections/blog";
 
 export const metadata: Metadata = {
   title: "Johan Beker | Developer & Designer Portfolio",
@@ -31,6 +32,7 @@ export default function Home() {
       <Blogs />
       <Playground />
       <Marketplace />
+      <Blog />
       <Contact />
       <Footer />
       <FloatingNavbar />

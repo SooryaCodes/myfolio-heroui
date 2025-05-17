@@ -8,8 +8,10 @@ import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
 import { Tooltip } from "@heroui/tooltip";
 import { RevealOnScroll } from "@/components/scroll-animations";
 import { scrollToSection } from "@/components/scroll-provider";
-import { FiCode, FiLayout, FiPenTool, FiDatabase, FiGlobe, FiSmartphone, FiArrowRight, FiCheck, FiPlus, FiX, FiExternalLink } from "react-icons/fi";
+import { FiCode, FiLayout, FiPenTool, FiDatabase, FiGlobe, FiSmartphone, FiArrowRight, FiCheck, FiPlus, FiX, FiExternalLink, FiLayers, FiMonitor, FiEdit, FiTrendingUp } from "react-icons/fi";
 import Image from "next/image";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter } from "@heroui/modal";
+import { Divider } from "@heroui/divider";
 
 interface ServiceFeature {
   title: string;
@@ -25,6 +27,12 @@ interface Service {
   features: string[];
   detailedFeatures?: ServiceFeature[];
   image: string;
+  details: {
+    longDescription: string;
+    features: string[];
+    technologies: string[];
+    process: string[];
+  };
 }
 
 const services: Service[] = [
@@ -55,7 +63,27 @@ const services: Service[] = [
         description: "I create high-fidelity interactive prototypes that simulate the real user experience before development begins."
       }
     ],
-    image: "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=1480&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=1480&auto=format&fit=crop",
+    details: {
+      longDescription: "I create intuitive and visually appealing user interfaces that enhance user experience. My design approach balances aesthetics with functionality, ensuring that users can easily navigate and enjoy using your product.",
+      features: [
+        "User research and personas",
+        "Wireframing and prototyping",
+        "Visual design",
+        "Interaction design",
+        "Usability testing",
+        "Design systems"
+      ],
+      technologies: ["Figma", "Adobe XD", "Sketch", "Illustrator", "Protopie", "InVision"],
+      process: [
+        "User research",
+        "Information architecture",
+        "Wireframing",
+        "Interactive prototyping",
+        "Visual design",
+        "Usability testing"
+      ]
+    }
   },
   {
     id: 2,
@@ -84,7 +112,26 @@ const services: Service[] = [
         description: "I craft smooth animations and intuitive interactions that elevate the user experience."
       }
     ],
-    image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?q=80&w=1470&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?q=80&w=1470&auto=format&fit=crop",
+    details: {
+      longDescription: "I create custom web applications and websites that are fast, responsive, and user-friendly. Using modern technologies like React, Next.js, and Tailwind CSS, I build solutions that not only look great but also perform exceptionally well.",
+      features: [
+        "Custom website development",
+        "Progressive Web Applications (PWAs)",
+        "E-commerce solutions",
+        "Content Management Systems",
+        "API integrations",
+        "Performance optimization"
+      ],
+      technologies: ["React", "Next.js", "Tailwind CSS", "TypeScript", "Node.js", "Express"],
+      process: [
+        "Requirements gathering and analysis",
+        "UI/UX design",
+        "Frontend and backend development",
+        "Testing and quality assurance",
+        "Deployment and maintenance"
+      ]
+    }
   },
   {
     id: 3,
@@ -113,7 +160,138 @@ const services: Service[] = [
         description: "I create efficient database schemas and queries that maximize performance while maintaining data integrity."
       }
     ],
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1470&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1470&auto=format&fit=crop",
+    details: {
+      longDescription: "I build secure, scalable, and maintainable backend systems that power web and mobile applications. From RESTful APIs to real-time services, I can create the server-side solutions your project needs.",
+      features: [
+        "RESTful API development",
+        "Database design and optimization",
+        "Authentication and authorization",
+        "Server-side rendering",
+        "Real-time services",
+        "Microservices architecture"
+      ],
+      technologies: ["Node.js", "Express", "MongoDB", "PostgreSQL", "GraphQL", "Redis"],
+      process: [
+        "System architecture design",
+        "Database schema design",
+        "API development",
+        "Security implementation",
+        "Performance optimization",
+        "Documentation"
+      ]
+    }
+  },
+  {
+    id: 4,
+    title: "Mobile Development",
+    description: "Native and cross-platform mobile apps for iOS and Android using React Native and Flutter.",
+    icon: <FiSmartphone className="text-primary text-3xl" />,
+    color: "from-teal-500 to-emerald-500",
+    features: [
+      "Native iOS and Android development",
+      "Cross-platform development",
+      "Mobile UI/UX design",
+      "Push notifications",
+      "Offline capabilities",
+      "App Store optimization"
+    ],
+    detailedFeatures: [],
+    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1470&auto=format&fit=crop",
+    details: {
+      longDescription: "I develop high-quality mobile applications for both iOS and Android platforms. Whether you need a native app or a cross-platform solution, I can create a mobile experience that your users will love.",
+      features: [
+        "Native iOS and Android development",
+        "Cross-platform development",
+        "Mobile UI/UX design",
+        "Push notifications",
+        "Offline capabilities",
+        "App Store optimization"
+      ],
+      technologies: ["React Native", "Flutter", "Swift", "Kotlin", "Firebase", "SQLite"],
+      process: [
+        "Requirements analysis",
+        "Wireframing and prototyping",
+        "UI/UX design",
+        "Development and testing",
+        "App store submission",
+        "Maintenance and updates"
+      ]
+    }
+  },
+  {
+    id: 5,
+    title: "Full-Stack Development",
+    description: "End-to-end development services covering both frontend and backend aspects of your project.",
+    icon: <FiLayers className="text-primary text-3xl" />,
+    color: "from-pink-500 to-purple-500",
+    features: [
+      "End-to-end application development",
+      "Frontend and backend integration",
+      "Database design and management",
+      "API development",
+      "Authentication and security",
+      "Deployment and DevOps"
+    ],
+    detailedFeatures: [],
+    image: "https://images.unsplash.com/photo-1517694712202-1482b7e1a5f8?q=80&w=1470&auto=format&fit=crop",
+    details: {
+      longDescription: "As a full-stack developer, I can handle all aspects of your project from the user interface to the server infrastructure. This integrated approach ensures a cohesive product with seamless interaction between all components.",
+      features: [
+        "End-to-end application development",
+        "Frontend and backend integration",
+        "Database design and management",
+        "API development",
+        "Authentication and security",
+        "Deployment and DevOps"
+      ],
+      technologies: ["JavaScript/TypeScript", "React", "Node.js", "Express", "MongoDB/PostgreSQL", "AWS/GCP"],
+      process: [
+        "Project planning and architecture",
+        "Frontend development",
+        "Backend development",
+        "Integration and testing",
+        "Deployment configuration",
+        "Maintenance and support"
+      ]
+    }
+  },
+  {
+    id: 6,
+    title: "Performance Optimization",
+    description: "Speed up your existing applications by identifying and fixing performance bottlenecks.",
+    icon: <FiTrendingUp className="text-primary text-3xl" />,
+    color: "from-yellow-500 to-orange-500",
+    features: [
+      "Performance auditing",
+      "Code optimization",
+      "Image and asset optimization",
+      "Caching strategies",
+      "Database query optimization",
+      "Load time reduction"
+    ],
+    detailedFeatures: [],
+    image: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1470&auto=format&fit=crop",
+    details: {
+      longDescription: "I help optimize the performance of existing web and mobile applications by identifying bottlenecks and implementing solutions to improve speed, responsiveness, and resource usage.",
+      features: [
+        "Performance auditing",
+        "Code optimization",
+        "Image and asset optimization",
+        "Caching strategies",
+        "Database query optimization",
+        "Load time reduction"
+      ],
+      technologies: ["Lighthouse", "Chrome DevTools", "WebPageTest", "React Profiler", "Database Query Analyzers", "Bundle Analyzers"],
+      process: [
+        "Performance benchmarking",
+        "Bottleneck identification",
+        "Solution implementation",
+        "A/B testing",
+        "Monitoring and analytics",
+        "Documentation and handover"
+      ]
+    }
   }
 ];
 
@@ -431,6 +609,18 @@ export const Services = () => {
   const y2 = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0.5]);
   
+  const [selectedService, setSelectedService] = useState<null | typeof services[0]>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (service: typeof services[0]) => {
+    setSelectedService(service);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <section 
       id="services" 
@@ -574,6 +764,74 @@ export const Services = () => {
           </RevealOnScroll>
         </div>
       </div>
+
+      {/* Service Details Modal */}
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={closeModal}
+        backdrop="blur"
+        size="3xl"
+        scrollBehavior="inside"
+        classNames={{
+          base: "bg-background/80 backdrop-blur-md border border-foreground/10",
+          header: "border-b border-foreground/10",
+          body: "py-6",
+          footer: "border-t border-foreground/10"
+        }}
+      >
+        <ModalContent>
+          {selectedService && (
+            <>
+              <ModalHeader className="flex items-center gap-4">
+                <div className="bg-primary/10 rounded-full w-10 h-10 flex items-center justify-center">
+                  {selectedService.icon}
+                </div>
+                <h3 className="text-xl font-bold">{selectedService.title}</h3>
+              </ModalHeader>
+              <ModalBody>
+                <p className="text-foreground/80 mb-6">
+                  {selectedService.details.longDescription}
+                </p>
+                
+                <h4 className="text-lg font-semibold mb-3 text-foreground">Features</h4>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-6 list-disc list-inside text-foreground/70">
+                  {selectedService.details.features.map((feature, index) => (
+                    <li key={index}>{feature}</li>
+                  ))}
+                </ul>
+                
+                <Divider className="my-6" />
+                
+                <h4 className="text-lg font-semibold mb-3 text-foreground">Technologies</h4>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {selectedService.details.technologies.map((tech, index) => (
+                    <Badge key={index} variant="flat" color="primary" className="bg-primary/10 font-normal">
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+                
+                <Divider className="my-6" />
+                
+                <h4 className="text-lg font-semibold mb-3 text-foreground">My Process</h4>
+                <ol className="list-decimal list-inside text-foreground/70 space-y-2">
+                  {selectedService.details.process.map((step, index) => (
+                    <li key={index}>{step}</li>
+                  ))}
+                </ol>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="primary"
+                  onClick={closeModal}
+                >
+                  Got it
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </section>
   );
 }; 

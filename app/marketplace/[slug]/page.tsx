@@ -1,162 +1,63 @@
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { Metadata } from "next";
+import React from 'react';
+import Image from 'next/image';
+import { notFound } from 'next/navigation';
+import { marketplaceProducts } from '@/datas/marketplace';
+import { Card, CardBody, CardHeader, CardFooter } from '@heroui/card';
+import { Button } from '@heroui/button';
+import { Badge } from '@heroui/badge';
+import { Chip } from '@heroui/chip';
+import { Divider } from '@heroui/divider';
+import { Link } from '@heroui/link';
+import { FiArrowLeft, FiHome, FiExternalLink, FiDollarSign, FiShoppingCart, FiStar, FiTag, FiCalendar } from 'react-icons/fi';
+import { Metadata } from 'next';
+import ProductTabs from '@/components/product-tabs';
 
-// Mock marketplace products data - in a real app, this would come from a database or API
-const marketplaceProducts = [
-  {
-    id: 1,
-    slug: "modern-dashboard-template",
-    title: "Modern Dashboard Template",
-    category: "UI Template",
-    price: 49,
-    description: "A clean and modern dashboard template built with React and Tailwind CSS.",
-    fullDescription: `
-      <p>Take your admin dashboard to the next level with this premium UI template built with React and Tailwind CSS. Perfect for SaaS applications, admin panels, and data-heavy applications.</p>
-      
-      <p>This template includes 20+ pre-built components, 10 page templates, and a fully responsive design that works perfectly on all devices.</p>
-      
-      <h2>Features</h2>
-      <ul>
-        <li>20+ React components including charts, tables, and forms</li>
-        <li>10 pre-built page templates</li>
-        <li>Dark and light mode support</li>
-        <li>Fully responsive design</li>
-        <li>Well-organized and documented code</li>
-        <li>Easy customization with Tailwind CSS</li>
-      </ul>
-      
-      <h2>What's Included</h2>
-      <ul>
-        <li>React source code</li>
-        <li>Design files (Figma)</li>
-        <li>Documentation</li>
-        <li>6 months of updates</li>
-        <li>Email support</li>
-      </ul>
-    `,
-    features: [
-      "20+ React components",
-      "10 page templates",
-      "Dark/light mode",
-      "Responsive design",
-      "Documentation",
-      "6 months updates"
-    ],
-    image: "/images/marketplace/dashboard.jpg",
-    images: [
-      "/images/marketplace/dashboard-1.jpg",
-      "/images/marketplace/dashboard-2.jpg",
-      "/images/marketplace/dashboard-3.jpg",
-    ],
-    demo: "https://example.com/demo/dashboard",
-    publishDate: "2023-11-20",
-    tags: ["React", "Tailwind CSS", "Dashboard", "Admin Panel"]
-  },
-  {
-    id: 2,
-    slug: "e-commerce-starter-kit",
-    title: "E-Commerce Starter Kit",
-    category: "Full Stack Template",
-    price: 79,
-    description: "Complete e-commerce solution with React, Next.js, and Stripe integration.",
-    fullDescription: `
-      <p>Launch your online store quickly with this complete e-commerce starter kit. Built with Next.js, React, and integrated with Stripe for payments, this template provides everything you need to start selling online.</p>
-      
-      <p>This kit includes both the frontend customer-facing store and an admin dashboard for managing products, orders, and customers.</p>
-      
-      <h2>Features</h2>
-      <ul>
-        <li>Complete e-commerce storefront</li>
-        <li>Admin dashboard for product and order management</li>
-        <li>Stripe payment integration</li>
-        <li>User authentication</li>
-        <li>Shopping cart functionality</li>
-        <li>Product search and filtering</li>
-        <li>Responsive design for all devices</li>
-      </ul>
-      
-      <h2>What's Included</h2>
-      <ul>
-        <li>Next.js source code (frontend and backend)</li>
-        <li>Database schema</li>
-        <li>Deployment instructions</li>
-        <li>Integration guide for Stripe</li>
-        <li>1 year of updates</li>
-        <li>Priority email support</li>
-      </ul>
-    `,
-    features: [
-      "Complete storefront",
-      "Admin dashboard",
-      "Stripe integration",
-      "User authentication",
-      "Shopping cart",
-      "Product search",
-      "1 year updates"
-    ],
-    image: "/images/marketplace/ecommerce.jpg",
-    images: [
-      "/images/marketplace/ecommerce-1.jpg",
-      "/images/marketplace/ecommerce-2.jpg",
-      "/images/marketplace/ecommerce-3.jpg",
-    ],
-    demo: "https://example.com/demo/ecommerce",
-    publishDate: "2023-10-15",
-    tags: ["Next.js", "E-commerce", "Stripe", "Full Stack"]
-  },
-  {
-    id: 3,
-    slug: "premium-ui-component-library",
-    title: "Premium UI Component Library",
-    category: "UI Components",
-    price: 59,
-    description: "A comprehensive library of 50+ premium UI components for React applications.",
-    fullDescription: `
-      <p>Accelerate your development process with this premium library of 50+ beautifully crafted UI components for React applications. Each component is designed with attention to detail, accessibility, and performance.</p>
-      
-      <p>Perfect for developers who want to create beautiful applications without starting from scratch, this library provides all the essential building blocks for modern web interfaces.</p>
-      
-      <h2>Features</h2>
-      <ul>
-        <li>50+ React components</li>
-        <li>Fully customizable with CSS variables</li>
-        <li>Accessibility built-in (WCAG 2.1 compliant)</li>
-        <li>Responsive and mobile-friendly</li>
-        <li>Tree-shakable for optimal bundle size</li>
-        <li>TypeScript support</li>
-      </ul>
-      
-      <h2>What's Included</h2>
-      <ul>
-        <li>React component library</li>
-        <li>TypeScript definitions</li>
-        <li>Storybook documentation</li>
-        <li>Usage examples</li>
-        <li>1 year of updates</li>
-        <li>Support via GitHub issues</li>
-      </ul>
-    `,
-    features: [
-      "50+ React components",
-      "Customizable with CSS variables",
-      "Accessibility compliant",
-      "Mobile-friendly",
-      "TypeScript support",
-      "Storybook documentation"
-    ],
-    image: "/images/marketplace/ui-components.jpg",
-    images: [
-      "/images/marketplace/ui-components-1.jpg",
-      "/images/marketplace/ui-components-2.jpg",
-      "/images/marketplace/ui-components-3.jpg",
-    ],
-    demo: "https://example.com/demo/ui-components",
-    publishDate: "2023-09-05",
-    tags: ["React", "UI Components", "TypeScript", "Frontend"]
-  }
+// Define interfaces for marketplace product
+interface ProductFeature {
+  title: string;
+  description: string;
+}
+
+interface ProductSpecification {
+  title: string;
+  subtitle?: string;
+  description: string;
+  items?: string[];
+}
+
+interface ProductRequirement {
+  title: string;
+  items: string[];
+}
+
+// Extend the MarketplaceProduct interface to include the additional properties
+interface ExtendedMarketplaceProduct {
+  id: number;
+  slug: string;
+  title: string;
+  category: string;
+  price: number;
+  description: string;
+  fullDescription?: string;
+  image: string;
+  images?: string[];
+  demo: string;
+  publishDate: string;
+  tags: string[];
+  featured?: boolean;
+  gallery?: string[];
+  features: (string | ProductFeature)[];
+  specifications?: ProductSpecification[];
+  requirements?: ProductRequirement[];
+}
+
+// Add fallback images for gallery with high-quality ones
+const fallbackImages = [
+  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+  "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
+  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
+  "https://images.unsplash.com/photo-1581472723648-909f4851d4ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
 ];
 
 type Props = {
@@ -171,7 +72,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!product) {
     return {
       title: "Product Not Found",
-      description: "The requested marketplace product could not be found."
+      description: "The requested product could not be found."
     };
   }
   
@@ -181,183 +82,304 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function MarketplaceProductPage({ params }: Props) {
-  const product = marketplaceProducts.find((p) => p.slug === params.slug);
+export default function ProductPage({ params }: Props) {
+  const product = marketplaceProducts.find((p) => p.slug === params.slug) as ExtendedMarketplaceProduct;
   
   if (!product) {
     notFound();
   }
+
+  // Find related products (excluding current one)
+  const relatedProducts = marketplaceProducts
+    .filter(p => p.id !== product.id && p.category === product.category)
+    .sort(() => Math.random() - 0.5) // Shuffle array
+    .slice(0, 2); // Take just 2 related products
+  
+  // Get a fallback image for gallery items
+  const getFallbackImage = (index = 0) => {
+    return fallbackImages[(product.id + index) % fallbackImages.length];
+  };
   
   return (
-    <main className="pt-24 pb-16">
-      <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8">
-            <Link 
-              href="/marketplace" 
-              className="text-primary hover:underline mb-4 inline-flex items-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Back to Marketplace
-            </Link>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div>
-              <div className="relative w-full h-[400px] rounded-2xl overflow-hidden mb-6">
-                <Image 
-                  src={product.image} 
-                  alt={product.title}
-                  fill
-                  className="object-cover"
-                  priority
-                />
-              </div>
-              
-              <div className="grid grid-cols-3 gap-4">
-                {product.images.map((img, index) => (
-                  <div key={index} className="relative h-24 rounded-lg overflow-hidden cursor-pointer">
+    <main className="min-h-screen pt-20 pb-16 bg-background/50">
+      <div className="container mx-auto px-4 md:px-8 max-w-screen-xl">
+        {/* Navigation */}
+        <div className="mb-8 flex flex-wrap gap-3 items-center">
+          <Button
+            as={Link}
+            href="/"
+            variant="light"
+            color="primary"
+            size="sm"
+            startContent={<FiHome />}
+          >
+            Home
+          </Button>
+          <span className="text-foreground/30">•</span>
+          <Button
+            as={Link}
+            href="/marketplace"
+            variant="light"
+            color="primary"
+            size="sm"
+            startContent={<FiArrowLeft />}
+          >
+            Back to Marketplace
+          </Button>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          {/* Product Image Section */}
+          <div className="lg:col-span-2">
+            <Card className="shadow-none border-none overflow-hidden bg-card/75 backdrop-blur-sm">
+              <CardBody className="p-0">
+                <div className="relative aspect-[16/9] md:aspect-[3/2] w-full rounded-xl overflow-hidden">
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    fill
+                    priority
+                    className="object-cover"
+                    placeholder="blur"
+                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                    onError={(e) => {
+                      // On client-side only
+                      const target = e.target as HTMLImageElement;
+                      target.src = getFallbackImage(0);
+                    }}
+                  />
+                </div>
+              </CardBody>
+            </Card>
+            
+            {/* Additional Images */}
+            {(product.gallery && product.gallery.length > 0) ? (
+              <div className="grid grid-cols-3 gap-4 mt-4">
+                {product.gallery.map((img: string, index: number) => (
+                  <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
                     <Image 
                       src={img} 
-                      alt={`${product.title} image ${index + 1}`}
+                      alt={`${product.title} gallery ${index+1}`}
                       fill
-                      className="object-cover hover:opacity-90 transition-opacity"
+                      className="object-cover hover:scale-105 transition-transform duration-300"
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                      onError={(e) => {
+                        // On client-side only
+                        const target = e.target as HTMLImageElement;
+                        target.src = getFallbackImage(index + 1);
+                      }}
                     />
                   </div>
                 ))}
               </div>
-            </div>
-            
-            <div>
-              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">
-                {product.category}
-              </span>
-              
-              <h1 className="text-3xl md:text-4xl font-bold mt-3 mb-4">{product.title}</h1>
-              
-              <div className="flex items-center gap-2 mb-6">
-                <span className="text-3xl font-bold">${product.price}</span>
-                <span className="text-gray-500 line-through">${Math.round(product.price * 1.3)}</span>
-                <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-sm font-medium">
-                  Save ${Math.round(product.price * 0.3)}
-                </span>
+            ) : product.images && product.images.length > 0 ? (
+              <div className="grid grid-cols-3 gap-4 mt-4">
+                {product.images.map((img: string, index: number) => (
+                  <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
+                    <Image 
+                      src={img} 
+                      alt={`${product.title} gallery ${index+1}`}
+                      fill
+                      className="object-cover hover:scale-105 transition-transform duration-300"
+                      placeholder="blur"
+                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                      onError={(e) => {
+                        // On client-side only
+                        const target = e.target as HTMLImageElement;
+                        target.src = getFallbackImage(index + 1);
+                      }}
+                    />
+                  </div>
+                ))}
               </div>
-              
-              <p className="text-gray-700 dark:text-gray-300 mb-8">
-                {product.description}
-              </p>
-              
-              <div className="mb-8">
-                <h3 className="text-lg font-semibold mb-3">Key Features</h3>
-                <ul className="space-y-2">
-                  {product.features.map((feature, index) => (
-                    <li key={index} className="flex items-start">
-                      <svg className="h-5 w-5 text-primary mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                <a 
-                  href="#" 
-                  className="bg-primary text-white py-3 px-6 rounded-lg font-medium text-center hover:bg-primary/90 transition-colors flex-1"
-                >
-                  Buy Now - ${product.price}
-                </a>
-                
-                <a 
-                  href={product.demo} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white py-3 px-6 rounded-lg font-medium text-center hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                >
-                  Live Demo
-                </a>
-              </div>
-              
-              <div className="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-lg text-sm">
-                <p className="flex items-center">
-                  <svg className="h-5 w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>Released on {new Date(product.publishDate).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}</span>
-                </p>
-                <p className="flex items-center mt-2">
-                  <svg className="h-5 w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
-                  <span>Regular updates and improvements</span>
-                </p>
-                <p className="flex items-center mt-2">
-                  <svg className="h-5 w-5 text-primary mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                  <span>Secure one-time payment</span>
-                </p>
-              </div>
-            </div>
+            ) : null}
           </div>
           
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold mb-6">Product Details</h2>
-            <div className="prose prose-lg max-w-none dark:prose-invert">
-              <div dangerouslySetInnerHTML={{ __html: product.fullDescription }} />
+          {/* Product Info Section */}
+          <div>
+            <div className="sticky top-20">
+              <Card className="shadow-sm bg-foreground/5 backdrop-blur-sm border-none border border-foreground/5">
+                <CardBody className="p-6">
+                  <Badge color="primary" variant="flat" className="mb-2">
+                    {product.category}
+                  </Badge>
+                  
+                  <h1 className="text-3xl font-bold mb-4 text-foreground">{product.title}</h1>
+                  
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <FiStar key={i} className="text-yellow-500 fill-yellow-500" />
+                      ))}
+                    </div>
+                    <span className="text-sm text-foreground/70">(Top-rated)</span>
+                  </div>
+                  
+                  <p className="text-foreground/70 mb-6">
+                    {product.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {product.tags.map((tag, index) => (
+                      <Chip
+                        key={index}
+                        startContent={<FiTag size={14} />}
+                        variant="flat"
+                        color="default"
+                        size="sm"
+                        className="bg-foreground/5"
+                      >
+                        {tag}
+                      </Chip>
+                    ))}
+                  </div>
+                  
+                  <Divider className="my-4" />
+                  
+                  <div className="mb-6">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-foreground/70">Released</span>
+                      <Chip
+                        startContent={<FiCalendar size={14} />}
+                        variant="flat"
+                        color="default"
+                        size="sm"
+                      >
+                        {new Date(product.publishDate).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                        })}
+                      </Chip>
+                    </div>
+                    
+                    <div className="flex justify-between items-center">
+                      <span className="text-foreground/70">Price</span>
+                      <Chip
+                        startContent={<FiDollarSign size={14} />}
+                        variant="flat"
+                        color="success"
+                        size="md"
+                        className="font-bold"
+                      >
+                        {product.price}
+                      </Chip>
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col gap-3">
+                    <Button
+                      color="primary"
+                      size="lg"
+                      radius="full"
+                      className="w-full shadow-md shadow-primary/20"
+                      startContent={<FiShoppingCart />}
+                    >
+                      Purchase Now
+                    </Button>
+                    
+                    <Button
+                      as={Link}
+                      href={product.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      color="default"
+                      variant="flat"
+                      radius="full"
+                      size="lg"
+                      className="w-full bg-foreground/5"
+                      endContent={<FiExternalLink />}
+                    >
+                      View Live Demo
+                    </Button>
+                  </div>
+                </CardBody>
+              </Card>
             </div>
           </div>
-          
-          <div className="mt-16">
-            <h2 className="text-2xl font-bold mb-6">Related Products</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {marketplaceProducts
-                .filter(p => p.id !== product.id)
-                .slice(0, 3)
-                .map(relatedProduct => (
-                  <Link 
-                    key={relatedProduct.id} 
-                    href={`/marketplace/${relatedProduct.slug}`}
-                    className="group"
-                  >
-                    <div className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow">
-                      <div className="relative h-48">
-                        <Image 
-                          src={relatedProduct.image} 
-                          alt={relatedProduct.title}
-                          fill
-                          className="object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                      <div className="p-5">
-                        <span className="text-xs text-primary font-medium">
+        </div>
+        
+        {/* Product Details Section */}
+        <div className="mt-16 max-w-4xl">
+          <ProductTabs product={product} />
+        </div>
+        
+        {/* Related Products */}
+        {relatedProducts.length > 0 && (
+          <div className="mt-20">
+            <h2 className="text-2xl font-bold mb-8 text-foreground">Related Products</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {relatedProducts.map((relatedProduct) => (
+                <Card key={relatedProduct.id} className="shadow-sm hover:shadow-lg transition-shadow border-none bg-card/75 backdrop-blur-sm">
+                  <CardHeader className="p-0">
+                    <div className="relative aspect-[4/3] w-full">
+                      <Image
+                        src={relatedProduct.image}
+                        alt={relatedProduct.title}
+                        fill
+                        className="object-cover"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                        onError={(e) => {
+                          // On client-side only
+                          const target = e.target as HTMLImageElement;
+                          target.src = getFallbackImage(relatedProduct.id);
+                        }}
+                      />
+                      <div className="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
+                        <Badge variant="flat" className="bg-white/20 text-white border-none">
                           {relatedProduct.category}
-                        </span>
-                        <h3 className="font-bold text-lg mt-1 mb-2 group-hover:text-primary transition-colors">
-                          {relatedProduct.title}
-                        </h3>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
-                          {relatedProduct.description}
-                        </p>
-                        <div className="flex justify-between items-center">
-                          <span className="font-bold text-lg">${relatedProduct.price}</span>
-                          <span className="text-primary text-sm font-medium">View Details →</span>
-                        </div>
+                        </Badge>
                       </div>
                     </div>
-                  </Link>
-                ))}
+                  </CardHeader>
+                  <CardBody>
+                    <h3 className="text-xl font-bold mb-2 text-foreground">{relatedProduct.title}</h3>
+                    <p className="text-foreground/70 text-sm mb-4 line-clamp-2">{relatedProduct.description}</p>
+                    
+                    <div className="flex justify-between items-center">
+                      <Chip 
+                        color="success" 
+                        variant="flat" 
+                        startContent={<FiDollarSign size={14} />}
+                      >
+                        {relatedProduct.price}
+                      </Chip>
+                      
+                      <Button
+                        as={Link}
+                        href={`/marketplace/${relatedProduct.slug}`}
+                        color="primary"
+                        variant="light"
+                        endContent={<FiArrowLeft className="rotate-180" />}
+                        size="sm"
+                      >
+                        View Details
+                      </Button>
+                    </div>
+                  </CardBody>
+                </Card>
+              ))}
             </div>
           </div>
+        )}
+        
+        {/* Back button */}
+        <div className="mt-16 text-center">
+          <Button
+            as={Link}
+            href="/marketplace"
+            color="primary"
+            variant="flat"
+            radius="full"
+            size="lg"
+            startContent={<FiArrowLeft />}
+            className="px-8 shadow-md"
+          >
+            Back to Marketplace
+          </Button>
         </div>
       </div>
     </main>
   );
-} 
+}

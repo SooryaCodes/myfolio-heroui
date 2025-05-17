@@ -3,66 +3,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { FiExternalLink, FiGithub, FiArrowLeft, FiHome } from "react-icons/fi";
+import { projects } from "@/datas/projects";
 
-// Mock project data - in a real app, this would come from a database or API
-const projects = [
-  {
-    id: 1,
-    slug: "portfolio-website",
-    title: "Portfolio Website",
-    category: "Web Development",
-    description: "A modern portfolio website built with Next.js and Tailwind CSS.",
-    fullDescription: "This modern portfolio website showcases my work and skills in web development. Built with Next.js for server-side rendering and Tailwind CSS for styling, it features smooth animations, responsive design, and optimized performance. The site includes project showcases, a blog section, and contact information.",
-    technologies: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
-    image: "/images/projects/portfolio.jpg",
-    images: [
-      "/images/projects/portfolio-1.jpg",
-      "/images/projects/portfolio-2.jpg",
-      "/images/projects/portfolio-3.jpg",
-    ],
-    link: "https://example.com",
-    github: "https://github.com/username/portfolio",
-    completed: "2023-09-15",
-    client: "Personal Project"
-  },
-  {
-    id: 2,
-    slug: "e-commerce-platform",
-    title: "E-Commerce Platform",
-    category: "Web Development",
-    description: "A full-featured e-commerce platform with payment integration.",
-    fullDescription: "A comprehensive e-commerce solution built for a fashion retailer. This platform includes product listings, search functionality, user accounts, shopping cart, and secure checkout with Stripe integration. The admin panel allows for easy product and order management.",
-    technologies: ["React", "Node.js", "Express", "MongoDB", "Stripe"],
-    image: "/images/projects/ecommerce.jpg",
-    images: [
-      "/images/projects/ecommerce-1.jpg",
-      "/images/projects/ecommerce-2.jpg",
-      "/images/projects/ecommerce-3.jpg",
-    ],
-    link: "https://shop-example.com",
-    github: "https://github.com/username/ecommerce",
-    completed: "2023-07-22",
-    client: "Fashion Retailer Ltd."
-  },
-  {
-    id: 3,
-    slug: "mobile-fitness-app",
-    title: "Mobile Fitness App",
-    category: "Mobile Development",
-    description: "A fitness tracking mobile application built with React Native.",
-    fullDescription: "This fitness tracking app helps users monitor their workouts, set goals, and track progress over time. Built with React Native for cross-platform compatibility, it features workout plans, exercise demonstrations, progress charts, and social sharing capabilities.",
-    technologies: ["React Native", "Firebase", "Redux", "Native APIs"],
-    image: "/images/projects/fitness-app.jpg",
-    images: [
-      "/images/projects/fitness-app-1.jpg",
-      "/images/projects/fitness-app-2.jpg",
-      "/images/projects/fitness-app-3.jpg",
-    ],
-    link: "https://play.google.com/store/apps/example",
-    github: "https://github.com/username/fitness-app",
-    completed: "2023-05-10",
-    client: "Healthy Living Co."
-  }
+// Add fallback images with high-quality Unsplash images
+const fallbackImages = [
+  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+  "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
+  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
+  "https://images.unsplash.com/photo-1581472723648-909f4851d4ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
 ];
 
 type Props = {
@@ -82,140 +32,227 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
   
   return {
-    title: `${project.title} | Johan Beker Portfolio`,
+    title: `${project.title} | Projects`,
     description: project.description,
   };
 }
 
 export default function ProjectPage({ params }: Props) {
-  const project = projects.find((p) => p.slug === params.slug);
-  
+  const project = projects.find(project => project.slug === params.slug);
+
   if (!project) {
     notFound();
   }
-  
+
+  // Find related projects
+  const relatedProjects = projects
+    .filter(p => p.id !== project.id)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 2);
+
+  // Get a fallback image based on the project ID
+  const getFallbackImage = (index = 0) => {
+    return fallbackImages[(project.id + index) % fallbackImages.length];
+  };
+
   return (
-    <main className="pt-24 pb-16">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
-            <Link 
-              href="/projects" 
-              className="text-primary hover:underline mb-4 inline-flex items-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Back to Projects
-            </Link>
-            
-            <h1 className="text-4xl md:text-5xl font-bold mt-4">{project.title}</h1>
-            
-            <div className="flex flex-wrap gap-2 mt-4">
-              <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">
-                {project.category}
-              </span>
-              <span className="bg-gray-200 dark:bg-gray-800 px-3 py-1 rounded-full text-sm">
-                {new Date(project.completed).toLocaleDateString('en-US', {
-                  year: 'numeric',
-                  month: 'long'
-                })}
-              </span>
-            </div>
+    <main className="pt-20 pb-16 bg-background/50 min-h-screen">
+      <div className="container mx-auto px-4 md:px-8 max-w-screen-2xl">
+        {/* Navigation */}
+        <div className="mb-8 flex flex-wrap gap-3 items-center">
+          <Link 
+            href="/"
+            className="text-primary hover:underline flex items-center gap-1"
+          >
+            <FiHome size={16} />
+            <span>Home</span>
+          </Link>
+          <span className="text-foreground/30">•</span>
+          <Link 
+            href="/projects"
+            className="text-primary hover:underline flex items-center gap-1"
+          >
+            <FiArrowLeft size={16} />
+            <span>All Projects</span>
+          </Link>
+        </div>
+
+        {/* Project Header */}
+        <div className="mb-16">
+          <div className="mb-6">
+            <span className="text-primary inline-block mb-2 px-3 py-1 rounded-full text-sm bg-primary/10">{project.category}</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-foreground">{project.title}</h1>
+            <p className="text-foreground/70 text-lg md:text-xl max-w-4xl">
+              {project.description}
+            </p>
           </div>
-          
-          <div className="relative w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden mb-12">
-            <Image 
-              src={project.image} 
+
+          {/* Showcase Image */}
+          <div className="relative aspect-[16/9] w-full max-h-[70vh] rounded-xl overflow-hidden shadow-xl">
+            <Image
+              src={project.image || getFallbackImage()}
               alt={project.title}
               fill
+              priority
               className="object-cover"
+              placeholder="blur"
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+              onError={(e) => {
+                // This will run on client-side only
+                const target = e.target as HTMLImageElement;
+                target.src = getFallbackImage();
+              }}
             />
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div className="md:col-span-2">
-              <h2 className="text-2xl font-bold mb-4">Project Overview</h2>
-              <p className="text-gray-700 dark:text-gray-300 mb-6">
-                {project.fullDescription}
-              </p>
+        </div>
+
+        {/* Project Details */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-16">
+          <div className="lg:col-span-2">
+            <h2 className="text-2xl font-bold mb-6 text-foreground">Project Description</h2>
+            <div className="text-foreground/80 space-y-4 mb-12">
+              <p>{project.fullDescription}</p>
+            </div>
+
+            {/* Project Gallery */}
+            {project.images && project.images.length > 0 && (
+              <div className="mt-12">
+                <h2 className="text-2xl font-bold mb-6 text-foreground">Project Gallery</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  {project.images.map((image, index) => (
+                    <div key={index} className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-md">
+                      <Image
+                        src={image || getFallbackImage(index + 1)}
+                        alt={`${project.title} - Image ${index + 1}`}
+                        fill
+                        className="object-cover hover:scale-105 transition-transform duration-500"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                        onError={(e) => {
+                          // This will run on client-side only
+                          const target = e.target as HTMLImageElement;
+                          target.src = getFallbackImage(index + 1);
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <div className="bg-foreground/5 backdrop-blur-sm rounded-xl p-6 shadow-md sticky top-24 border border-foreground/5">
+              <h3 className="text-xl font-bold mb-6 text-foreground">Project Details</h3>
               
-              <h2 className="text-2xl font-bold mb-4 mt-10">Project Gallery</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {project.images.map((img, index) => (
-                  <div key={index} className="relative h-60 rounded-lg overflow-hidden">
-                    <Image 
-                      src={img} 
-                      alt={`${project.title} screenshot ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
+              <div className="space-y-4 mb-8">
+                <div>
+                  <h4 className="text-foreground/60 text-sm">Project Type</h4>
+                  <p className="font-medium text-foreground">{project.category}</p>
+                </div>
+                <div>
+                  <h4 className="text-foreground/60 text-sm">Client</h4>
+                  <p className="font-medium text-foreground">{project.client}</p>
+                </div>
+                <div>
+                  <h4 className="text-foreground/60 text-sm">Completed</h4>
+                  <p className="font-medium text-foreground">{new Date(project.completed).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                  })}</p>
+                </div>
+                {project.location && (
+                  <div>
+                    <h4 className="text-foreground/60 text-sm">Location</h4>
+                    <p className="font-medium text-foreground">{project.location}</p>
                   </div>
+                )}
+              </div>
+              
+              <h3 className="text-xl font-bold mb-4 text-foreground">Technologies</h3>
+              <div className="flex flex-wrap gap-2 mb-8">
+                {project.technologies.map((tech, index) => (
+                  <span key={index} className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm">
+                    {tech}
+                  </span>
                 ))}
               </div>
-            </div>
-            
-            <div>
-              <div className="bg-gray-50 dark:bg-gray-800/50 p-6 rounded-xl">
-                <h3 className="text-xl font-bold mb-4">Project Details</h3>
+              
+              <div className="flex flex-col gap-3">
+                {project.link && (
+                  <a 
+                    href={project.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-primary text-white px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-medium transition-transform hover:translate-y-[-2px] shadow-md"
+                  >
+                    <FiExternalLink />
+                    View Live Project
+                  </a>
+                )}
                 
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400">Client</h4>
-                    <p className="font-medium">{project.client}</p>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400">Completed</h4>
-                    <p className="font-medium">{new Date(project.completed).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}</p>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-sm text-gray-500 dark:text-gray-400">Technologies</h4>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {project.technologies.map((tech, index) => (
-                        <span 
-                          key={index}
-                          className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="pt-4">
-                    <a 
-                      href={project.link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="w-full bg-primary text-white py-3 px-4 rounded-lg flex items-center justify-center font-medium hover:bg-primary/90 transition-colors"
-                    >
-                      View Live Project
-                    </a>
-                    
-                    {project.github && (
-                      <a 
-                        href={project.github} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="w-full mt-3 bg-black dark:bg-white text-white dark:text-black py-3 px-4 rounded-lg flex items-center justify-center font-medium hover:opacity-90 transition-colors"
-                      >
-                        <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                        View on GitHub
-                      </a>
-                    )}
-                  </div>
-                </div>
+                {project.github && (
+                  <a 
+                    href={project.github} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="bg-foreground/10 text-foreground px-4 py-3 rounded-lg flex items-center justify-center gap-2 font-medium transition-all hover:bg-foreground/15"
+                  >
+                    <FiGithub />
+                    View Source Code
+                  </a>
+                )}
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Related Projects */}
+        {relatedProjects.length > 0 && (
+          <div className="mt-24">
+            <h2 className="text-3xl font-bold mb-10 text-foreground">Related Projects</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {relatedProjects.map((related) => (
+                <div key={related.id} className="group">
+                  <Link href={`/projects/${related.slug}`} className="block">
+                    <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-6 shadow-lg">
+                      <Image
+                        src={related.image || getFallbackImage(related.id)}
+                        alt={related.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                        onError={(e) => {
+                          // This will run on client-side only
+                          const target = e.target as HTMLImageElement;
+                          target.src = getFallbackImage(related.id);
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <span className="text-white font-medium bg-primary/80 backdrop-blur-sm rounded-lg px-4 py-2">
+                          View Project
+                        </span>
+                      </div>
+                    </div>
+                    <span className="text-primary text-sm">{related.category}</span>
+                    <h3 className="text-xl font-bold group-hover:text-primary transition-colors text-foreground">{related.title}</h3>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Back to projects button */}
+        <div className="mt-20 text-center">
+          <Link 
+            href="/projects"
+            className="bg-primary/10 text-primary px-6 py-3 rounded-full inline-flex items-center gap-2 font-medium transition-all hover:bg-primary/20"
+          >
+            <FiArrowLeft />
+            Back to All Projects
+          </Link>
         </div>
       </div>
     </main>

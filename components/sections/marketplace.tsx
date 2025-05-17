@@ -10,6 +10,7 @@ import { FiShoppingCart, FiChevronRight, FiStar, FiBookmark, FiDownload, FiExter
 import { addToast } from "@heroui/toast";
 import { RevealOnScroll } from "@/components/scroll-animations";
 import Image from "next/image";
+import Link from "next/link";
 
 const products = [
   {
@@ -306,6 +307,8 @@ export const Marketplace = () => {
             radius="full"
             endContent={<FiExternalLink />}
             className="px-8 font-medium"
+            as={Link}
+            href="/marketplace"
           >
             Browse All Products
           </Button>

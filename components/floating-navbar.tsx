@@ -1,137 +1,181 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiHome, FiGrid, FiCode, FiBriefcase, FiMessageCircle, FiLayers, FiStar, FiShoppingBag, FiSun, FiMoon, FiZap } from "react-icons/fi";
-import { scrollToSection } from "@/components/scroll-provider";
-import { useTheme } from "next-themes";
-import { Button } from "@heroui/button";
+import { 
+  FiHome, 
+  FiUser, 
+  FiBriefcase, 
+  FiGrid, 
+  FiMessageCircle, 
+  FiTwitter, 
+  FiGithub, 
+  FiLinkedin,
+  FiShoppingBag,
+  FiBookOpen,
+  FiCommand,
+  FiAward
+} from "react-icons/fi";
+import Link from "next/link";
+import { usePathname } from 'next/navigation';
+
+interface NavItem {
+  label: string;
+  href: string;
+  icon: React.ReactNode;
+}
 
 export const FloatingNavbar = () => {
-  const [activeSection, setActiveSection] = useState("hero");
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const [isVisible, setIsVisible] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("home");
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+
+  const navItems: NavItem[] = [
+    {
+      label: "Home",
+      href: "/",
+      icon: <FiHome className="text-lg" />,
+    },
+    {
+      label: "About",
+      href: "/#about",
+      icon: <FiUser className="text-lg" />,
+    },
+    {
+      label: "Services",
+      href: "/#services",
+      icon: <FiAward className="text-lg" />,
+    },
+    {
+      label: "Projects",
+      href: isHomePage ? "/#projects" : "/projects",
+      icon: <FiBriefcase className="text-lg" />,
+    },
+    {
+      label: "Blog",
+      href: isHomePage ? "/#blog" : "/blog",
+      icon: <FiBookOpen className="text-lg" />,
+    },
+    {
+      label: "Marketplace",
+      href: isHomePage ? "/#marketplace" : "/marketplace",
+      icon: <FiShoppingBag className="text-lg" />,
+    },
+    {
+      label: "Contact",
+      href: "/#contact",
+      icon: <FiMessageCircle className="text-lg" />,
+    },
+  ];
+
+  const socialItems: NavItem[] = [
+    {
+      label: "Twitter",
+      href: "https://twitter.com",
+      icon: <FiTwitter className="text-lg" />,
+    },
+    {
+      label: "GitHub",
+      href: "https://github.com",
+      icon: <FiGithub className="text-lg" />,
+    },
+    {
+      label: "LinkedIn",
+      href: "https://linkedin.com",
+      icon: <FiLinkedin className="text-lg" />,
+    },
+  ];
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    // Determine which section is active
     const handleScroll = () => {
-      const sections = ["hero", "services", "projects", "skills", "experience", "testimonials", "marketplace", "playground", "contact"];
-      
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section);
-        if (!element) continue;
-        
-        const rect = element.getBoundingClientRect();
-        if (rect.top <= 100) {
-          setActiveSection(section);
-          break;
-        }
+      // Show after scrolling down a bit
+      if (window.scrollY > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+
+      // Update active section based on scroll position
+      if (isHomePage) {
+        const sections = document.querySelectorAll('section[id]');
+        const scrollPosition = window.scrollY + 300; // Offset for highlighting slightly before reaching the section
+
+        sections.forEach(section => {
+          const sectionTop = (section as HTMLElement).offsetTop;
+          const sectionBottom = sectionTop + (section as HTMLElement).offsetHeight;
+
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            setActiveSection(section.id);
+          }
+        });
       }
     };
 
+    // Set handler and remove it on cleanup
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [isHomePage]);
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
-  const navItems = [
-    { id: "hero", label: "Home", icon: <FiHome size={18} /> },
-    { id: "services", label: "Services", icon: <FiLayers size={18} /> },
-    { id: "projects", label: "Projects", icon: <FiGrid size={18} /> },
-    { id: "skills", label: "Skills", icon: <FiCode size={18} /> },
-    { id: "experience", label: "Experience", icon: <FiBriefcase size={18} /> },
-    { id: "marketplace", label: "Marketplace", icon: <FiShoppingBag size={18} /> },
-    { id: "testimonials", label: "Testimonials", icon: <FiStar size={18} /> },
-    { id: "playground", label: "Playground", icon: <FiZap size={18} /> },
-    { id: "contact", label: "Contact", icon: <FiMessageCircle size={18} /> },
-  ];
-
-  const handleNavigation = (id: string) => {
-    scrollToSection(id);
-  };
+  // Only show on the homepage
+  if (!isHomePage) return null;
 
   return (
-    <motion.div 
-      className="fixed bottom-0 left-0 right-0 z-50 flex justify-center items-center pb-4"
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.2 }}
-    >
-      <div className="glass-premium rounded-full flex items-center justify-between px-4 py-3 gap-1 md:gap-2 border border-border w-auto">
-        {navItems.map((item) => (
-          <div 
-            key={item.id}
-            className="navbar-icon"
-            onMouseEnter={() => setHoveredItem(item.id)}
-            onMouseLeave={() => setHoveredItem(null)}
-          >
-            <Button
-              isIconOnly
-              variant={activeSection === item.id ? "flat" : "light"}
-              color={activeSection === item.id ? "primary" : "default"}
-              radius="full"
-              size="sm"
-              className="navbar-icon-inner w-9 h-9"
-              onClick={() => handleNavigation(item.id)}
-            >
-              {item.icon}
-            </Button>
-            <AnimatePresence>
-              {hoveredItem === item.id && (
-                <motion.span
-                  className="navbar-icon-label"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {item.label}
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </div>
-        ))}
-        
-        {/* Theme switcher */}
-        <div 
-          className="navbar-icon"
-          onMouseEnter={() => setHoveredItem("theme")}
-          onMouseLeave={() => setHoveredItem(null)}
+    <AnimatePresence>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 50 }}
+          transition={{ duration: 0.3 }}
+          className="fixed left-1/2 -translate-x-1/2 bottom-8 z-50 px-4 w-full"
         >
-          <Button
-            isIconOnly
-            variant="light"
-            color="default"
-            radius="full"
-            size="sm"
-            className="navbar-icon-inner w-9 h-9"
-            onClick={toggleTheme}
-          >
-            {mounted && theme === "dark" ? <FiSun size={18} /> : <FiMoon size={18} />}
-          </Button>
-          <AnimatePresence>
-            {hoveredItem === "theme" && (
-              <motion.span
-                className="navbar-icon-label"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ duration: 0.2 }}
-              >
-                {mounted && theme === "dark" ? "Light Mode" : "Dark Mode"}
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </div>
-      </div>
-    </motion.div>
+          <nav className="mx-auto max-w-md bg-background/80 backdrop-blur-md border border-foreground/10 rounded-full p-2 flex justify-between shadow-xl">
+            <ul className="flex items-center gap-1">
+              {navItems.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    href={item.href}
+                    className={`text-xs flex flex-col items-center justify-center p-2 rounded-full transition-colors ${
+                      activeSection === item.href.split("#")[1] || 
+                      (item.href === "/" && activeSection === "home") || 
+                      (item.href.includes("projects") && activeSection === "projects") ||
+                      (item.href.includes("blog") && activeSection === "blog") ||
+                      (item.href.includes("marketplace") && activeSection === "marketplace")
+                        ? "text-primary bg-primary/10"
+                        : "text-foreground/60 hover:text-foreground/80 hover:bg-foreground/5"
+                    }`}
+                    aria-label={item.label}
+                    title={item.label}
+                    onClick={(e) => {
+                      if (item.href.includes("#") && isHomePage) {
+                        e.preventDefault();
+                        const targetId = item.href.split("#")[1];
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                          window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: "smooth",
+                          });
+                        }
+                      }
+                    }}
+                  >
+                    {item.icon}
+                    <span className="text-[10px] mt-1 opacity-70">{item.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="h-10 w-px bg-foreground/10 self-center mx-1"></div>
+            <div className="flex items-center">
+              <button className="text-foreground/60 hover:text-primary p-2 rounded-full transition-colors bg-foreground/5 flex items-center justify-center">
+                <FiCommand className="text-lg" />
+              </button>
+            </div>
+          </nav>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
