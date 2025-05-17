@@ -6,6 +6,7 @@ import { SwitchProps, useSwitch } from "@heroui/switch";
 import { useTheme } from "next-themes";
 import { useIsSSR } from "@react-aria/ssr";
 import clsx from "clsx";
+import { motion } from "framer-motion";
 
 import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
 
@@ -42,7 +43,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
     <Component
       {...getBaseProps({
         className: clsx(
-          "px-px transition-opacity hover:opacity-80 cursor-pointer",
+          "relative px-1 cursor-pointer group",
           className,
           classNames?.base,
         ),
@@ -51,31 +52,52 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
       <VisuallyHidden>
         <input {...getInputProps()} />
       </VisuallyHidden>
-      <div
+      <motion.div
         {...getWrapperProps()}
         className={slots.wrapper({
           class: clsx(
             [
-              "w-auto h-auto",
-              "bg-transparent",
-              "rounded-lg",
+              "w-10 h-10",
+              "glass-premium",
+              "hover:border-primary/30",
+              "rounded-full",
               "flex items-center justify-center",
-              "group-data-[selected=true]:bg-transparent",
-              "!text-default-500",
-              "pt-px",
-              "px-0",
-              "mx-0",
+              "transition-all duration-300",
+              "overflow-hidden",
             ],
             classNames?.wrapper,
           ),
         })}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
-        {!isSelected || isSSR ? (
-          <SunFilledIcon size={22} />
-        ) : (
-          <MoonFilledIcon size={22} />
-        )}
-      </div>
+        <motion.div
+          initial={false}
+          animate={{
+            y: isSelected && !isSSR ? 0 : -40,
+            opacity: isSelected && !isSSR ? 1 : 0
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="absolute"
+        >
+          <MoonFilledIcon size={20} className="text-primary" />
+        </motion.div>
+        
+        <motion.div
+          initial={false}
+          animate={{
+            y: !isSelected || isSSR ? 0 : 40,
+            opacity: !isSelected || isSSR ? 1 : 0
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          className="absolute"
+        >
+          <SunFilledIcon size={20} className="text-primary" />
+        </motion.div>
+        
+        {/* Fancy glow effect */}
+        <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 rounded-full transition-opacity duration-300"></div>
+      </motion.div>
     </Component>
   );
 };

@@ -5,11 +5,13 @@ import { motion } from "framer-motion";
 import { Badge } from "@heroui/badge";
 import { Input } from "@heroui/input";
 import { Textarea } from "@heroui/input";
-import { button as buttonStyles } from "@heroui/theme";
+import { Button } from "@heroui/button";
 import { Link } from "@heroui/link";
-import { Card } from "@heroui/card";
+import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
+import { Tooltip } from "@heroui/tooltip";
 import { Divider } from "@heroui/divider";
-import { FiMail, FiMapPin, FiPhone, FiSend } from "react-icons/fi";
+import { FiMail, FiMapPin, FiPhone, FiSend, FiCalendar, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
+import { addToast } from "@heroui/toast";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -39,14 +41,38 @@ export const Contact = () => {
         message: "",
       });
       
-      // Show success message
-      alert("Message sent! Thanks for reaching out. I'll get back to you soon.");
+      // Show success message using Toast
+      addToast({
+        title: "Message Sent!",
+        description: "Thanks for reaching out. I'll get back to you soon!",
+        color: "success",
+        variant: "flat",
+        radius: "full",
+      });
     }, 1500);
   };
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { ease: [0.22, 1, 0.36, 1], duration: 0.7 } },
+  };
+
   return (
-    <section id="contact" className="py-24 px-6">
-      <div className="max-w-7xl mx-auto">
+    <section id="contact" className="py-24 px-6 relative">
+      <div className="absolute inset-0 grid-pattern opacity-5 z-0"></div>
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -54,51 +80,68 @@ export const Contact = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <Badge variant="flat" color="primary" className="mb-4">
-            Get In Touch
+          <Badge 
+            variant="flat" 
+            color="primary" 
+            className="mb-4 glass-premium border border-primary/20"
+          >
+            <span className="px-2 py-0.5 text-primary">Get In Touch</span>
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Contact Me</h2>
-          <p className="text-foreground/70 max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">Let's Connect</h2>
+          <p className="text-muted max-w-2xl mx-auto">
             Have a project in mind or want to discuss a potential collaboration?
             Feel free to reach out, and I'll get back to you as soon as possible.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            className="lg:col-span-7"
           >
-            <Card className="p-8">
-              <h3 className="text-2xl font-bold mb-6">Send Me a Message</h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <Input
-                    type="text"
-                    name="name"
-                    label="Your Name"
-                    placeholder="John Doe"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    fullWidth
-                  />
-                </div>
-                <div>
-                  <Input
-                    type="email"
-                    name="email"
-                    label="Your Email"
-                    placeholder="john@example.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    fullWidth
-                  />
-                </div>
-                <div>
+            <Card className="glass-premium border border-border">
+              <CardHeader className="pb-0">
+                <h3 className="text-2xl font-bold text-foreground">Send Me a Message</h3>
+              </CardHeader>
+              
+              <CardBody>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <Input
+                      type="text"
+                      name="name"
+                      label="Your Name"
+                      placeholder="John Doe"
+                      value={formData.name}
+                      onChange={handleChange}
+                      variant="bordered"
+                      radius="lg"
+                      labelPlacement="outside"
+                      isRequired
+                      startContent={
+                        <FiMail className="text-muted mr-2 flex-shrink-0" />
+                      }
+                    />
+                    <Input
+                      type="email"
+                      name="email"
+                      label="Your Email"
+                      placeholder="john@example.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      variant="bordered"
+                      radius="lg"
+                      labelPlacement="outside"
+                      isRequired
+                      startContent={
+                        <FiMail className="text-muted mr-2 flex-shrink-0" />
+                      }
+                    />
+                  </div>
+                  
                   <Input
                     type="text"
                     name="subject"
@@ -106,64 +149,39 @@ export const Contact = () => {
                     placeholder="Project Inquiry"
                     value={formData.subject}
                     onChange={handleChange}
-                    required
-                    fullWidth
+                    variant="bordered"
+                    radius="lg"
+                    labelPlacement="outside"
+                    isRequired
                   />
-                </div>
-                <div>
+                  
                   <Textarea
                     name="message"
                     label="Your Message"
                     placeholder="Tell me about your project, timeline, and budget..."
                     value={formData.message}
                     onChange={handleChange}
-                    required
-                    fullWidth
+                    variant="bordered"
+                    radius="lg"
+                    labelPlacement="outside"
+                    isRequired
                     minRows={5}
                   />
-                </div>
-                <div>
-                  <button
+                  
+                  <Button
                     type="submit"
-                    className={buttonStyles({
-                      color: "primary",
-                      size: "lg",
-                      className: "w-full",
-                    })}
-                    disabled={loading}
+                    color="primary"
+                    variant="flat"
+                    radius="full"
+                    size="lg"
+                    fullWidth
+                    isLoading={loading}
+                    startContent={!loading && <FiSend />}
                   >
-                    {loading ? (
-                      <>
-                        <svg
-                          className="animate-spin -ml-1 mr-3 h-5 w-5 text-current"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                        >
-                          <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                          ></circle>
-                          <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                          ></path>
-                        </svg>
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        <FiSend className="mr-2" /> Send Message
-                      </>
-                    )}
-                  </button>
-                </div>
-              </form>
+                    {loading ? "Sending..." : "Send Message"}
+                  </Button>
+                </form>
+              </CardBody>
             </Card>
           </motion.div>
 
@@ -172,72 +190,118 @@ export const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            className="lg:col-span-5"
           >
-            <Card className="p-8 h-full">
-              <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
-              <p className="text-foreground/70 mb-8">
-                Feel free to contact me through any of the following methods.
-                I'm always open to discussing new projects, creative ideas, or
-                opportunities to be part of your vision.
-              </p>
-
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 p-3 rounded-full text-primary">
-                    <FiMail size={24} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold">Email</h4>
-                    <Link
-                      isExternal
-                      href="mailto:your.email@example.com"
-                      className="text-foreground/70 hover:text-primary transition-colors"
-                    >
-                      your.email@example.com
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 p-3 rounded-full text-primary">
-                    <FiPhone size={24} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold">Phone</h4>
-                    <Link
-                      isExternal
-                      href="tel:+1234567890"
-                      className="text-foreground/70 hover:text-primary transition-colors"
-                    >
-                      +1 (234) 567-890
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 p-3 rounded-full text-primary">
-                    <FiMapPin size={24} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold">Location</h4>
-                    <p className="text-foreground/70">San Francisco, CA, USA</p>
-                  </div>
-                </div>
-              </div>
-
-              <Divider className="my-8" />
-
-              <div>
-                <h4 className="text-lg font-semibold mb-4">Availability</h4>
-                <p className="text-foreground/70 mb-4">
-                  I'm currently available for freelance work or full-time
-                  opportunities. My typical response time is within 24 hours.
+            <Card className="glass-premium border border-border h-full">
+              <CardHeader>
+                <h3 className="text-2xl font-bold text-foreground">Contact Information</h3>
+              </CardHeader>
+              
+              <CardBody className="gap-6 flex flex-col">
+                <p className="text-muted">
+                  Feel free to contact me through any of the following methods.
+                  I'm always open to discussing new projects, creative ideas, or
+                  opportunities to be part of your vision.
                 </p>
-                <div className="flex gap-3 items-center">
-                  <div className="h-3 w-3 rounded-full bg-green-500"></div>
-                  <span className="text-sm">Available for new projects</span>
+
+                <motion.div 
+                  variants={container}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  className="space-y-5"
+                >
+                  <motion.div variants={item} className="flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
+                      <FiMail size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted mb-1">Email</p>
+                      <Link
+                        isExternal
+                        href="mailto:your.email@example.com"
+                        className="text-foreground hover:text-primary transition-colors"
+                      >
+                        your.email@example.com
+                      </Link>
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={item} className="flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
+                      <FiPhone size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted mb-1">Phone</p>
+                      <Link
+                        isExternal
+                        href="tel:+1234567890"
+                        className="text-foreground hover:text-primary transition-colors"
+                      >
+                        +1 (234) 567-890
+                      </Link>
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={item} className="flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
+                      <FiMapPin size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted mb-1">Location</p>
+                      <p className="text-foreground">San Francisco, CA, USA</p>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div variants={item} className="flex items-center gap-4">
+                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
+                      <FiCalendar size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted mb-1">Availability</p>
+                      <div className="flex gap-2 items-center">
+                        <span className="h-2.5 w-2.5 rounded-full bg-green-500"></span>
+                        <span className="text-foreground">Available for new projects</span>
+                      </div>
+                    </div>
+                  </motion.div>
+                </motion.div>
+
+                <Divider className="my-2" />
+
+                <div>
+                  <p className="text-sm text-muted mb-4">Or connect with me on social media:</p>
+                  <div className="flex gap-3">
+                    <Tooltip content="GitHub">
+                      <Link
+                        isExternal
+                        href="https://github.com/yourusername"
+                        className="p-3 rounded-full bg-default/10 text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                      >
+                        <FiGithub size={18} />
+                      </Link>
+                    </Tooltip>
+                    <Tooltip content="LinkedIn">
+                      <Link
+                        isExternal
+                        href="https://linkedin.com/in/yourusername"
+                        className="p-3 rounded-full bg-default/10 text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                      >
+                        <FiLinkedin size={18} />
+                      </Link>
+                    </Tooltip>
+                    <Tooltip content="Twitter">
+                      <Link
+                        isExternal
+                        href="https://twitter.com/yourusername"
+                        className="p-3 rounded-full bg-default/10 text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                      >
+                        <FiTwitter size={18} />
+                      </Link>
+                    </Tooltip>
+                  </div>
                 </div>
-              </div>
+              </CardBody>
             </Card>
           </motion.div>
         </div>
