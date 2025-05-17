@@ -9,6 +9,7 @@ import { Testimonials } from "@/components/sections/testimonials";
 import { Blogs } from "@/components/sections/blogs";
 import { Services } from "@/components/sections/services";
 import { Marketplace } from "@/components/sections/marketplace";
+import { Playground } from "@/components/sections/playground";
 import { FloatingNavbar } from "@/components/floating-navbar";
 
 export const metadata: Metadata = {
@@ -27,6 +28,7 @@ export default function Home() {
       <Marketplace />
       <Testimonials />
       <Blogs />
+      <Playground />
       <Contact />
       <Footer />
       <FloatingNavbar />

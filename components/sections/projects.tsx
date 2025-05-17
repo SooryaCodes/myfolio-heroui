@@ -30,295 +30,130 @@ interface ProjectType {
 
 // Project data array
 const projects: ProjectType[] = [
-  // ... (keeping existing project data)
+  {
+    id: 1,
+    title: "Modern E-commerce Platform",
+    description: "A full-featured e-commerce platform with React, Node.js, and MongoDB.",
+    longDescription: "A comprehensive e-commerce solution built with React, Node.js, and MongoDB. Features include user authentication, product management, shopping cart, payment processing with Stripe, and order tracking. The platform is fully responsive and designed with a modern UI/UX approach.",
+    image: "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "https://images.unsplash.com/photo-1556740758-90de374c12ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    ],
+    technologies: [
+      { name: "React", description: "Frontend UI development" },
+      { name: "Node.js", description: "Backend API and server" },
+      { name: "MongoDB", description: "Database" },
+      { name: "Express", description: "Web framework" },
+      { name: "Stripe", description: "Payment processing" },
+      { name: "JWT", description: "Authentication" }
+    ],
+    tags: ["React", "Node.js", "MongoDB", "Express", "Stripe", "REST API"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    category: "web",
+    featured: true
+  },
+  {
+    id: 2,
+    title: "AI-Powered Content Generator",
+    description: "A content generation tool leveraging OpenAI's GPT models for marketers and writers.",
+    longDescription: "This AI-powered content generator helps marketers and writers create high-quality content efficiently. It uses OpenAI's GPT models to generate blog posts, social media content, product descriptions, and more. The platform includes features for customizing tone, style, and content length, as well as editing and refining the generated content.",
+    image: "https://images.unsplash.com/photo-1677442135016-ac193eda4635?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1677442135016-ac193eda4635?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80",
+      "https://images.unsplash.com/photo-1673443214909-89df92c73549?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "https://images.unsplash.com/photo-1655720035861-ba4fd1c31aaf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    ],
+    technologies: [
+      { name: "Next.js", description: "Frontend framework" },
+      { name: "OpenAI API", description: "AI capabilities" },
+      { name: "TypeScript", description: "Type-safe code" },
+      { name: "Tailwind CSS", description: "Styling" },
+      { name: "Prisma", description: "Database ORM" },
+      { name: "PostgreSQL", description: "Database" }
+    ],
+    tags: ["AI", "OpenAI", "Next.js", "TypeScript", "Tailwind CSS", "SaaS"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    category: "ai",
+    featured: true
+  },
+  {
+    id: 3,
+    title: "Fitness Tracking Mobile App",
+    description: "A comprehensive fitness tracking app for iOS and Android using React Native.",
+    longDescription: "A feature-rich fitness tracking mobile application built using React Native for both iOS and Android platforms. The app helps users track workouts, set goals, monitor progress, and connect with a community of fitness enthusiasts. It includes features like workout plans, nutrition tracking, progress photos, and integration with wearable devices.",
+    image: "https://images.unsplash.com/photo-1510861320402-285a66f54351?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1510861320402-285a66f54351?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80",
+      "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+      "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    ],
+    technologies: [
+      { name: "React Native", description: "Cross-platform mobile development" },
+      { name: "Firebase", description: "Backend services" },
+      { name: "Redux", description: "State management" },
+      { name: "Expo", description: "Development framework" },
+      { name: "HealthKit/Google Fit", description: "Fitness data integration" }
+    ],
+    tags: ["React Native", "Firebase", "Redux", "Mobile App", "Fitness", "Expo"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    category: "mobile",
+    featured: false
+  },
+  {
+    id: 4,
+    title: "Real-time Collaboration Platform",
+    description: "A collaborative workspace for teams with real-time document editing and project management.",
+    longDescription: "This real-time collaboration platform helps teams work together efficiently regardless of location. It features collaborative document editing, task management, team chat, file sharing, and video conferencing. The platform uses WebSockets for real-time updates and ensures that all team members stay in sync.",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+    ],
+    technologies: [
+      { name: "Vue.js", description: "Frontend framework" },
+      { name: "Socket.io", description: "Real-time communication" },
+      { name: "Node.js", description: "Backend" },
+      { name: "MongoDB", description: "Database" },
+      { name: "WebRTC", description: "Video conferencing" },
+      { name: "Docker", description: "Containerization" }
+    ],
+    tags: ["Vue.js", "WebSockets", "Real-time", "Collaboration", "SaaS", "Team"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    category: "web",
+    featured: false
+  },
+  {
+    id: 5,
+    title: "AR Product Visualization App",
+    description: "An Augmented Reality app that allows users to visualize products in their real environment.",
+    longDescription: "This AR product visualization app enables e-commerce customers to see how products would look in their own space before purchasing. Using ARKit for iOS and ARCore for Android, the app provides a seamless AR experience with realistic product rendering, scaling, and placement. It includes a catalog of 3D models and integrates with e-commerce platforms for a complete shopping experience.",
+    image: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    gallery: [
+      "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "https://images.unsplash.com/photo-1640176706899-25b8ef1fdd9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
+      "https://images.unsplash.com/photo-1583225214464-90552867f89f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+    ],
+    technologies: [
+      { name: "Unity", description: "3D development platform" },
+      { name: "ARKit/ARCore", description: "AR frameworks" },
+      { name: "C#", description: "Programming language" },
+      { name: "Blender", description: "3D modeling" },
+      { name: "RESTful API", description: "Backend integration" }
+    ],
+    tags: ["AR", "Mobile", "Unity", "3D", "E-commerce", "iOS", "Android"],
+    githubUrl: "https://github.com",
+    liveUrl: "https://example.com",
+    category: "mobile",
+    featured: true
+  }
 ];
-
-// Full-width expanding project card
-const FullWidthProjectCard = ({ project, index }: { project: ProjectType, index: number }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const cardRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    if (isExpanded && project.gallery?.length) {
-      const intervalId = setInterval(() => {
-        setCurrentImageIndex((prev) => 
-          prev === project.gallery!.length - 1 ? 0 : prev + 1
-        );
-      }, 5000);
-      
-      return () => clearInterval(intervalId);
-    }
-  }, [isExpanded, project.gallery]);
-
-  const handleOutsideClick = (e: MouseEvent) => {
-    if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
-      setIsExpanded(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isExpanded) {
-      document.addEventListener('mousedown', handleOutsideClick);
-    } else {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    }
-    
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, [isExpanded]);
-  
-  return (
-    <motion.div
-      ref={cardRef}
-      className="w-full mb-12"
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ 
-        duration: 0.8, 
-        delay: index * 0.15,
-        ease: [0.22, 1, 0.36, 1] 
-      }}
-    >
-      <Card
-        className={`overflow-hidden transition-all duration-500 ${
-          isExpanded ? "shadow-2xl" : "hover-lift border border-border"
-        }`}
-        onClick={() => !isExpanded && setIsExpanded(true)}
-      >
-        <motion.div 
-          className={`flex flex-col ${isExpanded ? "lg:flex-row" : ""}`}
-          layout
-        >
-          {/* Image section */}
-          <motion.div 
-            className={`relative ${
-              isExpanded
-                ? "lg:w-2/5 h-64 lg:h-auto"
-                : "w-full aspect-[21/9]"
-            }`}
-            layout
-          >
-            {isExpanded && project.gallery ? (
-              <AnimatePresence mode="wait">
-                <motion.div 
-                  key={currentImageIndex}
-                  className="absolute inset-0"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <Image 
-                    src={project.gallery[currentImageIndex]} 
-                    alt={`${project.title} - Gallery image ${currentImageIndex + 1}`}
-                    fill
-                    className="object-cover rounded-tl-2xl rounded-bl-2xl"
-                  />
-                  <div className="absolute inset-0 bg-black/20 rounded-tl-2xl rounded-bl-2xl"></div>
-                </motion.div>
-              </AnimatePresence>
-            ) : (
-              <>
-                <Image 
-                  src={project.image} 
-                  alt={project.title}
-                  fill
-                  className={`object-cover ${isExpanded ? "rounded-tl-2xl rounded-bl-2xl" : "rounded-t-2xl"}`}
-                />
-                <div className={`absolute inset-0 bg-black/30 ${isExpanded ? "rounded-tl-2xl rounded-bl-2xl" : "rounded-t-2xl"}`}></div>
-              </>
-            )}
-            
-            {/* Gallery navigation dots */}
-            {isExpanded && project.gallery && project.gallery.length > 1 && (
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-1.5 z-10">
-                {project.gallery.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCurrentImageIndex(idx);
-                    }}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      idx === currentImageIndex 
-                        ? 'bg-white scale-110' 
-                        : 'bg-white/50 hover:bg-white/80'
-                    }`}
-                    aria-label={`View image ${idx + 1}`}
-                  />
-                ))}
-              </div>
-            )}
-            
-            {/* Category badge */}
-            <div className="absolute top-4 left-4 z-10">
-              <Chip
-                color="primary"
-                variant="flat"
-                className="glass-premium border border-primary/20 text-xs text-white flex items-center gap-1.5"
-                radius="full"
-              >
-                {project.category === 'web' ? <FiExternalLink size={12} /> : 
-                 project.category === 'mobile' ? <FiMaximize size={12} /> : 
-                 <FiFolder size={12} />}
-                <span>
-                  {project.category === 'web' ? 'Web Development' : 
-                   project.category === 'mobile' ? 'Mobile App' : 
-                   'AI & Machine Learning'}
-                </span>
-              </Chip>
-            </div>
-          </motion.div>
-          
-          {/* Content section */}
-          <CardBody 
-            className={`p-6 flex-1 flex flex-col bg-card/30 backdrop-blur-md`}
-          >
-            <motion.div layout>
-              <motion.h3 
-                className="text-2xl md:text-3xl font-bold text-foreground mb-2"
-                layout
-              >
-                {project.title}
-              </motion.h3>
-              
-              <motion.p 
-                className="text-muted mb-4 line-clamp-2"
-                layout
-              >
-                {isExpanded ? project.longDescription : project.description}
-              </motion.p>
-              
-              {/* Tags */}
-              <motion.div 
-                className="flex flex-wrap gap-2 mb-4"
-                layout
-              >
-                {project.tags.map((tag) => (
-                  <Chip
-                    key={tag}
-                    className="bg-default-100 text-foreground/80 text-xs"
-                    radius="full"
-                    size="sm"
-                  >
-                    {tag}
-                  </Chip>
-                ))}
-              </motion.div>
-            </motion.div>
-            
-            {/* Technologies - Only visible when expanded */}
-            {isExpanded && project.technologies && (
-              <motion.div 
-                className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-3"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                {project.technologies.map((tech) => (
-                  <div key={tech.name} className="flex items-start gap-2 bg-default-100/50 p-2 rounded-lg">
-                    <div className="mt-0.5 text-primary">
-                      <FiTag size={14} />
-                    </div>
-                    <div>
-                      <div className="font-medium text-sm text-foreground">{tech.name}</div>
-                      {tech.description && <div className="text-xs text-muted">{tech.description}</div>}
-                    </div>
-                  </div>
-                ))}
-              </motion.div>
-            )}
-            
-            {/* Action buttons */}
-            <motion.div 
-              className={`flex gap-3 mt-auto ${isExpanded ? "justify-end" : ""}`}
-              layout
-            >
-              {isExpanded ? (
-                <>
-                  <Button
-                    as={Link}
-                    href={project.githubUrl}
-                    target="_blank"
-                    variant="flat"
-                    color="default"
-                    size="sm"
-                    startContent={<FiGithub size={14} />}
-                  >
-                    View Code
-                  </Button>
-                  <Button
-                    as={Link}
-                    href={project.liveUrl}
-                    target="_blank"
-                    variant="flat"
-                    color="primary"
-                    size="sm"
-                    startContent={<FiExternalLink size={14} />}
-                  >
-                    Visit Project
-                  </Button>
-                  <Button
-                    variant="light"
-                    color="default"
-                    size="sm"
-                    isIconOnly
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsExpanded(false);
-                    }}
-                  >
-                    <FiX size={14} />
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button
-                    variant="flat"
-                    color="primary"
-                    size="sm"
-                    radius="full"
-                    endContent={<FiEye size={14} />}
-                    className="mr-auto"
-                  >
-                    View Details
-                  </Button>
-                  <Button
-                    as={Link}
-                    href={project.githubUrl}
-                    target="_blank"
-                    isIconOnly
-                    variant="light"
-                    color="default"
-                    size="sm"
-                    radius="full"
-                  >
-                    <FiGithub size={14} />
-                  </Button>
-                  <Button
-                    as={Link}
-                    href={project.liveUrl}
-                    target="_blank"
-                    isIconOnly
-                    variant="light"
-                    color="primary"
-                    size="sm"
-                    radius="full"
-                  >
-                    <FiExternalLink size={14} />
-                  </Button>
-                </>
-              )}
-            </motion.div>
-          </CardBody>
-        </motion.div>
-      </Card>
-    </motion.div>
-  );
-};
 
 // Featured Project Card for hero section
 const FeaturedProjectCard = ({ project }: { project: ProjectType }) => {
@@ -330,7 +165,7 @@ const FeaturedProjectCard = ({ project }: { project: ProjectType }) => {
       viewport={{ once: true }}
       transition={{ duration: 0.8 }}
     >
-      <Card className="h-full overflow-hidden border border-border rounded-2xl">
+      <Card className="h-full overflow-hidden border border-border rounded-2xl hover-lift">
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10 z-10"></div>
         
         <div className="absolute inset-0 z-0">
@@ -398,6 +233,113 @@ const FeaturedProjectCard = ({ project }: { project: ProjectType }) => {
   );
 };
 
+// Modern project card with hover expansion
+const ProjectCard = ({ project, index }: { project: ProjectType, index: number }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "end start"]
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1, 0.98]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.8, 1], [0.4, 1, 1, 0.8]);
+  
+  return (
+    <motion.div
+      ref={cardRef}
+      style={{ scale, opacity }}
+      className="group relative overflow-hidden rounded-2xl"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ 
+        duration: 0.8, 
+        delay: index * 0.15,
+        ease: [0.22, 1, 0.36, 1] 
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="aspect-[16/9] sm:aspect-[3/2] md:aspect-[16/9] relative overflow-hidden rounded-2xl">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className={`object-cover transition-all duration-700 ${isHovered ? 'scale-110 filter saturate-100' : 'scale-100 filter saturate-[0.9]'}`}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
+        
+        {/* Category badge */}
+        <div className="absolute top-4 left-4 z-20">
+          <Chip
+            color="primary"
+            variant="flat"
+            className="glass-premium border border-primary/20 text-xs text-white"
+            radius="full"
+          >
+            {project.category === 'web' ? 'Web Development' : 
+             project.category === 'mobile' ? 'Mobile App' : 
+             'AI & Machine Learning'}
+          </Chip>
+        </div>
+        
+        {/* Content */}
+        <div className={`absolute inset-x-0 bottom-0 p-6 z-20 transition-all duration-500 ${isHovered ? 'transform-none' : 'translate-y-6'}`}>
+          <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">{project.title}</h3>
+          <p className={`text-white/80 mb-4 line-clamp-2 transition-all duration-500 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+            {project.description}
+          </p>
+          
+          {/* Tags */}
+          <div className={`flex flex-wrap gap-2 mb-5 transition-all duration-500 delay-100 ${isHovered ? 'opacity-100 transform-none' : 'opacity-0 translate-y-4'}`}>
+            {project.tags.slice(0, 3).map((tag) => (
+              <span key={tag} className="glass-premium px-2 py-1 rounded-full text-xs text-white">
+                {tag}
+              </span>
+            ))}
+            {project.tags.length > 3 && (
+              <span className="glass-premium px-2 py-1 rounded-full text-xs text-white">
+                +{project.tags.length - 3}
+              </span>
+            )}
+          </div>
+          
+          {/* Buttons */}
+          <div className={`flex gap-3 transition-all duration-500 delay-150 ${isHovered ? 'opacity-100 transform-none' : 'opacity-0 translate-y-4'}`}>
+            <Button
+              as={Link}
+              href={project.liveUrl}
+              target="_blank"
+              variant="flat"
+              color="primary"
+              radius="full"
+              size="sm"
+              className="glass-premium border border-primary/20"
+              startContent={<FiExternalLink size={14} />}
+            >
+              Live Demo
+            </Button>
+            <Button
+              as={Link}
+              href={project.githubUrl}
+              target="_blank"
+              variant="flat"
+              color="default"
+              radius="full"
+              size="sm"
+              className="glass-premium border border-white/10"
+              startContent={<FiGithub size={14} />}
+            >
+              View Code
+            </Button>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 // Projects section component
 export const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -436,13 +378,24 @@ export const Projects = () => {
       >
         <RevealOnScroll>
           <div className="text-center mb-16">
-            <Badge color="primary" variant="flat" className="mb-4">Projects</Badge>
+            <Badge color="primary" variant="flat" className="mb-4 glass-premium border border-primary/20">
+              <span className="px-2 py-0.5 text-primary">Projects</span>
+            </Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">My Latest Work</h2>
             <p className="text-muted max-w-2xl mx-auto">
               Explore my recent projects showcasing my skills, creativity, and problem-solving abilities.
             </p>
           </div>
         </RevealOnScroll>
+        
+        {/* Featured Projects Section - Grid Layout */}
+        <div className="mb-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.filter(p => p.featured).map((project) => (
+              <FeaturedProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </div>
         
         {/* Category filter */}
         <div className="mb-12 flex justify-center">
@@ -452,6 +405,10 @@ export const Projects = () => {
             radius="full" 
             className="max-w-fit mx-auto"
             onSelectionChange={(key) => setSelectedCategory(key.toString())}
+            classNames={{
+              tabList: "overflow-x-auto flex-nowrap sm:flex-wrap",
+              tab: "whitespace-nowrap",
+            }}
           >
             {categories.map((category) => (
               <Tab 
@@ -463,7 +420,7 @@ export const Projects = () => {
                     ) : category === "web" ? (
                       <FiExternalLink className="text-xs" />
                     ) : category === "mobile" ? (
-                      <FiMaximize className="text-xs" />
+                      <FiSmartphone className="text-xs" />
                     ) : (
                       <FiFolder className="text-xs" />
                     )}
@@ -475,10 +432,10 @@ export const Projects = () => {
           </Tabs>
         </div>
         
-        {/* Projects display */}
-        <div className="space-y-16">
+        {/* Projects display - Modern Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project, index) => (
-            <FullWidthProjectCard 
+            <ProjectCard 
               key={project.id} 
               project={project} 
               index={index} 
@@ -488,4 +445,4 @@ export const Projects = () => {
       </motion.div>
     </section>
   );
-}; 
+};

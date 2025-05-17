@@ -78,6 +78,14 @@ export const Footer = () => {
               <li>
                 <Link
                   className="text-foreground/70 hover:text-primary transition-colors"
+                  onClick={() => scrollToSection("playground")}
+                >
+                  Playground
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="text-foreground/70 hover:text-primary transition-colors"
                   onClick={() => scrollToSection("contact")}
                 >
                   Contact

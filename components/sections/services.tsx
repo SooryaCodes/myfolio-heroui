@@ -8,7 +8,7 @@ import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
 import { Tooltip } from "@heroui/tooltip";
 import { RevealOnScroll } from "@/components/scroll-animations";
 import { scrollToSection } from "@/components/scroll-provider";
-import { FiCode, FiLayout, FiPenTool, FiDatabase, FiGlobe, FiSmartphone, FiArrowRight, FiCheck, FiPlus, FiX } from "react-icons/fi";
+import { FiCode, FiLayout, FiPenTool, FiDatabase, FiGlobe, FiSmartphone, FiArrowRight, FiCheck, FiPlus, FiX, FiExternalLink } from "react-icons/fi";
 import Image from "next/image";
 
 interface ServiceFeature {
@@ -175,7 +175,9 @@ const Service3DCard = ({ service, index }: { service: Service, index: number }) 
             rotateY: rotateYSpring,
             transformPerspective: 1000,
             transformStyle: "preserve-3d",
-            boxShadow: isHovered ? `0 20px 40px -20px ${service.color.split(" ")[1]}30` : "0 10px 30px -15px rgba(0,0,0,0.1)"
+            boxShadow: isHovered 
+              ? `0 20px 40px -20px ${service.color.split(" ")[1]}50, 0 0 15px ${service.color.split(" ")[1]}20` 
+              : "0 10px 30px -15px rgba(0,0,0,0.1)"
           }}
         >
           <div className="relative aspect-video overflow-hidden">
@@ -186,12 +188,13 @@ const Service3DCard = ({ service, index }: { service: Service, index: number }) 
               className="object-cover transition-transform duration-700"
               style={{ 
                 transform: isHovered ? "scale(1.05)" : "scale(1)",
+                filter: isHovered ? "brightness(1.1) contrast(1.1)" : "brightness(1) contrast(1)"
               }}
             />
-            <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-30 mix-blend-overlay`}></div>
-            <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-40 mix-blend-overlay transition-opacity duration-500 ${isHovered ? 'opacity-60' : 'opacity-30'}`}></div>
+            <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/70 to-transparent"></div>
             
-            <div className="absolute top-4 left-4 glass-premium p-2 px-3 rounded-full border border-white/10">
+            <div className="absolute top-4 left-4 glass-premium p-2 px-3 rounded-full border border-white/10 backdrop-blur-md">
               <div className="text-white text-sm font-medium flex items-center gap-2">
                 {service.icon}
                 <span>{service.title}</span>
@@ -201,13 +204,14 @@ const Service3DCard = ({ service, index }: { service: Service, index: number }) 
             <motion.div 
               className="absolute bottom-4 right-4"
               whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               <Button
                 size="sm"
                 color="primary"
                 variant="flat"
                 radius="full"
-                className="glass-premium border border-primary/20"
+                className="glass-premium border border-primary/20 shadow-lg shadow-primary/20"
                 endContent={<FiPlus />}
                 onClick={() => setIsModalOpen(true)}
               >
@@ -224,26 +228,28 @@ const Service3DCard = ({ service, index }: { service: Service, index: number }) 
               {service.features.slice(0, 3).map((feature, idx) => (
                 <div 
                   key={idx}
-                  className="flex items-start gap-2"
+                  className="flex items-start gap-2 group"
                 >
-                  <div className="p-1 rounded-full bg-primary/10 text-primary mt-0.5">
+                  <div className="p-1 rounded-full bg-primary/10 text-primary mt-0.5 transition-all duration-300 group-hover:bg-primary group-hover:text-white">
                     <FiCheck size={12} />
                   </div>
-                  <span className="text-muted text-sm">{feature}</span>
+                  <span className="text-muted text-sm transition-colors duration-300 group-hover:text-foreground">{feature}</span>
                 </div>
               ))}
               
               {service.features.length > 3 && (
-                <Button
-                  size="sm"
-                  variant="light"
-                  color="primary"
-                  className="mt-2 w-full justify-center"
-                  endContent={<FiArrowRight size={14} />}
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  {service.features.length - 3} more features
-                </Button>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Button
+                    size="sm"
+                    variant="light"
+                    color="primary"
+                    className="mt-2 w-full justify-center font-medium"
+                    endContent={<FiArrowRight size={14} />}
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    {service.features.length - 3} more features
+                  </Button>
+                </motion.div>
               )}
             </div>
           </div>
@@ -276,7 +282,7 @@ const Service3DCard = ({ service, index }: { service: Service, index: number }) 
                   fill
                   className="object-cover"
                 />
-                <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-30 mix-blend-overlay`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-r ${service.color} opacity-40 mix-blend-overlay`}></div>
                 
                 <div className="absolute top-4 right-4">
                   <Button
@@ -292,8 +298,8 @@ const Service3DCard = ({ service, index }: { service: Service, index: number }) 
                   </Button>
                 </div>
                 
-                <div className="absolute bottom-8 left-8 glass-premium p-4 rounded-xl border border-white/10 max-w-md">
-                  <div className={`p-3 rounded-xl bg-gradient-to-r ${service.color} text-white mb-4`}>
+                <div className="absolute bottom-8 left-8 glass-premium p-4 rounded-xl border border-white/10 max-w-md backdrop-blur-md">
+                  <div className={`p-3 rounded-xl bg-gradient-to-r ${service.color} text-white mb-4 shadow-lg`}>
                     {service.icon}
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2">{service.title}</h3>
@@ -309,10 +315,11 @@ const Service3DCard = ({ service, index }: { service: Service, index: number }) 
                       {service.features.map((feature, idx) => (
                         <motion.div 
                           key={idx}
-                          className="flex items-start gap-3 glass-premium p-3 rounded-lg border border-border"
+                          className="flex items-start gap-3 glass-premium p-3 rounded-lg border border-border hover:border-primary/30 transition-all duration-300"
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: idx * 0.05 }}
+                          whileHover={{ y: -2, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                         >
                           <div className="p-1.5 rounded-full bg-primary/10 text-primary mt-0.5">
                             <FiCheck size={16} />
@@ -330,10 +337,11 @@ const Service3DCard = ({ service, index }: { service: Service, index: number }) 
                         {service.detailedFeatures.map((feature, idx) => (
                           <motion.div 
                             key={idx}
-                            className="glass-premium p-4 rounded-lg border border-border"
+                            className="glass-premium p-4 rounded-lg border border-border hover:border-primary/30 transition-all duration-300"
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.3 + idx * 0.1 }}
+                            whileHover={{ y: -2, boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                           >
                             <h5 className="text-lg font-medium text-foreground mb-2">{feature.title}</h5>
                             <p className="text-muted">{feature.description}</p>
@@ -350,7 +358,7 @@ const Service3DCard = ({ service, index }: { service: Service, index: number }) 
                       radius="full"
                       size="lg"
                       endContent={<FiArrowRight />}
-                      className="w-full"
+                      className="w-full shadow-lg shadow-primary/10"
                       onClick={() => {
                         setIsModalOpen(false);
                         scrollToSection("contact");
@@ -387,11 +395,25 @@ const AdditionalServiceCard = ({ icon, title, description, index }: {
         className="glass-premium border border-border hover-lift group transition-all duration-500 h-full"
       >
         <CardBody className="p-6 text-center">
-          <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white transform group-hover:scale-110">
+          <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-white transform group-hover:scale-110 shadow-lg shadow-primary/5 group-hover:shadow-primary/15">
             {icon}
           </div>
-          <h4 className="text-xl font-bold text-foreground mb-3">{title}</h4>
+          <h4 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">{title}</h4>
           <p className="text-muted text-sm">{description}</p>
+          
+          <div className="mt-5 pt-5 border-t border-border/50 opacity-0 translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+            <Button
+              variant="light"
+              color="primary"
+              radius="full"
+              className="w-full"
+              size="sm"
+              endContent={<FiArrowRight size={14} />}
+              onClick={() => scrollToSection("contact")}
+            >
+              Learn More
+            </Button>
+          </div>
         </CardBody>
       </Card>
     </motion.div>
@@ -500,24 +522,54 @@ export const Services = () => {
         {/* Call to action */}
         <div className="text-center">
           <RevealOnScroll>
-            <Card className="glass-premium border border-primary/10 max-w-3xl mx-auto">
-              <CardBody className="p-8 text-center">
-                <h3 className="text-2xl font-semibold mb-4 text-foreground">Need a custom solution?</h3>
-                <p className="text-muted mb-6 max-w-lg mx-auto">
-                  Let's discuss your project requirements and create something exceptional together.
-                </p>
-                <Button
-                  color="primary"
-                  variant="flat"
-                  radius="full"
-                  size="lg"
-                  endContent={<FiArrowRight />}
-                  className="px-8 font-medium"
-                  onClick={() => scrollToSection("contact")}
-                >
-                  Get in Touch
-                </Button>
-              </CardBody>
+            <Card className="glass-premium border border-primary/10 max-w-3xl mx-auto overflow-hidden">
+              <div className="relative">
+                {/* Background elements */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent z-0"></div>
+                <div className="absolute w-60 h-60 rounded-full bg-primary/10 blur-[80px] -top-20 -right-20 z-0 animate-float"></div>
+                <div className="absolute w-40 h-40 rounded-full bg-secondary/10 blur-[60px] -bottom-10 -left-10 z-0 animate-float-slow"></div>
+                
+                <CardBody className="p-8 lg:p-12 text-center relative z-10">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                  >
+                    <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                      <FiCode className="text-primary text-2xl" />
+                    </div>
+                    <h3 className="text-2xl lg:text-3xl font-bold mb-4 text-foreground">Ready to Transform Your Digital Presence?</h3>
+                    <p className="text-muted mb-8 max-w-lg mx-auto">
+                      I'm available for freelance projects and full-time opportunities. Let's discuss how we can create something exceptional together.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <Button
+                        color="primary"
+                        variant="flat"
+                        radius="full"
+                        size="lg"
+                        endContent={<FiArrowRight />}
+                        className="px-8 font-medium"
+                        onClick={() => scrollToSection("contact")}
+                      >
+                        Get in Touch
+                      </Button>
+                      <Button
+                        color="default"
+                        variant="flat"
+                        radius="full"
+                        size="lg"
+                        className="px-8 font-medium"
+                        endContent={<FiExternalLink />}
+                        onClick={() => scrollToSection("projects")}
+                      >
+                        View My Work
+                      </Button>
+                    </div>
+                  </motion.div>
+                </CardBody>
+              </div>
             </Card>
           </RevealOnScroll>
         </div>

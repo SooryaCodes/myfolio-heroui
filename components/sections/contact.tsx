@@ -10,7 +10,7 @@ import { Link } from "@heroui/link";
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
 import { Tooltip } from "@heroui/tooltip";
 import { Divider } from "@heroui/divider";
-import { FiMail, FiMapPin, FiPhone, FiSend, FiCalendar, FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
+import { FiMail, FiMapPin, FiPhone, FiSend, FiCalendar, FiGithub, FiLinkedin, FiTwitter, FiArrowRight, FiUser, FiMessageSquare } from "react-icons/fi";
 import { addToast } from "@heroui/toast";
 
 export const Contact = () => {
@@ -69,8 +69,13 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 px-6 relative">
+    <section id="contact" className="py-32 px-6 relative">
+      {/* Background decorative elements */}
       <div className="absolute inset-0 grid-pattern opacity-5 z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-background to-transparent z-1"></div>
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent z-1"></div>
+      <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-primary/10 filter blur-3xl opacity-30 z-0"></div>
+      <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-primary/10 filter blur-3xl opacity-30 z-0"></div>
       
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
@@ -78,7 +83,7 @@ export const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-20"
         >
           <Badge 
             variant="flat" 
@@ -88,26 +93,27 @@ export const Contact = () => {
             <span className="px-2 py-0.5 text-primary">Get In Touch</span>
           </Badge>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">Let's Connect</h2>
-          <p className="text-muted max-w-2xl mx-auto">
+          <p className="text-muted max-w-2xl mx-auto text-lg">
             Have a project in mind or want to discuss a potential collaboration?
             Feel free to reach out, and I'll get back to you as soon as possible.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="lg:col-span-7"
           >
-            <Card className="glass-premium border border-border">
-              <CardHeader className="pb-0">
+            <Card className="glass-premium border border-border p-4 shadow-xl overflow-hidden transform-3d hover-lift">
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 via-transparent to-primary/5 z-0"></div>
+              <CardHeader className="pb-0 relative z-10">
                 <h3 className="text-2xl font-bold text-foreground">Send Me a Message</h3>
               </CardHeader>
               
-              <CardBody>
+              <CardBody className="relative z-10">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Input
@@ -121,8 +127,12 @@ export const Contact = () => {
                       radius="lg"
                       labelPlacement="outside"
                       isRequired
+                      classNames={{
+                        input: "bg-default-50/30",
+                        inputWrapper: "bg-default-50/30 hover:bg-default-50/50 border-primary/20"
+                      }}
                       startContent={
-                        <FiMail className="text-muted mr-2 flex-shrink-0" />
+                        <FiUser className="text-primary mr-2 flex-shrink-0" />
                       }
                     />
                     <Input
@@ -136,8 +146,12 @@ export const Contact = () => {
                       radius="lg"
                       labelPlacement="outside"
                       isRequired
+                      classNames={{
+                        input: "bg-default-50/30",
+                        inputWrapper: "bg-default-50/30 hover:bg-default-50/50 border-primary/20"
+                      }}
                       startContent={
-                        <FiMail className="text-muted mr-2 flex-shrink-0" />
+                        <FiMail className="text-primary mr-2 flex-shrink-0" />
                       }
                     />
                   </div>
@@ -153,6 +167,13 @@ export const Contact = () => {
                     radius="lg"
                     labelPlacement="outside"
                     isRequired
+                    classNames={{
+                      input: "bg-default-50/30",
+                      inputWrapper: "bg-default-50/30 hover:bg-default-50/50 border-primary/20"
+                    }}
+                    startContent={
+                      <FiMessageSquare className="text-primary mr-2 flex-shrink-0" />
+                    }
                   />
                   
                   <Textarea
@@ -166,17 +187,22 @@ export const Contact = () => {
                     labelPlacement="outside"
                     isRequired
                     minRows={5}
+                    classNames={{
+                      input: "bg-default-50/30",
+                      inputWrapper: "bg-default-50/30 hover:bg-default-50/50 border-primary/20"
+                    }}
                   />
                   
                   <Button
                     type="submit"
                     color="primary"
-                    variant="flat"
+                    variant="shadow"
                     radius="full"
                     size="lg"
                     fullWidth
                     isLoading={loading}
                     startContent={!loading && <FiSend />}
+                    className="bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 transition-all shadow-lg"
                   >
                     {loading ? "Sending..." : "Send Message"}
                   </Button>
@@ -186,18 +212,19 @@ export const Contact = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="lg:col-span-5"
           >
-            <Card className="glass-premium border border-border h-full">
-              <CardHeader>
+            <Card className="glass-premium border border-border p-4 h-full shadow-xl transform-3d hover-lift overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/5 z-0"></div>
+              <CardHeader className="relative z-10">
                 <h3 className="text-2xl font-bold text-foreground">Contact Information</h3>
               </CardHeader>
               
-              <CardBody className="gap-6 flex flex-col">
+              <CardBody className="gap-6 flex flex-col relative z-10">
                 <p className="text-muted">
                   Feel free to contact me through any of the following methods.
                   I'm always open to discussing new projects, creative ideas, or
@@ -209,59 +236,59 @@ export const Contact = () => {
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true }}
-                  className="space-y-5"
+                  className="space-y-6"
                 >
-                  <motion.div variants={item} className="flex items-center gap-4">
-                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
-                      <FiMail size={20} />
+                  <motion.div variants={item} className="flex items-center gap-4 group">
+                    <div className="p-3.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary/20 transition-all shadow-sm">
+                      <FiMail size={22} />
                     </div>
                     <div>
-                      <p className="text-sm text-muted mb-1">Email</p>
+                      <p className="text-sm text-muted mb-1 font-medium">Email</p>
                       <Link
                         isExternal
                         href="mailto:your.email@example.com"
-                        className="text-foreground hover:text-primary transition-colors"
+                        className="text-foreground hover:text-primary transition-colors font-medium"
                       >
                         your.email@example.com
                       </Link>
                     </div>
                   </motion.div>
 
-                  <motion.div variants={item} className="flex items-center gap-4">
-                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
-                      <FiPhone size={20} />
+                  <motion.div variants={item} className="flex items-center gap-4 group">
+                    <div className="p-3.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary/20 transition-all shadow-sm">
+                      <FiPhone size={22} />
                     </div>
                     <div>
-                      <p className="text-sm text-muted mb-1">Phone</p>
+                      <p className="text-sm text-muted mb-1 font-medium">Phone</p>
                       <Link
                         isExternal
                         href="tel:+1234567890"
-                        className="text-foreground hover:text-primary transition-colors"
+                        className="text-foreground hover:text-primary transition-colors font-medium"
                       >
                         +1 (234) 567-890
                       </Link>
                     </div>
                   </motion.div>
 
-                  <motion.div variants={item} className="flex items-center gap-4">
-                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
-                      <FiMapPin size={20} />
+                  <motion.div variants={item} className="flex items-center gap-4 group">
+                    <div className="p-3.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary/20 transition-all shadow-sm">
+                      <FiMapPin size={22} />
                     </div>
                     <div>
-                      <p className="text-sm text-muted mb-1">Location</p>
-                      <p className="text-foreground">San Francisco, CA, USA</p>
+                      <p className="text-sm text-muted mb-1 font-medium">Location</p>
+                      <p className="text-foreground font-medium">San Francisco, CA, USA</p>
                     </div>
                   </motion.div>
                   
-                  <motion.div variants={item} className="flex items-center gap-4">
-                    <div className="p-3 rounded-lg bg-primary/10 text-primary">
-                      <FiCalendar size={20} />
+                  <motion.div variants={item} className="flex items-center gap-4 group">
+                    <div className="p-3.5 rounded-xl bg-primary/10 text-primary group-hover:bg-primary/20 transition-all shadow-sm">
+                      <FiCalendar size={22} />
                     </div>
                     <div>
-                      <p className="text-sm text-muted mb-1">Availability</p>
+                      <p className="text-sm text-muted mb-1 font-medium">Availability</p>
                       <div className="flex gap-2 items-center">
-                        <span className="h-2.5 w-2.5 rounded-full bg-green-500"></span>
-                        <span className="text-foreground">Available for new projects</span>
+                        <span className="h-3 w-3 rounded-full bg-green-500 animate-pulse"></span>
+                        <span className="text-foreground font-medium">Available for new projects</span>
                       </div>
                     </div>
                   </motion.div>
@@ -270,38 +297,56 @@ export const Contact = () => {
                 <Divider className="my-2" />
 
                 <div>
-                  <p className="text-sm text-muted mb-4">Or connect with me on social media:</p>
-                  <div className="flex gap-3">
+                  <p className="text-sm text-muted mb-4 font-medium">Or connect with me on social media:</p>
+                  <div className="flex gap-4">
                     <Tooltip content="GitHub">
                       <Link
                         isExternal
                         href="https://github.com/yourusername"
-                        className="p-3 rounded-full bg-default/10 text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                        className="p-3.5 rounded-xl bg-primary/10 text-foreground hover:bg-primary/20 hover:text-primary transition-all shadow-sm"
+                        aria-label="GitHub"
                       >
-                        <FiGithub size={18} />
+                        <FiGithub size={20} />
                       </Link>
                     </Tooltip>
                     <Tooltip content="LinkedIn">
                       <Link
                         isExternal
                         href="https://linkedin.com/in/yourusername"
-                        className="p-3 rounded-full bg-default/10 text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                        className="p-3.5 rounded-xl bg-primary/10 text-foreground hover:bg-primary/20 hover:text-primary transition-all shadow-sm"
+                        aria-label="LinkedIn"
                       >
-                        <FiLinkedin size={18} />
+                        <FiLinkedin size={20} />
                       </Link>
                     </Tooltip>
                     <Tooltip content="Twitter">
                       <Link
                         isExternal
                         href="https://twitter.com/yourusername"
-                        className="p-3 rounded-full bg-default/10 text-foreground hover:bg-primary/10 hover:text-primary transition-colors"
+                        className="p-3.5 rounded-xl bg-primary/10 text-foreground hover:bg-primary/20 hover:text-primary transition-all shadow-sm"
+                        aria-label="Twitter"
                       >
-                        <FiTwitter size={18} />
+                        <FiTwitter size={20} />
                       </Link>
                     </Tooltip>
                   </div>
                 </div>
               </CardBody>
+              
+              <CardFooter className="bg-primary/5 border-t border-primary/10 relative z-10">
+                <Button
+                  as={Link}
+                  href="#"
+                  variant="flat"
+                  color="primary"
+                  radius="full"
+                  size="md"
+                  endContent={<FiArrowRight />}
+                  className="ml-auto"
+                >
+                  Schedule a Call
+                </Button>
+              </CardFooter>
             </Card>
           </motion.div>
         </div>

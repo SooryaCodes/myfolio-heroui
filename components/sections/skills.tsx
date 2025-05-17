@@ -318,9 +318,9 @@ export const Skills = () => {
             color="primary"
             variant="light"
             classNames={{
-              tabList: "glass-premium rounded-full p-1 mb-12 mx-auto max-w-fit",
+              tabList: "glass-premium rounded-full p-1 mb-12 mx-auto max-w-fit overflow-x-auto flex-nowrap sm:flex-wrap",
               cursor: "bg-primary/20",
-              tab: "text-muted data-[selected=true]:text-primary px-6 py-2 text-sm",
+              tab: "text-muted data-[selected=true]:text-primary px-4 sm:px-6 py-2 text-sm whitespace-nowrap",
             }}
             selectedKey={skillType}
             onSelectionChange={(key) => setSkillType(key as string)}
@@ -331,7 +331,7 @@ export const Skills = () => {
           </Tabs>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            {/* Orbital visualization */}
+            {/* Orbital visualization - only for desktop */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -343,6 +343,39 @@ export const Skills = () => {
                 skills={currentCategory.skills} 
                 color={currentCategory.accentColor} 
               />
+            </motion.div>
+            
+            {/* Mobile skill visualization - simplified version for mobile */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="mb-8 lg:hidden"
+            >
+              <div className="glass-premium border border-border rounded-xl p-4 sm:p-6 overflow-hidden">
+                <h3 className="text-xl font-bold mb-3 text-foreground text-center">
+                  {currentCategory.title} Proficiency
+                </h3>
+                <div className="flex flex-wrap justify-center gap-3 p-4">
+                  {currentCategory.skills.map((skill, idx) => (
+                    <motion.div
+                      key={skill.name}
+                      className="glass-premium border border-border rounded-full px-3 py-1.5 text-sm"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: idx * 0.05 }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <div className="text-foreground/80 text-xs">
+                          {skill.icon}
+                        </div>
+                        <span>{skill.name}</span>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </motion.div>
             
             {/* Skill cards */}
@@ -385,7 +418,7 @@ export const Skills = () => {
             </h3>
           </RevealOnScroll>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-16">
             {[
               { label: "Years Experience", value: "6+", icon: "⏱️" },
               { label: "Projects Completed", value: "75+", icon: "🚀" },
@@ -400,10 +433,10 @@ export const Skills = () => {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
               >
                 <Card className="glass-premium border border-border hover-lift text-center h-full">
-                  <CardBody className="py-8">
-                    <div className="text-2xl mb-4">{metric.icon}</div>
-                    <div className="text-3xl font-bold text-primary mb-2">{metric.value}</div>
-                    <div className="text-muted text-sm">{metric.label}</div>
+                  <CardBody className="py-4 sm:py-8 px-3 sm:px-6">
+                    <div className="text-2xl mb-2 sm:mb-4">{metric.icon}</div>
+                    <div className="text-xl sm:text-3xl font-bold text-primary mb-1 sm:mb-2">{metric.value}</div>
+                    <div className="text-muted text-xs sm:text-sm">{metric.label}</div>
                   </CardBody>
                 </Card>
               </motion.div>
@@ -446,38 +479,40 @@ export const Skills = () => {
                 </div>
                 
                 {/* GitHub-style contribution grid */}
-                <div className="grid grid-cols-52 gap-1 h-24 mb-4">
-                  {Array.from({ length: 52 }).map((_, weekIndex) => (
-                    <div key={`week-${weekIndex}`} className="grid grid-rows-7 gap-1">
-                      {Array.from({ length: 7 }).map((_, dayIndex) => {
-                        // Generate random contribution levels (0-4) for demo
-                        const level = Math.floor(Math.random() * 5);
-                        let bgColor = "bg-default-100";
-                        
-                        if (level === 1) bgColor = "bg-primary/20";
-                        if (level === 2) bgColor = "bg-primary/40";
-                        if (level === 3) bgColor = "bg-primary/60";
-                        if (level === 4) bgColor = "bg-primary/80";
-                        
-                        return (
-                          <div 
-                            key={`day-${weekIndex}-${dayIndex}`} 
-                            className={`w-2 h-2 rounded-sm ${bgColor}`}
-                          />
-                        );
-                      })}
-                    </div>
-                  ))}
+                <div className="overflow-x-auto pb-2">
+                  <div className="grid grid-cols-52 gap-1 h-24 mb-4 min-w-[600px]">
+                    {Array.from({ length: 52 }).map((_, weekIndex) => (
+                      <div key={`week-${weekIndex}`} className="grid grid-rows-7 gap-1">
+                        {Array.from({ length: 7 }).map((_, dayIndex) => {
+                          // Generate random contribution levels (0-4) for demo
+                          const level = Math.floor(Math.random() * 5);
+                          let bgColor = "bg-default-100 dark:bg-default-200";
+                          
+                          if (level === 1) bgColor = "bg-foreground/10 dark:bg-foreground/20";
+                          if (level === 2) bgColor = "bg-foreground/20 dark:bg-foreground/30";
+                          if (level === 3) bgColor = "bg-foreground/30 dark:bg-foreground/50";
+                          if (level === 4) bgColor = "bg-foreground/50 dark:bg-foreground/70";
+                          
+                          return (
+                            <div 
+                              key={`day-${weekIndex}-${dayIndex}`} 
+                              className={`w-2 h-2 rounded-sm ${bgColor} border-none`}
+                            />
+                          );
+                        })}
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 
                 <div className="flex justify-between items-center text-xs text-muted">
                   <div>Less</div>
                   <div className="flex gap-1">
-                    <div className="w-2 h-2 rounded-sm bg-default-100"></div>
-                    <div className="w-2 h-2 rounded-sm bg-primary/20"></div>
-                    <div className="w-2 h-2 rounded-sm bg-primary/40"></div>
-                    <div className="w-2 h-2 rounded-sm bg-primary/60"></div>
-                    <div className="w-2 h-2 rounded-sm bg-primary/80"></div>
+                    <div className="w-2 h-2 rounded-sm bg-default-100 dark:bg-default-200 border-none"></div>
+                    <div className="w-2 h-2 rounded-sm bg-foreground/10 dark:bg-foreground/20 border-none"></div>
+                    <div className="w-2 h-2 rounded-sm bg-foreground/20 dark:bg-foreground/30 border-none"></div>
+                    <div className="w-2 h-2 rounded-sm bg-foreground/30 dark:bg-foreground/50 border-none"></div>
+                    <div className="w-2 h-2 rounded-sm bg-foreground/50 dark:bg-foreground/70 border-none"></div>
                   </div>
                   <div>More</div>
                 </div>
@@ -489,23 +524,20 @@ export const Skills = () => {
                   <h5 className="text-lg font-semibold text-foreground mb-4">Top Languages</h5>
                   <div className="space-y-4">
                     {[
-                      { name: "TypeScript", percentage: 45, color: "#3178C6" },
-                      { name: "JavaScript", percentage: 30, color: "#F7DF1E" },
-                      { name: "HTML/CSS", percentage: 15, color: "#E34F26" },
-                      { name: "Python", percentage: 10, color: "#3776AB" }
+                      { name: "TypeScript", percentage: 45, color: "bg-foreground/70 dark:bg-foreground/80" },
+                      { name: "JavaScript", percentage: 30, color: "bg-foreground/60 dark:bg-foreground/70" },
+                      { name: "HTML/CSS", percentage: 15, color: "bg-foreground/50 dark:bg-foreground/60" },
+                      { name: "Python", percentage: 10, color: "bg-foreground/40 dark:bg-foreground/50" }
                     ].map((lang) => (
                       <div key={lang.name}>
                         <div className="flex justify-between text-sm mb-1">
                           <span className="font-medium text-foreground">{lang.name}</span>
                           <span className="text-muted">{lang.percentage}%</span>
                         </div>
-                        <div className="h-2 w-full bg-default-100 rounded-full overflow-hidden">
+                        <div className="h-2 w-full bg-default-100 dark:bg-default-200 rounded-full overflow-hidden">
                           <div 
-                            className="h-full rounded-full" 
-                            style={{ 
-                              width: `${lang.percentage}%`,
-                              backgroundColor: lang.color 
-                            }}
+                            className={`h-full rounded-full ${lang.color}`}
+                            style={{ width: `${lang.percentage}%` }}
                           />
                         </div>
                       </div>

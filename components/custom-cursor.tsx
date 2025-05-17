@@ -14,7 +14,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
   const [clicked, setClicked] = useState(false);
   const [linkHovered, setLinkHovered] = useState(false);
   const [hidden, setHidden] = useState(true); // Start hidden until mouse moves
-  const { theme } = useTheme();
+  const { theme, resolvedTheme } = useTheme();
   
   // Use motion values for smoother performance
   const mouseX = useMotionValue(0);
@@ -33,9 +33,21 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
     mass: 0.1 
   });
   
-  // Cursor color based on theme
-  const cursorColor = theme === "dark" ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)";
-  const cursorBgColor = theme === "dark" ? "rgba(var(--color-primary), 0.15)" : "rgba(var(--color-primary), 0.1)";
+  // Determine if we're in dark mode
+  const isDarkMode = resolvedTheme === "dark";
+  
+  // Cursor colors with improved visibility in light mode
+  const cursorBorderColor = isDarkMode 
+    ? "rgba(255, 255, 255, 0.8)" 
+    : "rgba(var(--color-primary), 1)";
+    
+  const cursorBgColor = isDarkMode 
+    ? "rgba(var(--color-primary), 0.15)" 
+    : "rgba(var(--color-primary), 0.1)";
+  
+  const trailerBgColor = isDarkMode 
+    ? "rgba(255, 255, 255, 0.2)" 
+    : "rgba(var(--color-primary), 0.5)";
   
   useEffect(() => {
     setMounted(true);
@@ -118,7 +130,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
           translateY: cursorY,
           x: "-50%", 
           y: "-50%",
-          mixBlendMode: theme === "dark" ? "difference" : "normal"
+          mixBlendMode: isDarkMode ? "difference" : "normal"
         }}
       >
         <motion.div
@@ -127,19 +139,19 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
             default: {
               height: 16,
               width: 16,
-              border: `1.5px solid ${theme === "dark" ? "rgba(255, 255, 255, 0.8)" : "rgba(var(--color-primary), 1)"}`,
+              border: `1.5px solid ${cursorBorderColor}`,
               backgroundColor: cursorBgColor,
             },
             clicked: {
               height: 14,
               width: 14, 
-              backgroundColor: theme === "dark" ? "rgba(255, 255, 255, 0.8)" : "rgba(var(--color-primary), 0.8)",
+              backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(var(--color-primary), 0.8)",
               border: "1.5px solid transparent",
             },
             hovered: {
               height: 36,
               width: 36,
-              border: `1.5px solid ${theme === "dark" ? "rgba(255, 255, 255, 0.6)" : "rgba(var(--color-primary), 0.8)"}`,
+              border: `1.5px solid ${isDarkMode ? "rgba(255, 255, 255, 0.6)" : "rgba(var(--color-primary), 0.8)"}`,
               backgroundColor: cursorBgColor,
             },
           }}
@@ -160,7 +172,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
             <motion.span
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
-              className={`text-xs font-medium ${theme === "dark" ? "text-white" : "text-primary"}`}
+              className={`text-xs font-medium ${isDarkMode ? "text-white" : "text-primary"}`}
             >
             </motion.span>
           )}
@@ -169,7 +181,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
       
       {/* Trailer effect */}
       <motion.div
-        className={`fixed top-0 left-0 pointer-events-none z-[9998] rounded-full ${hidden ? 'opacity-0' : 'opacity-20'}`}
+        className={`fixed top-0 left-0 pointer-events-none z-[9998] rounded-full ${hidden ? 'opacity-0' : 'opacity-100'}`}
         style={{ 
           translateX: cursorX,
           translateY: cursorY,
@@ -177,8 +189,8 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
           y: "-50%",
           height: clicked ? 20 : linkHovered ? 40 : 30,
           width: clicked ? 20 : linkHovered ? 40 : 30,
-          backgroundColor: theme === "dark" ? "#ffffff" : "rgba(var(--color-primary), 0.7)",
-          mixBlendMode: theme === "dark" ? "difference" : "normal"
+          backgroundColor: trailerBgColor,
+          mixBlendMode: isDarkMode ? "difference" : "normal"
         }}
         transition={{
           type: "spring",

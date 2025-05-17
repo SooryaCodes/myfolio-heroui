@@ -74,16 +74,6 @@ const blogPosts: BlogPost[] = [
     image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop",
     url: "/blog/framer-motion",
   },
-  {
-    id: 6,
-    title: "The Future of Web Development: What to Expect in 2023",
-    excerpt: "Exploring emerging technologies and methodologies that will shape the web development landscape in the coming year.",
-    date: "December 12, 2022",
-    readTime: "11 min read",
-    category: "Trends",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop",
-    url: "/blog/future-web-development",
-  },
 ];
 
 // Enhanced Blog Card with 3D effect

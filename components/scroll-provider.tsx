@@ -25,6 +25,12 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
     }
 
     window.addEventListener("scrollto", onScrollToSection as EventListener);
+    
+    // Ensure the scroll position is reset when the page loads
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+    
     return () => {
       window.removeEventListener("scrollto", onScrollToSection as EventListener);
     };
@@ -37,6 +43,8 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
         lerp: 0.1,
         duration: 1.2,
         smoothWheel: true,
+        wheelMultiplier: 1,
+        infinite: false,
       }}
     >
       {children}

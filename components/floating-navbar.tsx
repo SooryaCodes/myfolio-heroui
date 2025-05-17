@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiHome, FiGrid, FiCode, FiBriefcase, FiMessageCircle, FiLayers, FiStar, FiShoppingBag, FiSun, FiMoon } from "react-icons/fi";
+import { FiHome, FiGrid, FiCode, FiBriefcase, FiMessageCircle, FiLayers, FiStar, FiShoppingBag, FiSun, FiMoon, FiZap } from "react-icons/fi";
 import { scrollToSection } from "@/components/scroll-provider";
 import { useTheme } from "next-themes";
 import { Button } from "@heroui/button";
@@ -20,7 +20,7 @@ export const FloatingNavbar = () => {
   useEffect(() => {
     // Determine which section is active
     const handleScroll = () => {
-      const sections = ["hero", "services", "projects", "skills", "experience", "testimonials", "marketplace", "contact"];
+      const sections = ["hero", "services", "projects", "skills", "experience", "testimonials", "marketplace", "playground", "contact"];
       
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
@@ -50,6 +50,7 @@ export const FloatingNavbar = () => {
     { id: "experience", label: "Experience", icon: <FiBriefcase size={18} /> },
     { id: "marketplace", label: "Marketplace", icon: <FiShoppingBag size={18} /> },
     { id: "testimonials", label: "Testimonials", icon: <FiStar size={18} /> },
+    { id: "playground", label: "Playground", icon: <FiZap size={18} /> },
     { id: "contact", label: "Contact", icon: <FiMessageCircle size={18} /> },
   ];
 
@@ -64,7 +65,7 @@ export const FloatingNavbar = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.2 }}
     >
-      <div className="glass-premium rounded-full flex items-center justify-between px-4 py-3 gap-1 md:gap-2 border border-border max-w-sm w-[95%]">
+      <div className="glass-premium rounded-full flex items-center justify-between px-4 py-3 gap-1 md:gap-2 border border-border w-auto">
         {navItems.map((item) => (
           <div 
             key={item.id}
