@@ -41,6 +41,8 @@ export const Playground = () => {
   ]);
   const [currentStackIdx, setCurrentStackIdx] = useState(0);
   const [fallingSpeed, setFallingSpeed] = useState(3000);
+  const blockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const gameOverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   
   // Typing Test states
   const [typingStarted, setTypingStarted] = useState(false);
@@ -50,7 +52,7 @@ export const Playground = () => {
   const [typingWPM, setTypingWPM] = useState(0);
   const [typingAccuracy, setTypingAccuracy] = useState(100);
   const [typingHighScore, setTypingHighScore] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const codingSnippets = [
     "const Button = ({ onClick, children }) => {\n  return (\n    <button onClick={onClick} className=\"btn\">\n      {children}\n    </button>\n  );\n};",
@@ -76,6 +78,89 @@ export const Playground = () => {
     "TypeScript": "#007ACC",
     "Tailwind CSS": "#38B2AC",
     "PostgreSQL": "#336791"
+  };
+
+  // Syntax highlighting colors
+  const syntaxColors = {
+    keyword: "text-blue-500", // const, function, return
+    string: "text-green-500", // "strings"
+    function: "text-yellow-500", // function names
+    variable: "text-purple-400", // variable names
+    property: "text-cyan-300", // object properties
+    operator: "text-pink-500", // + - = => etc
+    punctuation: "text-gray-400", // {} [] () , ;
+    comment: "text-gray-500", // comments
+    parameter: "text-orange-300", // function parameters
+    builtin: "text-red-400", // console, document
+  };
+
+  // Code syntax highlighting function
+  const highlightCode = (code: string): JSX.Element[] => {
+    // Basic syntax highlighting patterns
+    const patterns = [
+      { regex: /(const|let|var|function|return|await|async|try|catch|if|else|for|of|in)\b/g, className: syntaxColors.keyword },
+      { regex: /"([^"]*)"|'([^']*)'|`([^`]*)`/g, className: syntaxColors.string },
+      { regex: /\b(function|=>)\s*([A-Za-z0-9_]+)(?=\s*\()/g, className: syntaxColors.function },
+      { regex: /\b([A-Za-z0-9_]+)(?=\s*=)/g, className: syntaxColors.variable },
+      { regex: /\.([A-Za-z0-9_]+)\b/g, className: syntaxColors.property },
+      { regex: /\+|\-|\*|\/|%|=|==|===|!|!=|!==|>|<|>=|<=|&&|\|\||\?|\:/g, className: syntaxColors.operator },
+      { regex: /[\{\}\[\]\(\),;]/g, className: syntaxColors.punctuation },
+      { regex: /\/\/.*$/gm, className: syntaxColors.comment },
+      { regex: /\bconsole\b|\bdocument\b|\bwindow\b|\bArray\b|\bObject\b|\bString\b|\bNumber\b|\bBoolean\b|\bError\b/g, className: syntaxColors.builtin },
+    ];
+    
+    // Split code by line for better handling of multiline code
+    return code.split('\n').map((line, lineIndex) => {
+      let segments: { text: string, className?: string }[] = [{ text: line }];
+      
+      // Apply each regex pattern
+      patterns.forEach(pattern => {
+        const newSegments: { text: string, className?: string }[] = [];
+        
+        segments.forEach(segment => {
+          if (segment.className) {
+            // Already highlighted, keep as is
+            newSegments.push(segment);
+            return;
+          }
+          
+          let lastIndex = 0;
+          let match;
+          const text = segment.text;
+          pattern.regex.lastIndex = 0; // Reset regex state
+          
+          while ((match = pattern.regex.exec(text)) !== null) {
+            // Add unstyled text before the match
+            if (match.index > lastIndex) {
+              newSegments.push({ text: text.substring(lastIndex, match.index) });
+            }
+            
+            // Add the styled match
+            newSegments.push({ text: match[0], className: pattern.className });
+            
+            lastIndex = pattern.regex.lastIndex;
+          }
+          
+          // Add the remaining text
+          if (lastIndex < text.length) {
+            newSegments.push({ text: text.substring(lastIndex) });
+          }
+        });
+        
+        segments = newSegments;
+      });
+      
+      // Render the line with highlighted segments
+      return (
+        <div key={lineIndex} className="line">
+          {segments.map((segment, i) => (
+            <span key={i} className={segment.className}>
+              {segment.text}
+            </span>
+          ))}
+        </div>
+      );
+    });
   };
 
   // Load high scores from localStorage on component mount
@@ -238,14 +323,29 @@ export const Playground = () => {
     setCurrentStackIdx(Math.floor(Math.random() * techStacks.length));
     setStackedBlocks([]);
     setFallingSpeed(3000);
+    setCurrentBlock(null);
     
-    // Start dropping blocks
-    dropNextBlock();
+    // Start dropping blocks with a very short delay
+    setTimeout(() => {
+      console.log("Starting to drop blocks");
+      dropNextBlock();
+    }, 100);
   };
   
   // Drop the next tech block
   const dropNextBlock = () => {
     if (!stackGameStarted) return;
+    
+    // Clear any existing timeouts
+    if (blockTimeoutRef.current) {
+      clearTimeout(blockTimeoutRef.current);
+      blockTimeoutRef.current = null;
+    }
+    
+    if (gameOverTimeoutRef.current) {
+      clearTimeout(gameOverTimeoutRef.current);
+      gameOverTimeoutRef.current = null;
+    }
     
     const currentStack = techStacks[currentStackIdx];
     
@@ -257,26 +357,43 @@ export const Playground = () => {
       setFallingSpeed(prev => Math.max(prev * 0.9, 1000)); // Increase speed
       
       // Schedule next block
-      setTimeout(dropNextBlock, 1000);
+      blockTimeoutRef.current = setTimeout(dropNextBlock, 1000);
       return;
     }
     
-    const nextBlock = currentStack.techs[stackedBlocks.length];
-    setCurrentBlock(nextBlock);
+    // Ensure current block is null first (to force a re-render)
+    setCurrentBlock(null);
     
-    // Set a timeout to end the game if block is not stacked
-    const timeout = setTimeout(() => {
-      if (stackGameStarted && currentBlock === nextBlock) {
-        endStackGame();
-      }
-    }, fallingSpeed);
-    
-    return () => clearTimeout(timeout);
+    // Use a small delay to ensure React processes the null state before setting the new block
+    blockTimeoutRef.current = setTimeout(() => {
+      if (!stackGameStarted) return; // Check again in case game ended during timeout
+      
+      const nextBlock = currentStack.techs[stackedBlocks.length];
+      setCurrentBlock(nextBlock);
+      
+      // Set a timeout to end the game if block is not stacked
+      gameOverTimeoutRef.current = setTimeout(() => {
+        if (stackGameStarted) {
+          // Check if we're still on the same block index
+          const currentStackNow = techStacks[currentStackIdx];
+          if (stackedBlocks.length < currentStackNow.techs.length && 
+              nextBlock === currentStackNow.techs[stackedBlocks.length]) {
+            endStackGame();
+          }
+        }
+      }, fallingSpeed);
+    }, 50); // Small delay to ensure state updates properly
   };
   
   // Handle stacking a block
   const handleStackBlock = () => {
     if (!currentBlock) return;
+    
+    // Clear the game over timeout since we're handling the block
+    if (gameOverTimeoutRef.current) {
+      clearTimeout(gameOverTimeoutRef.current);
+      gameOverTimeoutRef.current = null;
+    }
     
     const currentStack = techStacks[currentStackIdx];
     const correctBlock = currentStack.techs[stackedBlocks.length];
@@ -288,7 +405,7 @@ export const Playground = () => {
       setCurrentBlock(null);
       
       // Schedule the next block
-      setTimeout(dropNextBlock, 500);
+      blockTimeoutRef.current = setTimeout(dropNextBlock, 500);
     } else {
       endStackGame();
     }
@@ -298,6 +415,17 @@ export const Playground = () => {
   const endStackGame = () => {
     setStackGameStarted(false);
     setCurrentBlock(null);
+    
+    // Clear all timeouts
+    if (blockTimeoutRef.current) {
+      clearTimeout(blockTimeoutRef.current);
+      blockTimeoutRef.current = null;
+    }
+    
+    if (gameOverTimeoutRef.current) {
+      clearTimeout(gameOverTimeoutRef.current);
+      gameOverTimeoutRef.current = null;
+    }
     
     // Update high score if needed
     if (stackScore > stackHighScore) {
@@ -342,8 +470,19 @@ export const Playground = () => {
   };
   
   // Handle typing input
-  const handleTypingInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTypingInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const input = e.target.value;
+    
+    // Check if the new typing is correct (validate each character)
+    if (input.length > typingInput.length) {
+      // Only validate the new character being added
+      const newCharIndex = input.length - 1;
+      if (newCharIndex >= typingText.length || input[newCharIndex] !== typingText[newCharIndex]) {
+        // Invalid input - optionally play error sound or vibration here
+        return; // Don't update the state with invalid input
+      }
+    }
+    
     setTypingInput(input);
     
     // Calculate accuracy
@@ -362,6 +501,38 @@ export const Playground = () => {
     if (timeElapsed > 0) {
       const wpm = Math.round((input.length / 5) / timeElapsed);
       setTypingWPM(wpm);
+    }
+  };
+  
+  // Handle key down for special keys like Enter and Tab
+  const handleTypingKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      
+      // Check if Enter is the expected character at this position
+      if (typingInput.length < typingText.length && typingText[typingInput.length] === '\n') {
+        // Add a newline character to the input
+        setTypingInput(prev => prev + '\n');
+      }
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      
+      // Check if the next characters are spaces that represent a tab
+      let expectedSpaces = '';
+      for (let i = 0; i < 2; i++) {
+        if (typingInput.length + i < typingText.length && typingText[typingInput.length + i] === ' ') {
+          expectedSpaces += ' ';
+        } else {
+          break;
+        }
+      }
+      
+      // If we have spaces representing a tab, add them
+      if (expectedSpaces.length > 0) {
+        setTypingInput(prev => prev + expectedSpaces);
+      }
+    } else if (e.key === 'Backspace') {
+      // Let backspace work normally
     }
   };
   
@@ -384,6 +555,14 @@ export const Playground = () => {
     return () => {
       if (gameIntervalRef.current) {
         clearInterval(gameIntervalRef.current);
+      }
+      
+      if (blockTimeoutRef.current) {
+        clearTimeout(blockTimeoutRef.current);
+      }
+      
+      if (gameOverTimeoutRef.current) {
+        clearTimeout(gameOverTimeoutRef.current);
       }
     };
   }, []);
@@ -423,6 +602,14 @@ export const Playground = () => {
               setSelectedGame(key as GameType);
               if (gameIntervalRef.current) {
                 clearInterval(gameIntervalRef.current);
+              }
+              if (blockTimeoutRef.current) {
+                clearTimeout(blockTimeoutRef.current);
+                blockTimeoutRef.current = null;
+              }
+              if (gameOverTimeoutRef.current) {
+                clearTimeout(gameOverTimeoutRef.current);
+                gameOverTimeoutRef.current = null;
               }
               setGameStarted(false);
               setStackGameStarted(false);
@@ -618,7 +805,7 @@ export const Playground = () => {
                       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
                         <h3 className="text-2xl font-bold mb-4">Stack the Stack</h3>
                         <p className="text-lg mb-6 max-w-xl">
-                          Build tech stacks by clicking falling blocks in the right order to complete the project!
+                          Build tech stacks by clicking the falling blocks in the right order to complete the project!
                         </p>
                         <Button
                           color="primary"
@@ -635,17 +822,22 @@ export const Playground = () => {
                     
                     {stackGameStarted && (
                       <>
-                        {/* Target Stack Display */}
-                        <div className="absolute top-4 left-0 right-0 flex justify-center">
+                        {/* Game State Display */}
+                        <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
+                          <div className="bg-background/30 backdrop-blur-sm rounded-lg p-2">
+                            <p className="text-xs text-foreground/70">Speed</p>
+                            <p className="text-sm font-bold">{Math.round(10000/fallingSpeed)}×</p>
+                          </div>
+                          
                           <div className="glass-premium border border-border p-2 rounded-lg">
-                            <h4 className="text-sm font-medium mb-1 text-center">Complete the {techStacks[currentStackIdx].name}</h4>
-                            <div className="flex gap-2 justify-center">
+                            <h4 className="text-sm font-medium mb-1 text-center">Complete: {techStacks[currentStackIdx].name}</h4>
+                            <div className="flex gap-2 justify-center flex-wrap">
                               {techStacks[currentStackIdx].techs.map((tech, idx) => (
                                 <Chip
                                   key={idx}
                                   className={idx < stackedBlocks.length ? "opacity-30" : ""}
                                   variant="flat"
-                                  color="primary"
+                                  color={idx < stackedBlocks.length ? "success" : "primary"}
                                   size="sm"
                                 >
                                   {tech}
@@ -653,17 +845,28 @@ export const Playground = () => {
                               ))}
                             </div>
                           </div>
+                          
+                          <div className="bg-background/30 backdrop-blur-sm rounded-lg p-2">
+                            <p className="text-xs text-foreground/70">Progress</p>
+                            <p className="text-sm font-bold">
+                              {stackedBlocks.length}/{techStacks[currentStackIdx].techs.length}
+                            </p>
+                          </div>
                         </div>
                         
                         {/* Stacked Blocks */}
-                        <div className="absolute bottom-0 left-0 right-0 flex justify-center">
-                          <div className="flex flex-col-reverse items-center mb-4">
+                        <div className="absolute bottom-20 left-0 right-0 flex justify-center">
+                          <div className="flex flex-col-reverse items-center">
                             {stackedBlocks.map((block, idx) => (
                               <motion.div
                                 key={idx}
                                 initial={{ y: -40, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                className="mb-1 glass-premium p-3 w-48 text-center rounded-lg border border-border"
+                                className="mb-1 glass-premium p-3 w-48 text-center rounded-lg border border-border bg-success/10"
+                                style={{ 
+                                  borderColor: techColors[block as keyof typeof techColors] || 'rgba(var(--color-primary))',
+                                  borderWidth: '2px'
+                                }}
                               >
                                 {block}
                               </motion.div>
@@ -672,16 +875,27 @@ export const Playground = () => {
                         </div>
                         
                         {/* Falling Block */}
-                        {currentBlock && (
-                          <motion.div
-                            initial={{ y: -100 }}
-                            animate={{ y: 300 }}
-                            transition={{ duration: fallingSpeed / 1000, ease: "linear" }}
-                            className="absolute left-1/2 transform -translate-x-1/2 glass-premium p-3 w-48 text-center rounded-lg border border-border"
-                          >
-                            {currentBlock}
-                          </motion.div>
-                        )}
+                        <AnimatePresence mode="wait">
+                          {currentBlock && (
+                            <motion.div
+                              key={`falling-${currentBlock}-${stackedBlocks.length}-${Date.now()}`}
+                              initial={{ y: -100 }}
+                              animate={{ y: 250 }}
+                              exit={{ opacity: 0, scale: 0.8 }}
+                              transition={{ 
+                                duration: fallingSpeed / 1000, 
+                                ease: "linear" 
+                              }}
+                              className="absolute left-1/2 transform -translate-x-1/2 glass-premium p-3 w-48 text-center rounded-lg border-2 z-10"
+                              style={{ 
+                                borderColor: techColors[currentBlock as keyof typeof techColors] || 'rgba(var(--color-primary))',
+                                backgroundColor: `${techColors[currentBlock as keyof typeof techColors]}15` || 'rgba(var(--color-primary), 0.1)'
+                              }}
+                            >
+                              {currentBlock}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                         
                         {/* Stack Button */}
                         <Button
@@ -696,6 +910,34 @@ export const Playground = () => {
                           Stack It!
                         </Button>
                       </>
+                    )}
+                    
+                    {/* Game Over State */}
+                    {stackGameStarted === false && stackScore > 0 && (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 backdrop-blur-sm">
+                        <h3 className="text-2xl font-bold mb-4">Game Over!</h3>
+                        <div className="mb-6">
+                          <p className="text-lg mb-2">Your Score: <span className="text-primary font-bold">{stackScore}</span></p>
+                        </div>
+                        
+                        {stackScore > stackHighScore && stackScore > 0 && (
+                          <div className="mb-6 p-3 bg-warning/10 text-warning rounded-lg font-medium animate-pulse">
+                            <FiAward className="inline-block mr-2" />
+                            New High Score!
+                          </div>
+                        )}
+                        
+                        <Button
+                          color="primary"
+                          variant="flat"
+                          radius="full"
+                          size="lg"
+                          startContent={<FiPlay />}
+                          onClick={startStackGame}
+                        >
+                          Play Again
+                        </Button>
+                      </div>
                     )}
                   </div>
                 </>
@@ -758,33 +1000,41 @@ export const Playground = () => {
                     
                     {typingStarted && (
                       <>
-                        <div className="mb-6 p-4 bg-background/50 border border-border rounded-lg overflow-auto">
-                          <pre className="whitespace-pre-wrap font-mono text-sm leading-relaxed">
-                            {typingText.split('').map((char, idx) => {
-                              const inputChar = typingInput[idx];
-                              let color = 'text-foreground/50';
-                              
-                              if (inputChar !== undefined) {
-                                color = inputChar === char ? 'text-primary' : 'text-error';
-                              }
-                              
-                              return (
-                                <span key={idx} className={color}>
-                                  {char}
-                                </span>
-                              );
-                            })}
-                          </pre>
+                        <div className="mb-6 p-4 bg-background/50 border border-border rounded-lg overflow-auto font-mono text-sm">
+                          <div className="code-editor bg-gray-900 p-4 rounded-lg">
+                            {typingText.split('\n').map((line, lineIndex) => (
+                              <div key={lineIndex} className="line relative">
+                                {line.split('').map((char, charIndex) => {
+                                  const absoluteIndex = typingText.split('\n').slice(0, lineIndex).join('\n').length + (lineIndex > 0 ? 1 : 0) + charIndex;
+                                  let className = "";
+                                  
+                                  if (absoluteIndex < typingInput.length) {
+                                    const inputChar = typingInput[absoluteIndex];
+                                    className = (inputChar === char) ? "text-green-400" : "text-red-400 bg-red-900/30";
+                                  }
+                                  
+                                  return (
+                                    <span key={charIndex} className={className}>
+                                      {char === " " ? "\u00A0" : char}
+                                    </span>
+                                  );
+                                })}
+                                {lineIndex < typingText.split('\n').length - 1 && <br />}
+                              </div>
+                            ))}
+                          </div>
                         </div>
                         
                         <div className="mb-4">
-                          <input
+                          <textarea
                             ref={inputRef}
-                            type="text"
-                            className="w-full p-3 border border-border rounded-lg bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                            className="w-full p-3 border border-border rounded-lg bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary/50 font-mono"
                             value={typingInput}
                             onChange={handleTypingInput}
+                            onKeyDown={handleTypingKeyDown}
                             disabled={typingTimeLeft <= 0}
+                            rows={5}
+                            style={{ resize: 'none' }}
                             autoComplete="off"
                             autoCorrect="off"
                             autoCapitalize="off"
@@ -793,7 +1043,7 @@ export const Playground = () => {
                         </div>
                         
                         <p className="text-sm text-foreground/70 text-center">
-                          Type the code above as accurately as possible.
+                          Type the code above as accurately as possible. Press Enter for newlines.
                         </p>
                       </>
                     )}
