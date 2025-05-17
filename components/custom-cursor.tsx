@@ -1,36 +1,53 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { motion, useSpring } from "framer-motion";
+import { motion, useSpring, useMotionValue } from "framer-motion";
+import { useTheme } from "next-themes";
 
 interface CustomCursorProps {
   color?: string;
 }
 
-export const CustomCursor: React.FC<CustomCursorProps> = ({ 
-  color = "rgba(var(--color-primary), 1)" 
-}) => {
+export const CustomCursor: React.FC<CustomCursorProps> = () => {
+  const [mounted, setMounted] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [clicked, setClicked] = useState(false);
   const [linkHovered, setLinkHovered] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const [hidden, setHidden] = useState(true); // Start hidden until mouse moves
+  const { theme } = useTheme();
+  
+  // Use motion values for smoother performance
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
   
   // Use springs for smoother movement
-  const cursorX = useSpring(position.x, { 
-    stiffness: 700,
-    damping: 50,
+  const cursorX = useSpring(mouseX, { 
+    stiffness: 800,
+    damping: 60,
     mass: 0.1
   });
   
-  const cursorY = useSpring(position.y, { 
-    stiffness: 700,
-    damping: 50,
+  const cursorY = useSpring(mouseY, { 
+    stiffness: 800,
+    damping: 60,
     mass: 0.1 
   });
   
+  // Cursor color based on theme
+  const cursorColor = theme === "dark" ? "rgba(255, 255, 255, 0.8)" : "rgba(0, 0, 0, 0.8)";
+  const cursorBgColor = theme === "dark" ? "rgba(var(--color-primary), 0.15)" : "rgba(var(--color-primary), 0.1)";
+  
   useEffect(() => {
+    setMounted(true);
+    
+    // Show cursor only after the user moves the mouse
+    const showCursor = () => {
+      setHidden(false);
+    };
+    
     const onMouseMove = (e: MouseEvent) => {
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
       setPosition({ x: e.clientX, y: e.clientY });
     };
 
@@ -39,11 +56,11 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
     const onMouseLeave = () => setHidden(true);
     const onMouseEnter = () => setHidden(false);
 
-    // Throttle mouse move events for better performance
+    // Improved throttle implementation for better performance
     let lastMove = 0;
     const throttledMouseMove = (e: MouseEvent) => {
       const now = Date.now();
-      if (now - lastMove > 10) { // Throttle to 10ms
+      if (now - lastMove > 5) { // Reduce throttle time to 5ms for smoother movement
         onMouseMove(e);
         lastMove = now;
       }
@@ -54,24 +71,30 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
     document.addEventListener("mouseleave", onMouseLeave);
     document.addEventListener("mousedown", onMouseDown);
     document.addEventListener("mouseup", onMouseUp);
+    document.addEventListener("mousemove", showCursor, { once: true });
 
+    // Improved approach for interactive elements
     const handleLinkHoverEvents = () => {
-      const interactiveElements = document.querySelectorAll(
-        "a, button, [role=button], input[type=button], [data-cursor=pointer], .interactive-item"
-      );
+      const selector = "a, button, [role=button], input[type=button], .navbar-icon, .card-premium, .interactive-item, .hover-lift";
       
-      interactiveElements.forEach(el => {
-        el.addEventListener("mouseenter", () => setLinkHovered(true));
-        el.addEventListener("mouseleave", () => setLinkHovered(false));
+      // Use event delegation for better performance with many elements
+      document.body.addEventListener("mouseover", (e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest(selector)) {
+          setLinkHovered(true);
+        }
+      });
+      
+      document.body.addEventListener("mouseout", (e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest(selector)) {
+          setLinkHovered(false);
+        }
       });
     };
 
     // Small delay to ensure all elements are loaded
-    setTimeout(handleLinkHoverEvents, 500);
-    
-    // Update link listeners when DOM changes
-    const observer = new MutationObserver(handleLinkHoverEvents);
-    observer.observe(document.body, { childList: true, subtree: true });
+    setTimeout(handleLinkHoverEvents, 300);
 
     return () => {
       document.removeEventListener("mousemove", throttledMouseMove);
@@ -79,49 +102,45 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
       document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mousedown", onMouseDown);
       document.removeEventListener("mouseup", onMouseUp);
-      observer.disconnect();
     };
-  }, []);
+  }, [mouseX, mouseY]);
 
-  // Show custom cursor only on client
-  if (typeof window === "undefined") return null;
+  // Don't render until mounted (client-side)
+  if (!mounted) return null;
 
   return (
     <>
       {/* Main cursor */}
       <motion.div
-        ref={cursorRef}
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{ 
           translateX: cursorX,
           translateY: cursorY,
           x: "-50%", 
-          y: "-50%"
+          y: "-50%",
+          mixBlendMode: theme === "dark" ? "difference" : "normal"
         }}
       >
         <motion.div
-          className="relative flex items-center justify-center rounded-full"
+          className={`relative flex items-center justify-center rounded-full ${hidden ? 'opacity-0' : 'opacity-100'}`}
           variants={{
             default: {
-              opacity: hidden ? 0 : 1,
               height: 16,
               width: 16,
-              border: "1px solid rgba(var(--color-primary), 0.6)",
-              backgroundColor: "rgba(var(--color-primary), 0.1)",
+              border: `1.5px solid ${theme === "dark" ? "rgba(255, 255, 255, 0.8)" : "rgba(var(--color-primary), 1)"}`,
+              backgroundColor: cursorBgColor,
             },
             clicked: {
-              opacity: hidden ? 0 : 1,
               height: 14,
               width: 14, 
-              backgroundColor: color,
-              border: "1px solid transparent",
+              backgroundColor: theme === "dark" ? "rgba(255, 255, 255, 0.8)" : "rgba(var(--color-primary), 0.8)",
+              border: "1.5px solid transparent",
             },
             hovered: {
-              opacity: hidden ? 0 : 1,
-              height: 40,
-              width: 40,
-              border: "1px solid rgba(var(--color-primary), 0.6)",
-              backgroundColor: "rgba(var(--color-primary), 0.1)",
+              height: 36,
+              width: 36,
+              border: `1.5px solid ${theme === "dark" ? "rgba(255, 255, 255, 0.6)" : "rgba(var(--color-primary), 0.8)"}`,
+              backgroundColor: cursorBgColor,
             },
           }}
           animate={
@@ -133,18 +152,16 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
           }
           transition={{
             type: "spring",
-            stiffness: 300,
-            damping: 30,
-            mass: 0.2,
+            stiffness: 500,
+            damping: 28,
           }}
         >
           {linkHovered && (
             <motion.span
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="text-white text-xs font-medium"
+              className={`text-xs font-medium ${theme === "dark" ? "text-white" : "text-primary"}`}
             >
-              View
             </motion.span>
           )}
         </motion.div>
@@ -152,23 +169,23 @@ export const CustomCursor: React.FC<CustomCursorProps> = ({
       
       {/* Trailer effect */}
       <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-full bg-white mix-blend-difference opacity-20"
+        className={`fixed top-0 left-0 pointer-events-none z-[9998] rounded-full ${hidden ? 'opacity-0' : 'opacity-20'}`}
         style={{ 
           translateX: cursorX,
           translateY: cursorY,
           x: "-50%", 
           y: "-50%",
-          height: clicked ? 20 : linkHovered ? 45 : 30,
-          width: clicked ? 20 : linkHovered ? 45 : 30,
-          transition: "height 0.3s, width 0.3s, opacity 0.3s",
-          scale: hidden ? 0 : 1
+          height: clicked ? 20 : linkHovered ? 40 : 30,
+          width: clicked ? 20 : linkHovered ? 40 : 30,
+          backgroundColor: theme === "dark" ? "#ffffff" : "rgba(var(--color-primary), 0.7)",
+          mixBlendMode: theme === "dark" ? "difference" : "normal"
         }}
         transition={{
           type: "spring",
-          stiffness: 100,
+          stiffness: 200,
           damping: 40,
-          mass: 0.8,
-          delay: 0.05, // Delayed effect for trailer
+          mass: 0.5,
+          delay: 0.03,
         }}
       />
     </>

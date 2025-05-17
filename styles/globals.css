@@ -21,6 +21,17 @@
     --glass-opacity: 0.8;
     --shadow-color: 0, 0, 0;
     --shadow-strength: 0.08;
+
+    /* Skill section gradients */
+    --skills-frontend-gradient: linear-gradient(135deg, #4f46e5, #818cf8);
+    --skills-backend-gradient: linear-gradient(135deg, #10b981, #34d399);
+    --skills-design-gradient: linear-gradient(135deg, #ec4899, #f472b6);
+    --skills-other-gradient: linear-gradient(135deg, #f97316, #fb923c);
+
+    /* Service section gradients */
+    --service-overlay-opacity: 0.2;
+    --service-card-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.1);
+    --service-card-shadow-hover: 0 20px 40px -20px rgba(var(--color-primary), 0.2);
   }
   
   .dark {
@@ -41,6 +52,17 @@
     --glass-opacity: 0.7;
     --shadow-color: 0, 0, 0;
     --shadow-strength: 0.5;
+
+    /* Skill section gradients - darker theme variants */
+    --skills-frontend-gradient: linear-gradient(135deg, #4338ca, #6366f1);
+    --skills-backend-gradient: linear-gradient(135deg, #047857, #10b981);
+    --skills-design-gradient: linear-gradient(135deg, #be185d, #ec4899);
+    --skills-other-gradient: linear-gradient(135deg, #c2410c, #f97316);
+
+    /* Service section gradients */
+    --service-overlay-opacity: 0.3;
+    --service-card-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.3);
+    --service-card-shadow-hover: 0 20px 40px -20px rgba(var(--color-primary), 0.4);
   }
   
   html {
@@ -180,6 +202,8 @@
     position: relative;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(var(--shadow-color), var(--shadow-strength));
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
   }
   
   .card-premium::before {
@@ -239,7 +263,7 @@
   
   .hover-lift:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(var(--shadow-color), var(--shadow-strength));
+    box-shadow: 0 12px 24px rgba(var(--shadow-color), calc(var(--shadow-strength) + 0.1));
   }
   
   /* Grid pattern using CSS */
@@ -374,6 +398,11 @@
     @apply absolute -bottom-6 text-xs font-medium opacity-0 
            whitespace-nowrap transition-all duration-300;
     transform: translateY(-5px);
+    background-color: rgba(var(--color-background), 0.8);
+    backdrop-filter: blur(4px);
+    padding: 4px 8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(var(--shadow-color), var(--shadow-strength));
   }
   
   .navbar-icon:hover .navbar-icon-label {
@@ -412,6 +441,27 @@
   
   .smooth-reveal-delay-3 {
     animation-delay: 0.3s;
+  }
+  
+  /* 3D Transform Helpers */
+  .transform-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  /* Enhanced service card styles */
+  .service-card-3d {
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .service-card-3d:hover {
+    transform: perspective(1000px) scale(1.02);
   }
   
   /* Utility classes for theme-neutral colors */
@@ -474,6 +524,33 @@
   .card-3d-content {
     transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     transform-style: preserve-3d;
+  }
+  
+  /* Custom orbital animations */
+  @keyframes orbit {
+    0% {
+      transform: rotate(0deg) translateX(120px) rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg) translateX(120px) rotate(-360deg);
+    }
+  }
+  
+  .orbit-animation {
+    animation: orbit 20s linear infinite;
+  }
+  
+  .orbit-animation-reverse {
+    animation: orbit 25s linear infinite reverse;
+  }
+  
+  /* Subtle hover animation for cards */
+  .hover-scale {
+    transition: transform 0.3s ease;
+  }
+  
+  .hover-scale:hover {
+    transform: scale(1.02);
   }
   
   /* Content expansion animations */
