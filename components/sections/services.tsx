@@ -113,7 +113,7 @@ const services: Service[] = [
         description: "I create efficient database schemas and queries that maximize performance while maintaining data integrity."
       }
     ],
-    image: "https://images.unsplash.com/photo-1580894742597-87bc8789db3d?q=80&w=1470&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1470&auto=format&fit=crop"
   }
 ];
 

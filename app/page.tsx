@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { Hero } from "@/components/sections/hero";
+import { About } from "@/components/sections/about";
 import { Projects } from "@/components/sections/projects";
 import { Skills } from "@/components/sections/skills";
 import { Experience } from "@/components/sections/experience";
@@ -21,14 +22,15 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Services />
+      <About />
       <Projects />
       <Skills />
       <Experience />
-      <Marketplace />
+      <Services />
       <Testimonials />
       <Blogs />
       <Playground />
+      <Marketplace />
       <Contact />
       <Footer />
       <FloatingNavbar />

@@ -58,6 +58,10 @@ export const Hero = () => {
   const mouseY = useMotionValue(0);
   const containerRef = useRef<HTMLDivElement>(null);
   
+  // Developer name - centralized for consistency
+  const developerName = "Johan Beker";
+  const developerLocation = "Berlin, Germany";
+  
   // Smooth spring animation for mouse movement
   const smoothMouseX = useSpring(mouseX, { damping: 20, stiffness: 300 });
   const smoothMouseY = useSpring(mouseY, { damping: 20, stiffness: 300 });
@@ -119,7 +123,7 @@ export const Hero = () => {
     <section 
       ref={containerRef}
       id="hero"
-      className="min-h-screen flex items-center justify-center px-6 relative overflow-hidden pt-20 pb-16"
+      className="min-h-screen flex items-center justify-center px-6 md:px-8 relative overflow-hidden pt-24 pb-16"
     >
       {/* Modern Grid Background */}
       <div
@@ -175,14 +179,14 @@ export const Hero = () => {
 
             <motion.h1 
               variants={item}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-4 text-foreground"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6 text-foreground"
               style={{ 
                 rotateX, 
                 rotateY, 
                 transformStyle: "preserve-3d",
               }}
             >
-              Crafting <span className="text-primary premium-highlight">Digital</span> Experiences with Precision
+              {developerName} <span className="text-primary premium-highlight">Digital</span> Experiences with Precision
             </motion.h1>
             
             <motion.h2
@@ -219,12 +223,12 @@ export const Hero = () => {
               </Button>
               
               <Button
-                onClick={() => scrollToSection("contact")}
+                onClick={() => scrollToSection("about")}
                 className="px-8 py-6 rounded-full border border-primary/20 text-primary font-medium hover:bg-primary/5"
                 variant="ghost"
                 size="lg"
               >
-                Get in Touch
+                About Me
               </Button>
             </motion.div>
 
@@ -273,7 +277,7 @@ export const Hero = () => {
           
           {/* Image content - 5 columns */}
           <motion.div 
-            className="lg:col-span-5 flex justify-center lg:justify-end relative"
+            className="lg:col-span-5 flex justify-center lg:justify-end relative mt-8 lg:mt-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
@@ -281,7 +285,7 @@ export const Hero = () => {
             <div className="relative w-full max-w-md">
               {/* Decorative elements */}
               <motion.div 
-                className="absolute -top-8 -left-8 w-24 h-24 border border-primary/20 rounded-full z-0"
+                className="absolute -top-8 -left-8 w-24 h-24 border border-primary/20 rounded-full z-10 hidden sm:block"
                 animate={{ 
                   scale: [1, 1.05, 1],
                   opacity: [0.4, 0.6, 0.4],
@@ -294,7 +298,7 @@ export const Hero = () => {
               />
               
               <motion.div 
-                className="absolute -bottom-12 -right-4 w-32 h-32 border border-primary/10 rounded-full z-0"
+                className="absolute -bottom-12 -right-4 w-32 h-32 border border-primary/10 rounded-full z-10 hidden sm:block"
                 animate={{ 
                   scale: [1, 1.1, 1],
                   opacity: [0.3, 0.5, 0.3],
@@ -308,7 +312,7 @@ export const Hero = () => {
               />
               
               <motion.div
-                className="glass-premium p-3 rounded-2xl overflow-hidden border border-primary/10"
+                className="glass-premium p-3 rounded-2xl overflow-hidden border border-primary/10 relative z-20"
                 style={{ 
                   rotateX, 
                   rotateY, 
@@ -319,32 +323,33 @@ export const Hero = () => {
                 <div className="relative rounded-lg overflow-hidden aspect-[3/4] bg-gradient-to-tr from-black/70 to-black/30">
                   <Image 
                     src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
-                    alt="Johan Beker" 
+                    alt={developerName} 
                     width={600} 
                     height={800}
-                    className="object-cover h-full w-full mix-blend-normal opacity-80"
+                    className="object-cover h-full w-full mix-blend-normal opacity-90"
+                    priority
                   />
                   
                   {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20"></div>
                   
                   {/* Available status indicator */}
-                  <div className="absolute top-4 right-4 glass-premium rounded-full px-3 py-1 border border-primary/20 flex items-center gap-2">
+                  <div className="absolute top-4 right-4 glass-premium rounded-full px-3 py-1 border border-primary/20 flex items-center gap-2 z-30">
                     <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
                     <span className="text-xs font-medium text-primary">Available for Work</span>
                   </div>
                   
                   {/* Text overlay at bottom */}
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <h3 className="text-foreground text-xl font-bold mb-1">Johan Beker</h3>
-                    <p className="text-muted text-sm">Berlin, Germany</p>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 z-30">
+                    <h3 className="text-white text-xl font-bold mb-1">{developerName}</h3>
+                    <p className="text-white/70 text-sm">{developerLocation}</p>
                   </div>
                 </div>
               </motion.div>
               
               {/* Stats cards */}
               <motion.div 
-                className="absolute -right-20 top-1/3 glass-premium p-4 rounded-lg backdrop-blur-md border border-primary/10"
+                className="absolute -right-12 top-1/3 glass-premium p-4 rounded-lg backdrop-blur-md border border-primary/10 hidden md:block z-30"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 1 }}
@@ -361,7 +366,7 @@ export const Hero = () => {
               </motion.div>
               
               <motion.div 
-                className="absolute -left-16 bottom-1/4 glass-premium p-4 rounded-lg backdrop-blur-md border border-primary/10"
+                className="absolute -left-12 bottom-1/4 glass-premium p-4 rounded-lg backdrop-blur-md border border-primary/10 hidden md:block z-30"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.5, delay: 1.2 }}
@@ -390,7 +395,7 @@ export const Hero = () => {
           y: [0, 10, 0],
           transition: { delay: 2, duration: 1.5, repeat: Infinity, repeatType: "loop" }
         }}
-        onClick={() => scrollToSection("projects")}
+        onClick={() => scrollToSection("about")}
       >
         <span className="text-muted text-sm mb-2">Scroll Down</span>
         <FiArrowDown className="text-primary animate-bounce" />

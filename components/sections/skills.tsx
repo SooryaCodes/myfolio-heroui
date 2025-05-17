@@ -316,11 +316,11 @@ export const Skills = () => {
           <Tabs
             aria-label="Skill categories"
             color="primary"
-            variant="light"
+            variant="bordered"
             classNames={{
-              tabList: "glass-premium rounded-full p-1 mb-12 mx-auto max-w-fit overflow-x-auto flex-nowrap sm:flex-wrap",
+              tabList: "mb-12 mx-auto max-w-fit border-default-200 dark:border-default-100/20",
               cursor: "bg-primary/20",
-              tab: "text-muted data-[selected=true]:text-primary px-4 sm:px-6 py-2 text-sm whitespace-nowrap",
+              tab: "text-foreground/60 data-[selected=true]:text-primary px-4 sm:px-6 py-2 text-sm whitespace-nowrap",
             }}
             selectedKey={skillType}
             onSelectionChange={(key) => setSkillType(key as string)}
@@ -486,12 +486,12 @@ export const Skills = () => {
                         {Array.from({ length: 7 }).map((_, dayIndex) => {
                           // Generate random contribution levels (0-4) for demo
                           const level = Math.floor(Math.random() * 5);
-                          let bgColor = "bg-default-100 dark:bg-default-200";
+                          let bgColor = "bg-foreground/5 dark:bg-foreground/10";
                           
-                          if (level === 1) bgColor = "bg-foreground/10 dark:bg-foreground/20";
-                          if (level === 2) bgColor = "bg-foreground/20 dark:bg-foreground/30";
-                          if (level === 3) bgColor = "bg-foreground/30 dark:bg-foreground/50";
-                          if (level === 4) bgColor = "bg-foreground/50 dark:bg-foreground/70";
+                          if (level === 1) bgColor = "bg-foreground/10 dark:bg-foreground/15";
+                          if (level === 2) bgColor = "bg-foreground/20 dark:bg-foreground/25";
+                          if (level === 3) bgColor = "bg-foreground/30 dark:bg-foreground/35";
+                          if (level === 4) bgColor = "bg-foreground/40 dark:bg-foreground/50";
                           
                           return (
                             <div 
@@ -508,11 +508,11 @@ export const Skills = () => {
                 <div className="flex justify-between items-center text-xs text-muted">
                   <div>Less</div>
                   <div className="flex gap-1">
-                    <div className="w-2 h-2 rounded-sm bg-default-100 dark:bg-default-200 border-none"></div>
-                    <div className="w-2 h-2 rounded-sm bg-foreground/10 dark:bg-foreground/20 border-none"></div>
-                    <div className="w-2 h-2 rounded-sm bg-foreground/20 dark:bg-foreground/30 border-none"></div>
-                    <div className="w-2 h-2 rounded-sm bg-foreground/30 dark:bg-foreground/50 border-none"></div>
-                    <div className="w-2 h-2 rounded-sm bg-foreground/50 dark:bg-foreground/70 border-none"></div>
+                    <div className="w-2 h-2 rounded-sm bg-foreground/5 dark:bg-foreground/10 border-none"></div>
+                    <div className="w-2 h-2 rounded-sm bg-foreground/10 dark:bg-foreground/15 border-none"></div>
+                    <div className="w-2 h-2 rounded-sm bg-foreground/20 dark:bg-foreground/25 border-none"></div>
+                    <div className="w-2 h-2 rounded-sm bg-foreground/30 dark:bg-foreground/35 border-none"></div>
+                    <div className="w-2 h-2 rounded-sm bg-foreground/40 dark:bg-foreground/50 border-none"></div>
                   </div>
                   <div>More</div>
                 </div>
@@ -520,21 +520,21 @@ export const Skills = () => {
               
               {/* Language Distribution */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="bg-card rounded-xl p-6 border border-default-200 dark:border-default-100/20">
                   <h5 className="text-lg font-semibold text-foreground mb-4">Top Languages</h5>
                   <div className="space-y-4">
                     {[
-                      { name: "TypeScript", percentage: 45, color: "bg-foreground/70 dark:bg-foreground/80" },
-                      { name: "JavaScript", percentage: 30, color: "bg-foreground/60 dark:bg-foreground/70" },
-                      { name: "HTML/CSS", percentage: 15, color: "bg-foreground/50 dark:bg-foreground/60" },
-                      { name: "Python", percentage: 10, color: "bg-foreground/40 dark:bg-foreground/50" }
+                      { name: "TypeScript", percentage: 45, color: "bg-foreground/70 dark:bg-foreground/60" },
+                      { name: "JavaScript", percentage: 30, color: "bg-foreground/60 dark:bg-foreground/50" },
+                      { name: "HTML/CSS", percentage: 15, color: "bg-foreground/50 dark:bg-foreground/40" },
+                      { name: "Python", percentage: 10, color: "bg-foreground/40 dark:bg-foreground/30" }
                     ].map((lang) => (
                       <div key={lang.name}>
                         <div className="flex justify-between text-sm mb-1">
                           <span className="font-medium text-foreground">{lang.name}</span>
                           <span className="text-muted">{lang.percentage}%</span>
                         </div>
-                        <div className="h-2 w-full bg-default-100 dark:bg-default-200 rounded-full overflow-hidden">
+                        <div className="h-2 w-full bg-foreground/5 dark:bg-foreground/10 rounded-full overflow-hidden">
                           <div 
                             className={`h-full rounded-full ${lang.color}`}
                             style={{ width: `${lang.percentage}%` }}
@@ -545,7 +545,7 @@ export const Skills = () => {
                   </div>
                 </div>
                 
-                <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="bg-card rounded-xl p-6 border border-default-200 dark:border-default-100/20">
                   <h5 className="text-lg font-semibold text-foreground mb-4">Repository Stats</h5>
                   <div className="grid grid-cols-2 gap-4">
                     {[
@@ -554,7 +554,7 @@ export const Skills = () => {
                       { label: "Forks", value: "49" },
                       { label: "Pull Requests", value: "93" }
                     ].map((stat) => (
-                      <div key={stat.label} className="text-center p-3 glass-premium rounded-lg">
+                      <div key={stat.label} className="text-center p-3 bg-foreground/5 dark:bg-foreground/10 rounded-lg">
                         <div className="text-xl font-bold text-foreground">{stat.value}</div>
                         <div className="text-xs text-muted">{stat.label}</div>
                       </div>

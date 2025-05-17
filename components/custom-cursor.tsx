@@ -13,49 +13,47 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [clicked, setClicked] = useState(false);
   const [linkHovered, setLinkHovered] = useState(false);
-  const [hidden, setHidden] = useState(true); // Start hidden until mouse moves
+  const [hidden, setHidden] = useState(true);
   const { theme, resolvedTheme } = useTheme();
   
-  // Use motion values for smoother performance
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   
-  // Use springs for smoother movement
   const cursorX = useSpring(mouseX, { 
-    stiffness: 800,
-    damping: 60,
+    stiffness: 1000,
+    damping: 50,
     mass: 0.1
   });
   
   const cursorY = useSpring(mouseY, { 
-    stiffness: 800,
-    damping: 60,
+    stiffness: 1000,
+    damping: 50,
     mass: 0.1 
   });
   
-  // Determine if we're in dark mode
   const isDarkMode = resolvedTheme === "dark";
   
-  // Cursor colors with improved visibility in light mode
+  // Blue theme colors
   const cursorBorderColor = isDarkMode 
-    ? "rgba(255, 255, 255, 0.8)" 
-    : "rgba(var(--color-primary), 1)";
+    ? "rgba(59, 130, 246, 0.8)" // blue-500
+    : "rgba(37, 99, 235, 1)"; // blue-600
     
   const cursorBgColor = isDarkMode 
-    ? "rgba(var(--color-primary), 0.15)" 
-    : "rgba(var(--color-primary), 0.1)";
+    ? "rgba(59, 130, 246, 0.15)" 
+    : "rgba(37, 99, 235, 0.1)";
   
   const trailerBgColor = isDarkMode 
-    ? "rgba(255, 255, 255, 0.2)" 
-    : "rgba(var(--color-primary), 0.5)";
+    ? "rgba(59, 130, 246, 0.2)" 
+    : "rgba(37, 99, 235, 0.5)";
+
+  const glowColor = isDarkMode
+    ? "rgba(59, 130, 246, 0.3)"
+    : "rgba(37, 99, 235, 0.2)";
   
   useEffect(() => {
     setMounted(true);
     
-    // Show cursor only after the user moves the mouse
-    const showCursor = () => {
-      setHidden(false);
-    };
+    const showCursor = () => setHidden(false);
     
     const onMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -68,11 +66,10 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
     const onMouseLeave = () => setHidden(true);
     const onMouseEnter = () => setHidden(false);
 
-    // Improved throttle implementation for better performance
     let lastMove = 0;
     const throttledMouseMove = (e: MouseEvent) => {
       const now = Date.now();
-      if (now - lastMove > 5) { // Reduce throttle time to 5ms for smoother movement
+      if (now - lastMove > 3) { // Even smoother movement
         onMouseMove(e);
         lastMove = now;
       }
@@ -85,11 +82,9 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
     document.addEventListener("mouseup", onMouseUp);
     document.addEventListener("mousemove", showCursor, { once: true });
 
-    // Improved approach for interactive elements
     const handleLinkHoverEvents = () => {
       const selector = "a, button, [role=button], input[type=button], .navbar-icon, .card-premium, .interactive-item, .hover-lift";
       
-      // Use event delegation for better performance with many elements
       document.body.addEventListener("mouseover", (e) => {
         const target = e.target as HTMLElement;
         if (target.closest(selector)) {
@@ -105,7 +100,6 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
       });
     };
 
-    // Small delay to ensure all elements are loaded
     setTimeout(handleLinkHoverEvents, 300);
 
     return () => {
@@ -117,7 +111,6 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
     };
   }, [mouseX, mouseY]);
 
-  // Don't render until mounted (client-side)
   if (!mounted) return null;
 
   return (
@@ -130,29 +123,32 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
           translateY: cursorY,
           x: "-50%", 
           y: "-50%",
-          mixBlendMode: isDarkMode ? "difference" : "normal"
+          mixBlendMode: isDarkMode ? "screen" : "normal"
         }}
       >
         <motion.div
           className={`relative flex items-center justify-center rounded-full ${hidden ? 'opacity-0' : 'opacity-100'}`}
           variants={{
             default: {
-              height: 16,
-              width: 16,
-              border: `1.5px solid ${cursorBorderColor}`,
+              height: 18,
+              width: 18,
+              border: `2px solid ${cursorBorderColor}`,
               backgroundColor: cursorBgColor,
+              boxShadow: `0 0 15px ${glowColor}`,
             },
             clicked: {
-              height: 14,
-              width: 14, 
-              backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.8)" : "rgba(var(--color-primary), 0.8)",
-              border: "1.5px solid transparent",
+              height: 16,
+              width: 16, 
+              backgroundColor: isDarkMode ? "rgba(59, 130, 246, 0.8)" : "rgba(37, 99, 235, 0.8)",
+              border: "2px solid transparent",
+              boxShadow: `0 0 20px ${glowColor}`,
             },
             hovered: {
-              height: 36,
-              width: 36,
-              border: `1.5px solid ${isDarkMode ? "rgba(255, 255, 255, 0.6)" : "rgba(var(--color-primary), 0.8)"}`,
+              height: 40,
+              width: 40,
+              border: `2px solid ${isDarkMode ? "rgba(59, 130, 246, 0.6)" : "rgba(37, 99, 235, 0.8)"}`,
               backgroundColor: cursorBgColor,
+              boxShadow: `0 0 25px ${glowColor}`,
             },
           }}
           animate={
@@ -164,15 +160,15 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
           }
           transition={{
             type: "spring",
-            stiffness: 500,
-            damping: 28,
+            stiffness: 600,
+            damping: 25,
           }}
         >
           {linkHovered && (
             <motion.span
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
-              className={`text-xs font-medium ${isDarkMode ? "text-white" : "text-primary"}`}
+              className={`text-xs font-medium ${isDarkMode ? "text-blue-400" : "text-blue-600"}`}
             >
             </motion.span>
           )}
@@ -187,19 +183,20 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
           translateY: cursorY,
           x: "-50%", 
           y: "-50%",
-          height: clicked ? 20 : linkHovered ? 40 : 30,
-          width: clicked ? 20 : linkHovered ? 40 : 30,
+          height: clicked ? 24 : linkHovered ? 44 : 34,
+          width: clicked ? 24 : linkHovered ? 44 : 34,
           backgroundColor: trailerBgColor,
-          mixBlendMode: isDarkMode ? "difference" : "normal"
+          boxShadow: `0 0 30px ${glowColor}`,
+          mixBlendMode: isDarkMode ? "screen" : "normal"
         }}
         transition={{
           type: "spring",
-          stiffness: 200,
-          damping: 40,
-          mass: 0.5,
-          delay: 0.03,
+          stiffness: 300,
+          damping: 35,
+          mass: 0.4,
+          delay: 0.02,
         }}
       />
     </>
   );
-}; 
+};

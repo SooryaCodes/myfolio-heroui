@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Badge } from "@heroui/badge";
 import { Tabs, Tab } from "@heroui/tabs";
-import { FiArrowRight, FiBriefcase, FiAward, FiCode } from "react-icons/fi";
+import { FiArrowRight, FiBriefcase, FiAward, FiCode, FiCalendar } from "react-icons/fi";
 import { RevealOnScroll, MaskReveal } from "@/components/scroll-animations";
 import Image from "next/image";
 
@@ -116,11 +116,11 @@ export const Experience = () => {
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case "work":
-        return <FiBriefcase className="mr-2 text-primary" />;
+        return <FiBriefcase className="text-primary" />;
       case "education":
-        return <FiAward className="mr-2 text-primary" />;
+        return <FiAward className="text-primary" />;
       case "projects":
-        return <FiCode className="mr-2 text-primary" />;
+        return <FiCode className="text-primary" />;
       default:
         return null;
     }
@@ -130,7 +130,7 @@ export const Experience = () => {
     <section 
       id="experience"
       ref={containerRef}
-      className="py-24 md:py-32 px-6 relative overflow-hidden bg-black"
+      className="py-24 md:py-32 px-6 relative overflow-hidden dark:bg-black bg-gray-50"
     >
       {/* Background elements */}
       <div className="absolute inset-0 grid-pattern opacity-10 z-0" />
@@ -146,12 +146,12 @@ export const Experience = () => {
             <Badge 
               variant="flat" 
               color="primary" 
-              className="mb-4 border border-primary/20 bg-black/30 backdrop-blur-sm"
+              className="mb-4 border border-primary/20 dark:bg-black/30 bg-white/60 backdrop-blur-sm"
             >
               <span className="px-2 py-0.5 text-primary">Experience</span>
             </Badge>
-            <h2 className="heading-xl text-white mb-6">Professional Journey</h2>
-            <p className="text-white/60 max-w-2xl mx-auto">
+            <h2 className="heading-xl dark:text-white text-gray-900 mb-6">Professional Journey</h2>
+            <p className="dark:text-white/60 text-gray-600 max-w-2xl mx-auto">
               A curated timeline of my professional experience, education, and significant projects.
             </p>
           </div>
@@ -163,9 +163,9 @@ export const Experience = () => {
             color="primary"
             variant="light"
             classNames={{
-              tabList: "flex justify-center bg-white/5 backdrop-blur-sm rounded-full p-1 max-w-md mx-auto",
+              tabList: "flex justify-center dark:bg-white/5 bg-black/5 backdrop-blur-sm rounded-full p-1 max-w-md mx-auto",
               cursor: "bg-primary/20",
-              tab: "text-white/70 data-[selected=true]:text-primary px-4 py-2",
+              tab: "dark:text-white/70 text-gray-600 data-[selected=true]:text-primary px-4 py-2",
             }}
             selectedKey={category}
             onSelectionChange={(key) => setCategory(key as string)}
@@ -177,101 +177,119 @@ export const Experience = () => {
           </Tabs>
         </div>
         
-        {/* Timeline */}
-        <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-8 md:left-1/2 transform md:translate-x-[-50%] top-0 bottom-0 w-px bg-gradient-to-b from-primary/50 via-primary/30 to-primary/5"></div>
+        {/* Timeline with zigzag structure */}
+        <div className="relative mt-20">
+          {/* Vertical timeline line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/50 via-primary/30 to-primary/5 hidden md:block"></div>
           
-          <div className="space-y-12 md:space-y-24 relative">
-            {filteredExperiences.map((exp, index) => (
-              <div key={exp.id} className={`relative z-10 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12'}`}>
-                <div className="md:flex items-start">
-                  {/* Timeline content - alternating sides on larger screens */}
-                  <div className={`md:w-1/2 ${index % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
-                    <MaskReveal 
-                      direction={index % 2 === 0 ? "left" : "right"}
-                      threshold={0.2}
-                    >
-                      <div className="card-premium p-6 md:p-8 relative overflow-hidden group hover-lift">
-                        {/* Company logo */}
-                        <div className="absolute top-0 right-0 w-24 h-24 opacity-5 md:opacity-10 group-hover:opacity-20 transition-opacity duration-500">
-                          <div className="relative w-full h-full">
-                            <Image 
-                              src={exp.logo} 
-                              alt={exp.company} 
-                              fill 
-                              className="object-cover grayscale" 
-                            />
-                          </div>
+          {filteredExperiences.map((exp, index) => (
+            <div key={exp.id} className="mb-16 md:mb-24 relative" data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}>
+              {/* Timeline dot for central line */}
+              <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 top-1/2 w-5 h-5 bg-primary rounded-full z-20 border-4 border-white dark:border-black hidden md:block"></div>
+              
+              {/* Date badge - Centered on mobile, positioned on timeline for desktop */}
+              <div className={`flex justify-center md:absolute md:top-1/2 md:-translate-y-1/2 md:w-auto z-10 
+                ${index % 2 === 0 ? 'md:left-[calc(50%-5rem)]' : 'md:right-[calc(50%-5rem)]'} mb-6 md:mb-0`}>
+                <div className="glass-premium dark:bg-black/40 bg-white/70 backdrop-blur-sm border border-primary/20 px-4 py-2 rounded-full shadow-lg flex items-center gap-2">
+                  <FiCalendar className="text-primary" size={16} />
+                  <span className="dark:text-white text-gray-800 font-medium">{exp.duration}</span>
+                </div>
+              </div>
+              
+              <div className="md:grid md:grid-cols-2 gap-8 items-center">
+                {/* Content side alternates between left and right */}
+                <div className={`${index % 2 === 0 ? 'md:order-1' : 'md:order-2'}`}>
+                  <RevealOnScroll threshold={0.1} direction={index % 2 === 0 ? "right" : "left"}>
+                    <div className="glass-premium dark:bg-black/40 bg-white backdrop-blur-sm border border-primary/10 p-6 md:p-8 rounded-xl shadow-xl hover-lift transition-all duration-300 relative overflow-hidden group">
+                      {/* Logo background */}
+                      <div className="absolute -bottom-12 -right-12 w-36 h-36 opacity-10 group-hover:opacity-20 transition-opacity duration-500">
+                        <Image 
+                          src={exp.logo} 
+                          alt={exp.company} 
+                          width={150} 
+                          height={150}
+                          className="grayscale"
+                        />
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-3 mb-4">
+                        <div className="glass-premium px-3 py-1 rounded-full dark:bg-black/30 bg-white/70 border border-primary/20 flex items-center gap-2">
+                          {getCategoryIcon(exp.category)}
+                          <span className="text-primary text-sm font-medium">{exp.category.charAt(0).toUpperCase() + exp.category.slice(1)}</span>
                         </div>
-                        
-                        <div className="flex items-center gap-3 mb-4">
-                          <div className="px-2 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium flex items-center">
-                            {getCategoryIcon(exp.category)}
-                            {exp.category.charAt(0).toUpperCase() + exp.category.slice(1)}
-                          </div>
-                          <div className="text-white/50 text-sm">{exp.duration}</div>
+                        <div className="glass-premium px-3 py-1 rounded-full dark:bg-black/30 bg-white/70 border border-primary/10 dark:text-white/70 text-gray-700 text-sm">
+                          {exp.company}
                         </div>
-                        
-                        <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{exp.role}</h3>
-                        <h4 className="text-lg font-medium text-primary mb-4">{exp.company}</h4>
-                        
-                        <p className="text-white/70 mb-6">{exp.description}</p>
-                        
-                        <div className="mb-6">
-                          <h5 className="text-white text-sm font-medium mb-3">Key Achievements</h5>
-                          <ul className="space-y-2">
-                            {exp.achievements.map((achievement, i) => (
-                              <li key={i} className="flex items-start gap-2 text-white/60 text-sm">
-                                <span className="text-primary mt-1">•</span>
-                                <span>{achievement}</span>
-                              </li>
-                            ))}
-                          </ul>
+                      </div>
+                      
+                      <h3 className="text-xl md:text-2xl font-bold dark:text-white text-gray-900 mb-3">{exp.role}</h3>
+                      <p className="dark:text-white/70 text-gray-600 mb-6">{exp.description}</p>
+                      
+                      <div className="mb-6">
+                        <h4 className="text-base font-semibold dark:text-white text-gray-800 mb-3 flex items-center gap-2">
+                          <span className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center">
+                            <FiAward className="text-primary" size={12} />
+                          </span>
+                          Key Achievements
+                        </h4>
+                        <div className="space-y-3">
+                          {exp.achievements.map((achievement, i) => (
+                            <div key={i} className="glass-premium dark:bg-black/20 bg-white/70 p-3 rounded-lg border border-primary/5 dark:text-white/80 text-gray-700 text-sm flex items-start gap-3 transform transition-transform duration-300 hover:translate-x-1">
+                              <span className="text-primary mt-0.5 font-bold">•</span>
+                              <span>{achievement}</span>
+                            </div>
+                          ))}
                         </div>
-                        
+                      </div>
+                      
+                      <div>
+                        <h4 className="text-base font-semibold dark:text-white text-gray-800 mb-3 flex items-center gap-2">
+                          <span className="w-5 h-5 bg-primary/10 rounded-full flex items-center justify-center">
+                            <FiCode className="text-primary" size={12} />
+                          </span>
+                          Technologies
+                        </h4>
                         <div className="flex flex-wrap gap-2">
                           {exp.skills.map((skill) => (
                             <span 
                               key={skill} 
-                              className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-white/80 text-xs"
+                              className="px-3 py-1.5 dark:bg-primary/10 bg-primary/5 border border-primary/10 rounded-full dark:text-white text-gray-800 text-xs font-medium hover:bg-primary/15 transition-colors duration-300"
                             >
                               {skill}
                             </span>
                           ))}
                         </div>
                       </div>
-                    </MaskReveal>
-                  </div>
-                  
-                  {/* Timeline node */}
-                  <div className="absolute left-8 md:left-1/2 transform translate-y-1/2 md:translate-y-0 md:translate-x-[-50%] flex items-center justify-center">
-                    <div className="w-4 h-4 rounded-full bg-primary relative z-10">
-                      <div className="absolute inset-0 rounded-full bg-primary animate-ping opacity-30"></div>
                     </div>
-                  </div>
-                  
-                  {/* Timeline date - visible only on larger screens */}
-                  <div className={`hidden md:block md:w-1/2 pt-12 ${index % 2 === 0 ? 'md:order-2 md:pl-12' : 'md:order-1 md:pr-12 md:text-right'}`}>
-                    <RevealOnScroll
-                      threshold={0.1}
-                      direction={index % 2 === 0 ? "right" : "left"}
-                    >
-                      <h3 className="text-lg font-bold text-white mb-2">{exp.duration}</h3>
-                      <div className="h-px w-12 bg-gradient-to-r from-primary/60 to-transparent mb-3 mx-auto md:mx-0 md:ml-0"></div>
-                      <p className="text-white/40 text-sm max-w-xs md:max-w-none">
-                        {index % 2 === 0 ? (
-                          <>Working at <span className="text-primary">{exp.company}</span> as {exp.role}</>
-                        ) : (
-                          <>{exp.role} at <span className="text-primary">{exp.company}</span></>
-                        )}
-                      </p>
-                    </RevealOnScroll>
-                  </div>
+                  </RevealOnScroll>
+                </div>
+                
+                {/* Image side alternates between left and right */}
+                <div className={`hidden md:block ${index % 2 === 0 ? 'md:order-2' : 'md:order-1'} relative`}>
+                  <RevealOnScroll threshold={0.1} direction={index % 2 === 0 ? "left" : "right"}>
+                    <div className="relative">
+                      <div className="glass-premium p-3 rounded-xl border border-primary/10 shadow-xl overflow-hidden">
+                        <div className="aspect-[4/3] rounded-lg overflow-hidden">
+                          <Image 
+                            src={exp.logo} 
+                            alt={exp.company}
+                            width={500}
+                            height={375}
+                            className="object-cover w-full h-full transform transition-transform duration-700 hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                        </div>
+                      </div>
+                      
+                      <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 glass-premium dark:bg-black/40 bg-white/80 backdrop-blur-md px-6 py-3 rounded-full border border-primary/10 shadow-lg">
+                        <h4 className="text-lg font-bold dark:text-white text-gray-900">{exp.company}</h4>
+                      </div>
+                    </div>
+                  </RevealOnScroll>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

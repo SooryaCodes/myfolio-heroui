@@ -112,7 +112,7 @@ const BlogCard = ({ post, featured = false }: { post: BlogPost; featured?: boole
       className="group"
     >
       <motion.div 
-        className="card-premium overflow-hidden h-full transform-3d"
+        className="card-premium overflow-hidden h-full transform-3d bg-background/80 dark:bg-transparent backdrop-blur-sm border border-border dark:border-primary/10"
         style={{
           rotateX: springRotateX,
           rotateY: springRotateY,
@@ -170,7 +170,7 @@ export const Blogs = () => {
   const regularPosts = blogPosts.filter(post => !post.featured);
   
   return (
-    <section id="blog" className="py-24 md:py-32 px-6 relative overflow-hidden bg-gradient-to-b from-background to-black">
+    <section id="blog" className="py-24 md:py-32 px-6 relative overflow-hidden bg-gradient-to-b from-background to-background/80 dark:from-background dark:to-black">
       {/* Background elements */}
       <div className="absolute inset-0 grid-pattern opacity-10 z-0" />
       <div className="absolute top-40 -left-40 w-96 h-96 bg-primary/5 blur-[120px] rounded-full z-0" />
@@ -182,9 +182,9 @@ export const Blogs = () => {
             <Badge 
               variant="flat" 
               color="primary" 
-              className="mb-4"
+              className="mb-4 border border-primary/20"
             >
-              Insights
+              <span className="px-2 py-0.5 text-primary">Insights</span>
             </Badge>
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">From the Blog</h2>
             <p className="text-muted max-w-2xl mx-auto">
