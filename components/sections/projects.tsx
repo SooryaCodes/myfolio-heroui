@@ -163,15 +163,12 @@ const ProjectCard = ({ project }: { project: typeof projects[0] }) => {
                     <NextLink href={`/projects/${project.slug}`}>
                       <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg">
                         <Image
-                          src={project.image || fallbackImages[project.id % fallbackImages.length]}
+                          src={project.image}
                           alt={project.title}
                           fill
                           className="object-cover transition-transform duration-700 group-hover:scale-105"
-                          onError={(e) => {
-                            // If the image fails to load, use a fallback
-                            const target = e.target as HTMLImageElement;
-                            target.src = fallbackImages[project.id % fallbackImages.length];
-                          }}
+                          placeholder="blur"
+                          blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                       </div>

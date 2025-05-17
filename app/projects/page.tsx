@@ -114,16 +114,12 @@ export default function ProjectsPage() {
               <CardHeader className="p-0 overflow-hidden">
                 <div className="relative aspect-video w-full rounded-lg overflow-hidden mb-4">
                   <Image
-                    src={project.image || getFallbackImage(project.id)}
+                    src={project.image}
                     alt={project.title}
                     fill
                     className="object-cover hover:scale-105 transition-transform duration-500"
                     placeholder="blur"
-                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = getFallbackImage(project.id);
-                    }}
+                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzg0IiBoZWlnaHQ9IjQ0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
                   />
                   <div className="absolute top-3 left-3">
                     <Badge color="primary" variant="flat">

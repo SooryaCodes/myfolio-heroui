@@ -51,15 +51,6 @@ interface ExtendedMarketplaceProduct {
   requirements?: ProductRequirement[];
 }
 
-// Add fallback images for gallery with high-quality ones
-const fallbackImages = [
-  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-  "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
-  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
-  "https://images.unsplash.com/photo-1581472723648-909f4851d4ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-];
-
 type Props = {
   params: {
     slug: string;
@@ -94,11 +85,6 @@ export default function ProductPage({ params }: Props) {
     .filter(p => p.id !== product.id && p.category === product.category)
     .sort(() => Math.random() - 0.5) // Shuffle array
     .slice(0, 2); // Take just 2 related products
-  
-  // Get a fallback image for gallery items
-  const getFallbackImage = (index = 0) => {
-    return fallbackImages[(product.id + index) % fallbackImages.length];
-  };
   
   return (
     <main className="min-h-screen pt-20 pb-16 bg-background/50">
@@ -141,12 +127,7 @@ export default function ProductPage({ params }: Props) {
                     priority
                     className="object-cover"
                     placeholder="blur"
-                    blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
-                    onError={(e) => {
-                      // On client-side only
-                      const target = e.target as HTMLImageElement;
-                      target.src = getFallbackImage(0);
-                    }}
+                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"
                   />
                 </div>
               </CardBody>
@@ -163,12 +144,7 @@ export default function ProductPage({ params }: Props) {
                       fill
                       className="object-cover hover:scale-105 transition-transform duration-300"
                       placeholder="blur"
-                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
-                      onError={(e) => {
-                        // On client-side only
-                        const target = e.target as HTMLImageElement;
-                        target.src = getFallbackImage(index + 1);
-                      }}
+                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
                     />
                   </div>
                 ))}
@@ -183,12 +159,7 @@ export default function ProductPage({ params }: Props) {
                       fill
                       className="object-cover hover:scale-105 transition-transform duration-300"
                       placeholder="blur"
-                      blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
-                      onError={(e) => {
-                        // On client-side only
-                        const target = e.target as HTMLImageElement;
-                        target.src = getFallbackImage(index + 1);
-                      }}
+                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
                     />
                   </div>
                 ))}
@@ -319,12 +290,7 @@ export default function ProductPage({ params }: Props) {
                         fill
                         className="object-cover"
                         placeholder="blur"
-                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
-                        onError={(e) => {
-                          // On client-side only
-                          const target = e.target as HTMLImageElement;
-                          target.src = getFallbackImage(relatedProduct.id);
-                        }}
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"
                       />
                       <div className="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
                         <Badge variant="flat" className="bg-white/20 text-white border-none">

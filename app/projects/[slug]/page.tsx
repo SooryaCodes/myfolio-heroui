@@ -6,15 +6,6 @@ import { Metadata } from "next";
 import { FiExternalLink, FiGithub, FiArrowLeft, FiHome } from "react-icons/fi";
 import { projects } from "@/datas/projects";
 
-// Add fallback images with high-quality Unsplash images
-const fallbackImages = [
-  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-  "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
-  "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
-  "https://images.unsplash.com/photo-1581472723648-909f4851d4ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-];
-
 type Props = {
   params: {
     slug: string;
@@ -49,11 +40,6 @@ export default function ProjectPage({ params }: Props) {
     .filter(p => p.id !== project.id)
     .sort(() => 0.5 - Math.random())
     .slice(0, 2);
-
-  // Get a fallback image based on the project ID
-  const getFallbackImage = (index = 0) => {
-    return fallbackImages[(project.id + index) % fallbackImages.length];
-  };
 
   return (
     <main className="pt-20 pb-16 bg-background/50 min-h-screen">
@@ -90,18 +76,13 @@ export default function ProjectPage({ params }: Props) {
           {/* Showcase Image */}
           <div className="relative aspect-[16/9] w-full max-h-[70vh] rounded-xl overflow-hidden shadow-xl">
             <Image
-              src={project.image || getFallbackImage()}
+              src={project.image}
               alt={project.title}
               fill
               priority
               className="object-cover"
               placeholder="blur"
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
-              onError={(e) => {
-                // This will run on client-side only
-                const target = e.target as HTMLImageElement;
-                target.src = getFallbackImage();
-              }}
+              blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"
             />
           </div>
         </div>
@@ -122,17 +103,12 @@ export default function ProjectPage({ params }: Props) {
                   {project.images.map((image, index) => (
                     <div key={index} className="relative aspect-[4/3] rounded-lg overflow-hidden shadow-md">
                       <Image
-                        src={image || getFallbackImage(index + 1)}
+                        src={image}
                         alt={`${project.title} - Image ${index + 1}`}
                         fill
                         className="object-cover hover:scale-105 transition-transform duration-500"
                         placeholder="blur"
-                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
-                        onError={(e) => {
-                          // This will run on client-side only
-                          const target = e.target as HTMLImageElement;
-                          target.src = getFallbackImage(index + 1);
-                        }}
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
                       />
                     </div>
                   ))}
@@ -217,17 +193,12 @@ export default function ProjectPage({ params }: Props) {
                   <Link href={`/projects/${related.slug}`} className="block">
                     <div className="relative aspect-[16/9] rounded-xl overflow-hidden mb-6 shadow-lg">
                       <Image
-                        src={related.image || getFallbackImage(related.id)}
+                        src={related.image}
                         alt={related.title}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                         placeholder="blur"
-                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
-                        onError={(e) => {
-                          // This will run on client-side only
-                          const target = e.target as HTMLImageElement;
-                          target.src = getFallbackImage(related.id);
-                        }}
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"
                       />
                       <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                         <span className="text-white font-medium bg-primary/80 backdrop-blur-sm rounded-lg px-4 py-2">
@@ -248,10 +219,10 @@ export default function ProjectPage({ params }: Props) {
         <div className="mt-20 text-center">
           <Link 
             href="/projects"
-            className="bg-primary/10 text-primary px-6 py-3 rounded-full inline-flex items-center gap-2 font-medium transition-all hover:bg-primary/20"
+            className="bg-primary text-white px-8 py-3 rounded-full inline-flex items-center gap-2 font-medium shadow-md hover:shadow-lg transition-all hover:translate-y-[-2px]"
           >
             <FiArrowLeft />
-            Back to All Projects
+            Back to Projects
           </Link>
         </div>
       </div>
