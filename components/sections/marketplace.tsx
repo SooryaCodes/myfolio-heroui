@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
 import { Button } from "@heroui/button";
 import { Badge } from "@heroui/badge";
 import { Select, SelectItem } from "@heroui/select";
-import { FiShoppingCart, FiChevronRight, FiStar, FiBookmark, FiDownload } from "react-icons/fi";
+import { FiShoppingCart, FiChevronRight, FiStar, FiBookmark, FiDownload, FiExternalLink } from "react-icons/fi";
 import { addToast } from "@heroui/toast";
+import { RevealOnScroll } from "@/components/scroll-animations";
 import Image from "next/image";
 
 const products = [
@@ -81,6 +82,151 @@ const products = [
 
 const categories = ["All", "Template", "UI Kit", "Icons"];
 
+// Enhanced 3D Product Card
+const ProductCard = ({ product, index }: { product: any; index: number }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  
+  const rotateX = useTransform(y, [-100, 100], [10, -10]);
+  const rotateY = useTransform(x, [-100, 100], [-10, 10]);
+  
+  const springConfig = { damping: 20, stiffness: 100 };
+  const springRotateX = useSpring(rotateX, springConfig);
+  const springRotateY = useSpring(rotateY, springConfig);
+  
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const centerX = rect.left + width / 2;
+    const centerY = rect.top + height / 2;
+    const mouseX = e.clientX - centerX;
+    const mouseY = e.clientY - centerY;
+    
+    x.set(mouseX);
+    y.set(mouseY);
+  };
+  
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+  
+  const handleAddToCart = () => {
+    addToast({
+      title: "Added to cart!",
+      description: `${product.title} has been added to your cart.`,
+      color: "success",
+      variant: "flat",
+      radius: "full",
+    });
+  };
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ 
+        duration: 0.8, 
+        delay: index * 0.1,
+        ease: [0.22, 1, 0.36, 1] 
+      }}
+      className="h-full"
+    >
+      <motion.div
+        style={{
+          rotateX: springRotateX,
+          rotateY: springRotateY,
+          transformPerspective: "1000px",
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+        className="h-full transform-3d"
+      >
+        <Card className="h-full">
+          <div className="relative w-full h-48 overflow-hidden">
+            <Image
+              src={product.image}
+              alt={product.title}
+              width={600}
+              height={300}
+              className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute top-3 right-3 flex gap-2">
+              <Button 
+                isIconOnly 
+                size="sm" 
+                color="default" 
+                variant="flat" 
+                className="glass-premium"
+                aria-label="Bookmark"
+              >
+                <FiBookmark size={16} />
+              </Button>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+          </div>
+          
+          <CardHeader className="flex items-start justify-between">
+            <div>
+              <Badge 
+                color="primary" 
+                variant="flat" 
+                size="sm" 
+                className="mb-2"
+              >
+                {product.category}
+              </Badge>
+              <h3 className="text-xl font-semibold text-foreground">{product.title}</h3>
+            </div>
+            <div className="flex items-center text-sm text-muted">
+              <FiStar className="text-yellow-500 mr-1" size={16} />
+              <span>{product.rating}</span>
+              <span className="mx-1">•</span>
+              <span>{product.sales} sales</span>
+            </div>
+          </CardHeader>
+          
+          <CardBody>
+            <p className="text-muted text-sm mb-4">{product.description}</p>
+            <div className="flex flex-wrap gap-2">
+              {product.tags.map((tag: string) => (
+                <Badge key={tag} size="sm" variant="flat" color="default" className="text-xs">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </CardBody>
+          
+          <CardFooter className="flex justify-between items-center">
+            <div className="text-xl font-bold text-foreground">${product.price}</div>
+            <div className="flex gap-2">
+              <Button 
+                size="sm" 
+                variant="ghost" 
+                color="primary"
+                startContent={<FiDownload size={16} />}
+              >
+                Demo
+              </Button>
+              <Button 
+                size="sm" 
+                color="primary" 
+                className="font-medium"
+                startContent={<FiShoppingCart size={16} />}
+                onClick={handleAddToCart}
+              >
+                Buy Now
+              </Button>
+            </div>
+          </CardFooter>
+        </Card>
+      </motion.div>
+    </motion.div>
+  );
+};
+
 export const Marketplace = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("featured");
@@ -97,51 +243,22 @@ export const Marketplace = () => {
     return 0; // featured - keep original order
   });
   
-  const handleAddToCart = (productName: string) => {
-    addToast({
-      title: "Added to cart!",
-      description: `${productName} has been added to your cart.`,
-      color: "success",
-      variant: "flat",
-      radius: "full",
-    });
-  };
-  
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { ease: [0.22, 1, 0.36, 1], duration: 0.7 } },
-  };
-
   return (
     <section id="marketplace" className="py-20 px-6 relative">
       {/* Background pattern */}
       <div className="absolute inset-0 grid-pattern opacity-10 z-0"></div>
+      <div className="absolute top-40 -left-40 w-96 h-96 bg-primary/5 blur-[120px] rounded-full z-0" />
       
       <div className="max-w-7xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <Badge color="primary" variant="flat" className="mb-4">Digital Products</Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">Premium Digital Assets</h2>
-          <p className="text-muted max-w-2xl mx-auto">
-            Explore my collection of premium digital products designed to help you build better websites and applications.
-          </p>
-        </motion.div>
+        <RevealOnScroll>
+          <div className="text-center mb-16">
+            <Badge color="primary" variant="flat" className="mb-4">Digital Products</Badge>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">Premium Digital Assets</h2>
+            <p className="text-muted max-w-2xl mx-auto">
+              Explore my collection of premium digital products designed to help you build better websites and applications.
+            </p>
+          </div>
+        </RevealOnScroll>
         
         <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
           <div className="flex flex-wrap gap-3">
@@ -167,111 +284,28 @@ export const Marketplace = () => {
             variant="flat"
             radius="lg"
           >
-            <SelectItem key="featured" value="featured">Featured</SelectItem>
-            <SelectItem key="price-low" value="price-low">Price: Low to High</SelectItem>
-            <SelectItem key="price-high" value="price-high">Price: High to Low</SelectItem>
-            <SelectItem key="rating" value="rating">Highest Rated</SelectItem>
-            <SelectItem key="popularity" value="popularity">Most Popular</SelectItem>
+            <SelectItem key="featured">Featured</SelectItem>
+            <SelectItem key="price-low">Price: Low to High</SelectItem>
+            <SelectItem key="price-high">Price: High to Low</SelectItem>
+            <SelectItem key="rating">Highest Rated</SelectItem>
+            <SelectItem key="popularity">Most Popular</SelectItem>
           </Select>
         </div>
         
-        <motion.div 
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-        >
-          {sortedProducts.map(product => (
-            <motion.div key={product.id} variants={item}>
-              <Card className="group hover-lift overflow-hidden border border-border">
-                <div className="relative w-full h-48 overflow-hidden">
-                  <Image
-                    src={product.image}
-                    alt={product.title}
-                    width={600}
-                    height={300}
-                    className="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute top-3 right-3 flex gap-2">
-                    <Button 
-                      isIconOnly 
-                      size="sm" 
-                      color="default" 
-                      variant="solid" 
-                      className="glass-premium"
-                      aria-label="Bookmark"
-                    >
-                      <FiBookmark size={16} />
-                    </Button>
-                  </div>
-                </div>
-                
-                <CardHeader className="flex items-start justify-between">
-                  <div>
-                    <Badge 
-                      color="default" 
-                      variant="flat" 
-                      size="sm" 
-                      className="mb-2"
-                    >
-                      {product.category}
-                    </Badge>
-                    <h3 className="text-xl font-semibold text-foreground">{product.title}</h3>
-                  </div>
-                  <div className="flex items-center text-sm text-muted">
-                    <FiStar className="text-yellow-500 mr-1" size={16} />
-                    <span>{product.rating}</span>
-                    <span className="mx-1">•</span>
-                    <span>{product.sales} sales</span>
-                  </div>
-                </CardHeader>
-                
-                <CardBody>
-                  <p className="text-muted text-sm mb-4">{product.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {product.tags.map(tag => (
-                      <Badge key={tag} size="sm" variant="flat" color="default" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardBody>
-                
-                <CardFooter className="flex justify-between items-center">
-                  <div className="text-xl font-bold text-foreground">${product.price}</div>
-                  <div className="flex gap-2">
-                    <Button 
-                      size="sm" 
-                      variant="ghost" 
-                      color="primary"
-                      startContent={<FiDownload size={16} />}
-                    >
-                      Demo
-                    </Button>
-                    <Button 
-                      size="sm" 
-                      color="primary" 
-                      variant="flat"
-                      onClick={() => handleAddToCart(product.title)}
-                      startContent={<FiShoppingCart size={16} />}
-                    >
-                      Buy Now
-                    </Button>
-                  </div>
-                </CardFooter>
-              </Card>
-            </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {sortedProducts.map((product, index) => (
+            <ProductCard key={product.id} product={product} index={index} />
           ))}
-        </motion.div>
+        </div>
         
-        <div className="mt-16 text-center">
-          <Button 
-            color="primary" 
-            variant="flat" 
+        <div className="mt-16 flex justify-center">
+          <Button
             size="lg"
-            endContent={<FiChevronRight />}
-            className="px-12 py-6 rounded-full"
+            color="primary"
+            variant="flat"
+            radius="full"
+            endContent={<FiExternalLink />}
+            className="px-8 font-medium"
           >
             Browse All Products
           </Button>

@@ -9,7 +9,7 @@ import { Tabs, Tab } from "@heroui/tabs";
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
 import { Button } from "@heroui/button";
 import { RevealOnScroll } from "@/components/scroll-animations";
-import { FiCode, FiServer, FiPenTool, FiTool, FiChevronRight, FiExternalLink } from "react-icons/fi";
+import { FiCode, FiServer, FiPenTool, FiTool, FiChevronRight, FiExternalLink, FiGithub } from "react-icons/fi";
 import Image from "next/image";
 
 // Define interface for skill type
@@ -114,7 +114,7 @@ const OrbitalSkills = ({ skills, color }: { skills: Skill[], color: string }) =>
   return (
     <motion.div 
       ref={containerRef}
-      className="relative h-[400px] w-full bg-background/50 backdrop-blur-md rounded-2xl border border-border overflow-hidden"
+      className="relative h-[400px] w-full rounded-2xl border border-border overflow-hidden glass-premium"
       onMouseMove={handleMouseMove}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -143,8 +143,8 @@ const OrbitalSkills = ({ skills, color }: { skills: Skill[], color: string }) =>
         const defaultY = Math.sin(angle) * radius;
         
         // Use motion values for responsive movement
-        const x = useTransform(mouseX, [-100, 100], [defaultX - 20, defaultX + 20]);
-        const y = useTransform(mouseY, [-100, 100], [defaultY - 20, defaultY + 20]);
+        const x = useTransform(mouseX, [-100, 100], [defaultX - 15, defaultX + 15]);
+        const y = useTransform(mouseY, [-100, 100], [defaultY - 15, defaultY + 15]);
         
         const springX = useSpring(x, { stiffness: 100, damping: 30 });
         const springY = useSpring(y, { stiffness: 100, damping: 30 });
@@ -172,15 +172,15 @@ const OrbitalSkills = ({ skills, color }: { skills: Skill[], color: string }) =>
             whileHover={{ scale: 1.1, zIndex: 20 }}
           >
             <div 
-              className="flex items-center justify-center rounded-full glass-premium border border-border w-16 h-16"
+              className="flex items-center justify-center rounded-full glass-premium border border-border/50 w-16 h-16 transform-3d backface-hidden"
               style={{ 
                 background: `radial-gradient(circle at center, ${skill.color}22, transparent)`,
                 boxShadow: `0 0 20px ${skill.color}22`
               }}
             >
               <div className="text-center">
-                <div className="text-[10px] line-clamp-1 px-1">{skill.name}</div>
-                <div className="text-[9px] opacity-70">{skill.level}%</div>
+                <div className="text-[10px] line-clamp-1 px-1 font-medium">{skill.name}</div>
+                <div className="text-[9px] text-muted">{skill.level}%</div>
               </div>
             </div>
           </motion.div>
@@ -377,7 +377,7 @@ export const Skills = () => {
           </div>
         </div>
 
-        {/* Additional skill metrics */}
+        {/* Enhanced Experience Metrics with GitHub Stats */}
         <div className="mt-24">
           <RevealOnScroll>
             <h3 className="text-2xl md:text-3xl font-bold text-foreground text-center mb-12">
@@ -385,7 +385,7 @@ export const Skills = () => {
             </h3>
           </RevealOnScroll>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {[
               { label: "Years Experience", value: "6+", icon: "⏱️" },
               { label: "Projects Completed", value: "75+", icon: "🚀" },
@@ -409,6 +409,129 @@ export const Skills = () => {
               </motion.div>
             ))}
           </div>
+          
+          {/* GitHub Contributions Section */}
+          <RevealOnScroll>
+            <div className="rounded-2xl border border-border glass-premium p-8 mb-16">
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                <div>
+                  <h4 className="text-xl font-bold text-foreground mb-2">GitHub Contributions</h4>
+                  <p className="text-muted text-sm max-w-xl">
+                    Tracking my open source journey and code contributions through GitHub activity.
+                  </p>
+                </div>
+                <Button
+                  as="a"
+                  href="https://github.com/yourusername"
+                  target="_blank"
+                  color="primary"
+                  variant="flat"
+                  radius="full"
+                  size="sm"
+                  className="mt-4 md:mt-0"
+                  startContent={<FiGithub />}
+                >
+                  View Profile
+                </Button>
+              </div>
+              
+              <div className="relative bg-card rounded-xl p-6 border border-border">
+                <div className="flex justify-between mb-6">
+                  <div className="text-sm text-muted">
+                    <span className="font-medium text-foreground">1,243</span> contributions in the last year
+                  </div>
+                  <div className="text-sm text-muted">
+                    <span className="font-medium text-foreground">Oct 2022</span> - <span className="font-medium text-foreground">Oct 2023</span>
+                  </div>
+                </div>
+                
+                {/* GitHub-style contribution grid */}
+                <div className="grid grid-cols-52 gap-1 h-24 mb-4">
+                  {Array.from({ length: 52 }).map((_, weekIndex) => (
+                    <div key={`week-${weekIndex}`} className="grid grid-rows-7 gap-1">
+                      {Array.from({ length: 7 }).map((_, dayIndex) => {
+                        // Generate random contribution levels (0-4) for demo
+                        const level = Math.floor(Math.random() * 5);
+                        let bgColor = "bg-default-100";
+                        
+                        if (level === 1) bgColor = "bg-primary/20";
+                        if (level === 2) bgColor = "bg-primary/40";
+                        if (level === 3) bgColor = "bg-primary/60";
+                        if (level === 4) bgColor = "bg-primary/80";
+                        
+                        return (
+                          <div 
+                            key={`day-${weekIndex}-${dayIndex}`} 
+                            className={`w-2 h-2 rounded-sm ${bgColor}`}
+                          />
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="flex justify-between items-center text-xs text-muted">
+                  <div>Less</div>
+                  <div className="flex gap-1">
+                    <div className="w-2 h-2 rounded-sm bg-default-100"></div>
+                    <div className="w-2 h-2 rounded-sm bg-primary/20"></div>
+                    <div className="w-2 h-2 rounded-sm bg-primary/40"></div>
+                    <div className="w-2 h-2 rounded-sm bg-primary/60"></div>
+                    <div className="w-2 h-2 rounded-sm bg-primary/80"></div>
+                  </div>
+                  <div>More</div>
+                </div>
+              </div>
+              
+              {/* Language Distribution */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+                <div className="bg-card rounded-xl p-6 border border-border">
+                  <h5 className="text-lg font-semibold text-foreground mb-4">Top Languages</h5>
+                  <div className="space-y-4">
+                    {[
+                      { name: "TypeScript", percentage: 45, color: "#3178C6" },
+                      { name: "JavaScript", percentage: 30, color: "#F7DF1E" },
+                      { name: "HTML/CSS", percentage: 15, color: "#E34F26" },
+                      { name: "Python", percentage: 10, color: "#3776AB" }
+                    ].map((lang) => (
+                      <div key={lang.name}>
+                        <div className="flex justify-between text-sm mb-1">
+                          <span className="font-medium text-foreground">{lang.name}</span>
+                          <span className="text-muted">{lang.percentage}%</span>
+                        </div>
+                        <div className="h-2 w-full bg-default-100 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full rounded-full" 
+                            style={{ 
+                              width: `${lang.percentage}%`,
+                              backgroundColor: lang.color 
+                            }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="bg-card rounded-xl p-6 border border-border">
+                  <h5 className="text-lg font-semibold text-foreground mb-4">Repository Stats</h5>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      { label: "Repositories", value: "32" },
+                      { label: "Stars", value: "127" },
+                      { label: "Forks", value: "49" },
+                      { label: "Pull Requests", value: "93" }
+                    ].map((stat) => (
+                      <div key={stat.label} className="text-center p-3 glass-premium rounded-lg">
+                        <div className="text-xl font-bold text-foreground">{stat.value}</div>
+                        <div className="text-xs text-muted">{stat.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </RevealOnScroll>
         </div>
       </div>
     </section>
