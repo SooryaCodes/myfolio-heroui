@@ -368,7 +368,7 @@ export const Hero = () => {
           </motion.div>
 
           {/* Hero 3D animated image section */}
-          <div className="lg:col-span-5 mt-8 lg:mt-0">
+          <div className="lg:col-span-5 mt-8 lg:mt-0 hidden lg:block">
             <div className="relative w-full max-w-md">
               {/* Decorative elements */}
               <motion.div

@@ -33,33 +33,44 @@ export const blogPosts: BlogPost[] = [
   {
     id: 1,
     slug: "getting-started-with-nextjs",
-    title: "Getting Started with Next.js: A Beginner&apos;s Guide",
+    title: "Getting Started with Next.js: A Beginner's Guide",
     excerpt:
       "Learn the basics of Next.js and how to create your first app with this popular React framework.",
     content: `
-      <p>Next.js has become one of the most popular frameworks for building React applications. It provides a great developer experience with features like server-side rendering, static site generation, and easy API routes. In this guide, we&apos;ll walk through the basics of getting started with Next.js.</p>
+      <div class="mb-8">
+        <p>Next.js has become one of the most popular frameworks for building React applications. It provides a great developer experience with features like server-side rendering, static site generation, and easy API routes. In this guide, we&apos;ll walk through the basics of getting started with Next.js.</p>
+      </div>
       
-      <h2>What is Next.js?</h2>
-      <p>Next.js is a React framework that enables functionality like server-side rendering, static site generation, and API routes. It&apos;s designed to provide the best developer experience with all the features you need for production.</p>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">What is Next.js?</h2>
+        <p>Next.js is a React framework that enables functionality like server-side rendering, static site generation, and API routes. It&apos;s designed to provide the best developer experience with all the features you need for production.</p>
+        
+        <div class="mt-4 p-4 bg-primary/5 rounded-lg border border-primary/10">
+          <p class="text-sm font-medium"><span class="text-primary">💡 Pro Tip:</span> Next.js is maintained by Vercel and has excellent documentation at <a href="https://nextjs.org/docs" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">nextjs.org/docs</a>.</p>
+        </div>
+      </div>
       
-      <h2>Setting Up Your First Next.js Project</h2>
-      <p>To create a new Next.js app, you can use the following command:</p>
-      
-      <pre><code>npx create-next-app@latest my-next-app</code></pre>
-      
-      <p>This will set up a new Next.js project with a default template. You can then navigate to the project directory and start the development server:</p>
-      
-      <pre><code>cd my-next-app
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Setting Up Your First Next.js Project</h2>
+        <p>To create a new Next.js app, you can use the following command:</p>
+        
+        <pre><code>npx create-next-app@latest my-next-app</code></pre>
+        
+        <p class="mt-4">This will set up a new Next.js project with a default template. You can then navigate to the project directory and start the development server:</p>
+        
+        <pre><code>cd my-next-app
 npm run dev</code></pre>
+        
+        <p class="mt-4">Your Next.js app will now be running at <a href="http://localhost:3000" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">http://localhost:3000</a>.</p>
+      </div>
       
-      <p>Your Next.js app will now be running at <a href="http://localhost:3000">http://localhost:3000</a>.</p>
-      
-      <h2>Pages in Next.js</h2>
-      <p>Next.js uses a file-system based router. Each file in the &apos;pages&apos; directory becomes a route in your application. For example, if you create a file at &apos;pages/about.js&apos;, it will be accessible at &apos;/about&apos;.</p>
-      
-      <p>Here&apos;s a simple example of a page component:</p>
-      
-      <pre><code>// pages/about.js
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Pages in Next.js</h2>
+        <p>Next.js uses a file-system based router. Each file in the &apos;pages&apos; directory becomes a route in your application. For example, if you create a file at &apos;pages/about.js&apos;, it will be accessible at &apos;/about&apos;.</p>
+        
+        <p class="mt-4">Here&apos;s a simple example of a page component:</p>
+        
+        <pre><code>// pages/about.js
 export default function About() {
   return (
     <div>
@@ -68,20 +79,43 @@ export default function About() {
     </div>
   );
 }</code></pre>
+      </div>
       
-      <h2>Data Fetching</h2>
-      <p>Next.js provides several ways to fetch data for your pages:</p>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Project Structure</h2>
+        <p>A typical Next.js project has the following structure:</p>
+        
+        <pre><code>my-next-app/
+├── node_modules/
+├── pages/
+│   ├── _app.js
+│   ├── index.js
+│   └── about.js
+├── public/
+│   └── favicon.ico
+├── styles/
+│   └── globals.css
+├── .gitignore
+├── next.config.js
+├── package.json
+└── README.md</code></pre>
+      </div>
       
-      <ul>
-        <li><strong>getStaticProps</strong>: Fetch data at build time</li>
-        <li><strong>getServerSideProps</strong>: Fetch data on each request</li>
-        <li><strong>getStaticPaths</strong>: Specify dynamic routes to pre-render based on data</li>
-      </ul>
-      
-      <p>Here&apos;s an example using getStaticProps:</p>
-      
-      <pre><code>export async function getStaticProps() {
-  const res = await fetch(&apos;https://api.example.com/data&apos;);
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Data Fetching</h2>
+        <p>Next.js provides several ways to fetch data for your pages:</p>
+        
+        <ul class="list-disc pl-6 mt-4 space-y-2">
+          <li><strong>getStaticProps</strong>: Fetch data at build time</li>
+          <li><strong>getServerSideProps</strong>: Fetch data on each request</li>
+          <li><strong>getStaticPaths</strong>: Specify dynamic routes to pre-render based on data</li>
+        </ul>
+        
+        <p class="mt-4">Here&apos;s an example using getStaticProps:</p>
+        
+        <pre><code>// pages/blog.js
+export async function getStaticProps() {
+  const res = await fetch('https://api.example.com/data');
   const data = await res.json();
   
   return {
@@ -92,11 +126,62 @@ export default function About() {
 }
 
 export default function Blog({ data }) {
-  // Render data...
+  return (
+    <div>
+      <h1>Blog Posts</h1>
+      <ul>
+        {data.map((post) => (
+          <li key={post.id}>{post.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
 }</code></pre>
+      </div>
       
-      <h2>Conclusion</h2>
-      <p>Next.js provides a great foundation for building modern web applications with React. Its features like server-side rendering, static site generation, and API routes make it a powerful choice for developers. As you continue learning, you&apos;ll discover more advanced features that can help you build better applications.</p>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Built-in Features</h2>
+        <p>Next.js comes with several built-in features that make development easier:</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div class="p-4 border border-foreground/10 rounded-lg">
+            <h3 class="font-bold mb-2">API Routes</h3>
+            <p class="text-sm">Create API endpoints as Node.js serverless functions</p>
+          </div>
+          <div class="p-4 border border-foreground/10 rounded-lg">
+            <h3 class="font-bold mb-2">Image Optimization</h3>
+            <p class="text-sm">Automatic image optimization with the Image component</p>
+          </div>
+          <div class="p-4 border border-foreground/10 rounded-lg">
+            <h3 class="font-bold mb-2">Fast Refresh</h3>
+            <p class="text-sm">Instant feedback during development</p>
+          </div>
+          <div class="p-4 border border-foreground/10 rounded-lg">
+            <h3 class="font-bold mb-2">CSS Support</h3>
+            <p class="text-sm">Built-in support for CSS Modules, Sass, etc.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Conclusion</h2>
+        <p>Next.js provides a great foundation for building modern web applications with React. Its features like server-side rendering, static site generation, and API routes make it a powerful choice for developers. As you continue learning, you&apos;ll discover more advanced features that can help you build better applications.</p>
+        
+        <div class="mt-6 p-5 bg-foreground/5 rounded-xl flex gap-4 items-start">
+          <div class="text-primary flex-shrink-0 mt-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          </div>
+          <div>
+            <h3 class="font-bold mb-2">Next Steps</h3>
+            <p>Ready to dive deeper? Check out these resources:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1 text-sm">
+              <li><a href="https://nextjs.org/learn" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Next.js Tutorial</a></li>
+              <li><a href="https://github.com/vercel/next.js/tree/canary/examples" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Next.js Examples</a></li>
+              <li><a href="https://nextjs.org/docs" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Official Documentation</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     `,
     author,
     category: "Web Development",
@@ -114,33 +199,51 @@ export default function Blog({ data }) {
     excerpt:
       "Explore advanced techniques for using CSS Grid Layout to create complex web layouts with ease.",
     content: `
-      <p>CSS Grid Layout has revolutionized how we create web layouts. In this post, we&apos;ll explore some advanced techniques and best practices for working with CSS Grid.</p>
+      <div class="mb-8">
+        <p>CSS Grid Layout has revolutionized how we create web layouts. In this post, we&apos;ll explore some advanced techniques and best practices for working with CSS Grid.</p>
+      </div>
       
-      <h2>Why CSS Grid?</h2>
-      <p>CSS Grid Layout provides a two-dimensional layout system for the web, making it possible to lay out items in rows and columns. Unlike Flexbox, which is mostly one-dimensional, Grid is designed for two-dimensional layouts.</p>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Why CSS Grid?</h2>
+        <p>CSS Grid Layout provides a two-dimensional layout system for the web, making it possible to lay out items in rows and columns. Unlike Flexbox, which is mostly one-dimensional, Grid is designed for two-dimensional layouts.</p>
+        
+        <div class="mt-4 p-4 bg-primary/5 rounded-lg border border-primary/10">
+          <p class="text-sm font-medium"><span class="text-primary">💡 Pro Tip:</span> Use Grid for overall page layout and Flexbox for components within that layout. They work great together!</p>
+        </div>
+      </div>
       
-      <h2>Basic Grid Setup</h2>
-      <p>To create a basic grid, you need to set the display property to &apos;grid&apos; on the container element:</p>
-      
-      <pre><code>.container {
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Basic Grid Setup</h2>
+        <p>To create a basic grid, you need to set the display property to &apos;grid&apos; on the container element:</p>
+        
+        <pre><code>.container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
 }</code></pre>
+        
+        <p class="mt-4">This creates a grid with three equal-width columns and a 20px gap between grid items.</p>
+        
+        <div class="mt-6 grid grid-cols-3 gap-4">
+          <div class="bg-foreground/10 rounded-lg p-4 text-center font-medium">Column 1</div>
+          <div class="bg-foreground/10 rounded-lg p-4 text-center font-medium">Column 2</div>
+          <div class="bg-foreground/10 rounded-lg p-4 text-center font-medium">Column 3</div>
+        </div>
+      </div>
       
-      <p>This creates a grid with three equal-width columns and a 20px gap between grid items.</p>
-      
-      <h2>Advanced Grid Techniques</h2>
-      
-      <h3>1. Using Grid Areas</h3>
-      <p>Grid areas provide a visual way to define the layout of your grid:</p>
-      
-      <pre><code>.container {
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Advanced Grid Techniques</h2>
+        
+        <div class="mb-6">
+          <h3 class="text-xl font-bold mb-3">1. Using Grid Areas</h3>
+          <p>Grid areas provide a visual way to define the layout of your grid:</p>
+          
+          <pre><code>.container {
   display: grid;
   grid-template-areas:
-    &quot;header header header&quot;
-    &quot;sidebar content content&quot;
-    &quot;footer footer footer&quot;;
+    "header header header"
+    "sidebar content content"
+    "footer footer footer";
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
@@ -150,33 +253,51 @@ export default function Blog({ data }) {
 .sidebar { grid-area: sidebar; }
 .content { grid-area: content; }
 .footer { grid-area: footer; }</code></pre>
-      
-      <h3>2. Auto-Fit and Auto-Fill</h3>
-      <p>For responsive layouts, auto-fit and auto-fill are incredibly useful:</p>
-      
-      <pre><code>.container {
+          
+          <div class="mt-4 p-4 bg-foreground/5 rounded-lg">
+            <div class="grid grid-rows-[auto_1fr_auto] gap-2">
+              <div class="bg-primary/20 p-2 rounded text-center">Header</div>
+              <div class="grid grid-cols-[1fr_2fr] gap-2">
+                <div class="bg-primary/20 p-2 rounded text-center">Sidebar</div>
+                <div class="bg-primary/20 p-2 rounded text-center">Content</div>
+              </div>
+              <div class="bg-primary/20 p-2 rounded text-center">Footer</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mb-6">
+          <h3 class="text-xl font-bold mb-3">2. Auto-Fit and Auto-Fill</h3>
+          <p>For responsive layouts, auto-fit and auto-fill are incredibly useful:</p>
+          
+          <pre><code>.container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   grid-gap: 20px;
 }</code></pre>
-      
-      <p>This creates a grid where the number of columns adjusts automatically based on the available space.</p>
-      
-      <h3>3. Using Grid Alignment</h3>
-      <p>CSS Grid provides powerful alignment properties:</p>
-      
-      <pre><code>.container {
+          
+          <p class="mt-3">This creates a grid where the number of columns adjusts automatically based on the available space.</p>
+        </div>
+        
+        <div class="mb-6">
+          <h3 class="text-xl font-bold mb-3">3. Using Grid Alignment</h3>
+          <p>CSS Grid provides powerful alignment properties:</p>
+          
+          <pre><code>.container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 20px;
   justify-items: center; /* Horizontal alignment */
   align-items: center; /* Vertical alignment */
 }</code></pre>
+        </div>
+      </div>
       
-      <h2>Practical Example: Magazine Layout</h2>
-      <p>Here&apos;s how you might create a magazine-style layout using CSS Grid:</p>
-      
-      <pre><code>.magazine-layout {
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Practical Example: Magazine Layout</h2>
+        <p>Here&apos;s how you might create a magazine-style layout using CSS Grid:</p>
+        
+        <pre><code>.magazine-layout {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: minmax(100px, auto);
@@ -197,12 +318,106 @@ export default function Blog({ data }) {
   grid-column: 3 / 5;
   grid-row: 2 / 4;
 }</code></pre>
+        
+        <div class="mt-6 bg-foreground/5 p-5 rounded-lg">
+          <div class="grid grid-cols-4 grid-rows-3 gap-3 h-[300px]">
+            <div class="bg-primary/30 col-span-2 row-span-2 rounded-lg p-3 flex items-center justify-center font-bold">Feature Article</div>
+            <div class="bg-primary/20 col-span-2 rounded-lg p-3 flex items-center justify-center font-bold">Secondary Article</div>
+            <div class="bg-primary/10 col-span-2 row-span-2 rounded-lg p-3 flex items-center justify-center font-bold">Sidebar Content</div>
+            <div class="bg-primary/20 col-span-2 rounded-lg p-3 flex items-center justify-center font-bold">Additional Content</div>
+          </div>
+        </div>
+      </div>
       
-      <h2>Browser Support</h2>
-      <p>CSS Grid is now supported in all modern browsers. For older browsers, you may need to provide fallbacks or use a feature detection approach.</p>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Common Grid Patterns</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+          <div class="border border-foreground/10 rounded-lg overflow-hidden">
+            <div class="bg-foreground/5 p-3 font-bold">Holy Grail Layout</div>
+            <div class="p-4">
+              <div class="grid grid-rows-[auto_1fr_auto] gap-2 h-[200px]">
+                <div class="bg-foreground/10 p-2 rounded">Header</div>
+                <div class="grid grid-cols-[1fr_3fr_1fr] gap-2">
+                  <div class="bg-foreground/10 p-2 rounded">Left Sidebar</div>
+                  <div class="bg-foreground/10 p-2 rounded">Main Content</div>
+                  <div class="bg-foreground/10 p-2 rounded">Right Sidebar</div>
+                </div>
+                <div class="bg-foreground/10 p-2 rounded">Footer</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="border border-foreground/10 rounded-lg overflow-hidden">
+            <div class="bg-foreground/5 p-3 font-bold">Card Grid</div>
+            <div class="p-4">
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-foreground/10 p-2 rounded h-20"></div>
+                <div class="bg-foreground/10 p-2 rounded h-20"></div>
+                <div class="bg-foreground/10 p-2 rounded h-20"></div>
+                <div class="bg-foreground/10 p-2 rounded h-20"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       
-      <h2>Conclusion</h2>
-      <p>CSS Grid Layout is a powerful tool that can simplify complex layout tasks. By understanding its capabilities and combining it with other CSS features like Flexbox when appropriate, you can create sophisticated, responsive layouts with clean, maintainable code.</p>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Browser Support</h2>
+        <p>CSS Grid is now supported in all modern browsers. For older browsers, you may need to provide fallbacks or use a feature detection approach.</p>
+        
+        <div class="mt-4 p-4 bg-foreground/5 rounded-lg">
+          <h3 class="font-bold mb-2">Browser Support Table</h3>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-foreground/10">
+              <thead>
+                <tr>
+                  <th class="px-4 py-2 text-left">Browser</th>
+                  <th class="px-4 py-2 text-left">Version</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-foreground/10">
+                <tr>
+                  <td class="px-4 py-2">Chrome</td>
+                  <td class="px-4 py-2">57+</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2">Firefox</td>
+                  <td class="px-4 py-2">52+</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2">Safari</td>
+                  <td class="px-4 py-2">10.1+</td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-2">Edge</td>
+                  <td class="px-4 py-2">16+</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Conclusion</h2>
+        <p>CSS Grid Layout is a powerful tool that can simplify complex layout tasks. By understanding its capabilities and combining it with other CSS features like Flexbox when appropriate, you can create sophisticated, responsive layouts with clean, maintainable code.</p>
+        
+        <div class="mt-6 p-5 bg-foreground/5 rounded-xl flex gap-4 items-start">
+          <div class="text-primary flex-shrink-0 mt-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          </div>
+          <div>
+            <h3 class="font-bold mb-2">Further Resources</h3>
+            <p>Want to learn more about CSS Grid? Check out these resources:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1 text-sm">
+              <li><a href="https://css-tricks.com/snippets/css/complete-guide-grid/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">CSS-Tricks: A Complete Guide to Grid</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">MDN Web Docs: CSS Grid Layout</a></li>
+              <li><a href="https://gridbyexample.com/" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Grid by Example</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     `,
     author,
     category: "CSS",
@@ -220,15 +435,24 @@ export default function Blog({ data }) {
     excerpt:
       "Learn how to manage state effectively in your React applications using hooks.",
     content: `
-      <p>React Hooks have transformed how we manage state in React applications. In this article, we&apos;ll explore effective patterns for state management using hooks.</p>
+      <div class="mb-8">
+        <p>React Hooks have transformed how we manage state in React applications. In this article, we&apos;ll explore effective patterns for state management using hooks.</p>
+      </div>
       
-      <h2>Introduction to React Hooks</h2>
-      <p>Introduced in React 16.8, hooks allow you to use state and other React features without writing a class. The most commonly used hooks are useState, useEffect, useContext, and useReducer.</p>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Introduction to React Hooks</h2>
+        <p>Introduced in React 16.8, hooks allow you to use state and other React features without writing a class. The most commonly used hooks are useState, useEffect, useContext, and useReducer.</p>
+        
+        <div class="mt-4 p-4 bg-primary/5 rounded-lg border border-primary/10">
+          <p class="text-sm font-medium"><span class="text-primary">💡 Pro Tip:</span> Hooks can only be called at the top level of React function components or custom hooks. They can&apos;t be called inside loops, conditions, or nested functions.</p>
+        </div>
+      </div>
       
-      <h2>Basic State Management with useState</h2>
-      <p>The useState hook is the simplest way to add state to a functional component:</p>
-      
-      <pre><code>import React, { useState } from 'react';
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Basic State Management with useState</h2>
+        <p>The useState hook is the simplest way to add state to a functional component:</p>
+        
+        <pre><code>import React, { useState } from 'react';
 
 function Counter() {
   const [count, setCount] = useState(0);
@@ -242,13 +466,20 @@ function Counter() {
     </div>
   );
 }</code></pre>
+        
+        <p class="mt-4">This simple example demonstrates how to:</p>
+        <ul class="list-disc pl-6 mt-2 space-y-2">
+          <li>Initialize state with a default value (0)</li>
+          <li>Read the current state value (count)</li>
+          <li>Update the state with a setter function (setCount)</li>
+        </ul>
+      </div>
       
-      <h2>Complex State with useReducer</h2>
-      <p>For more complex state logic, useReducer can be more appropriate:</p>
-      
-      <pre><code>import React, { useReducer } from 'react';
-
-const initialState = { count: 0 };
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Complex State with useReducer</h2>
+        <p>For more complex state logic, useReducer can be more appropriate:</p>
+        
+        <pre><code>import React, { useReducer } from 'react';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -256,124 +487,302 @@ function reducer(state, action) {
       return { count: state.count + 1 };
     case 'decrement':
       return { count: state.count - 1 };
+    case 'reset':
+      return { count: 0 };
     default:
-      throw new Error();
+      throw new Error('Unsupported action type');
   }
 }
 
 function Counter() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
   
   return (
     <div>
-      Count: {state.count}
-      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+      <p>Count: {state.count}</p>
       <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+      <button onClick={() => dispatch({ type: 'reset' })}>Reset</button>
     </div>
   );
 }</code></pre>
+        
+        <div class="mt-6 p-4 bg-foreground/5 rounded-lg">
+          <h3 class="font-bold mb-2">When to use useReducer vs useState</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p class="font-medium mb-2">Use useState when:</p>
+              <ul class="list-disc pl-5 space-y-1 text-sm">
+                <li>Managing independent simple state values</li>
+                <li>State logic is simple</li>
+                <li>Small number of state transitions</li>
+              </ul>
+            </div>
+            <div>
+              <p class="font-medium mb-2">Use useReducer when:</p>
+              <ul class="list-disc pl-5 space-y-1 text-sm">
+                <li>Complex state logic with multiple sub-values</li>
+                <li>Next state depends on previous state</li>
+                <li>Many different state transitions</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
       
-      <h2>Sharing State with Context</h2>
-      <p>The Context API combined with hooks allows you to share state across components without prop drilling:</p>
-      
-      <pre><code>import React, { createContext, useContext, useReducer } from 'react';
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Sharing State with Context API</h2>
+        <p>The Context API combined with hooks provides a powerful way to share state across components without prop drilling:</p>
+        
+        <pre><code>// ThemeContext.js
+import React, { createContext, useContext, useState } from 'react';
 
-// Create a context
-const CountContext = createContext();
+const ThemeContext = createContext();
 
-// Create a provider component
-function CountProvider({ children }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+export function ThemeProvider({ children }) {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  
+  const toggleTheme = () => {
+    setIsDarkMode(prevMode => !prevMode);
+  };
   
   return (
-    <CountContext.Provider value={{ state, dispatch }}>
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
       {children}
-    </CountContext.Provider>
+    </ThemeContext.Provider>
   );
 }
 
-// Custom hook to use the count context
-function useCount() {
-  const context = useContext(CountContext);
-  if (context === undefined) {
-    throw new Error('useCount must be used within a CountProvider');
-  }
-  return context;
+export function useTheme() {
+  return useContext(ThemeContext);
 }
 
-// Example component using the context
-function CountDisplay() {
-  const { state } = useCount();
-  return <div>Count: {state.count}</div>;
-}
+// App.js
+import { ThemeProvider } from './ThemeContext';
+import ThemedButton from './ThemedButton';
 
-function CountButtons() {
-  const { dispatch } = useCount();
+function App() {
   return (
-    <div>
-      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
-      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
-    </div>
+    <ThemeProvider>
+      <div className="app">
+        <h1>Theme Example</h1>
+        <ThemedButton />
+      </div>
+    </ThemeProvider>
+  );
+}
+
+// ThemedButton.js
+import { useTheme } from './ThemeContext';
+
+function ThemedButton() {
+  const { isDarkMode, toggleTheme } = useTheme();
+  
+  return (
+    <button
+      onClick={toggleTheme}
+      style={{
+        backgroundColor: isDarkMode ? '#333' : '#fff',
+        color: isDarkMode ? '#fff' : '#333',
+        border: '1px solid',
+        padding: '8px 16px',
+      }}
+    >
+      Toggle Theme: Currently {isDarkMode ? 'Dark' : 'Light'}
+    </button>
   );
 }</code></pre>
+      </div>
       
-      <h2>Custom Hooks for Reusable Logic</h2>
-      <p>Custom hooks allow you to extract component logic into reusable functions:</p>
-      
-      <pre><code>function useLocalStorage(key, initialValue) {
-  // State to store our value
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Custom Hooks for Reusable Logic</h2>
+        <p>Custom hooks allow you to extract component logic into reusable functions:</p>
+        
+        <pre><code>// useLocalStorage.js
+import { useState, useEffect } from 'react';
+
+function useLocalStorage(key, initialValue) {
+  // Get stored value from localStorage or use initialValue
   const [storedValue, setStoredValue] = useState(() => {
     try {
-      // Get from local storage by key
       const item = window.localStorage.getItem(key);
-      // Parse stored json or if none return initialValue
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      // If error also return initialValue
-      console.log(error);
+      console.error(error);
       return initialValue;
     }
   });
-
-  // Return a wrapped version of useState's setter function
-  const setValue = value => {
+  
+  // Update localStorage when storedValue changes
+  useEffect(() => {
     try {
-      // Allow value to be a function so we have same API as useState
-      const valueToStore =
-        value instanceof Function ? value(storedValue) : value;
-      // Save state
-      setStoredValue(valueToStore);
-      // Save to local storage
-      window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      window.localStorage.setItem(key, JSON.stringify(storedValue));
     } catch (error) {
-      // A more advanced implementation would handle the error case
-      console.log(error);
+      console.error(error);
     }
-  };
+  }, [key, storedValue]);
+  
+  return [storedValue, setStoredValue];
+}
 
-  return [storedValue, setValue];
+// Using the custom hook
+function PreferencesForm() {
+  const [preferences, setPreferences] = useLocalStorage('user-preferences', {
+    notifications: true,
+    theme: 'light',
+  });
+  
+  const updatePreferences = (e) => {
+    const { name, checked, value } = e.target;
+    setPreferences(prev => ({
+      ...prev,
+      [name]: name === 'theme' ? value : checked,
+    }));
+  };
+  
+  return (
+    <form>
+      <label>
+        <input
+          type="checkbox"
+          name="notifications"
+          checked={preferences.notifications}
+          onChange={updatePreferences}
+        />
+        Enable Notifications
+      </label>
+      <select
+        name="theme"
+        value={preferences.theme}
+        onChange={updatePreferences}
+      >
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="system">System</option>
+      </select>
+    </form>
+  );
 }</code></pre>
+      </div>
       
-      <h2>When to Use Each Hook</h2>
-      <p>Here&apos;s a quick guide on when to use different hooks for state management:</p>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Advanced Patterns</h2>
+        
+        <div class="mb-6">
+          <h3 class="text-xl font-bold mb-3">1. State Initialization Patterns</h3>
+          <p>When initial state is expensive to compute, use the lazy initialization pattern:</p>
+          
+          <pre><code>// Expensive calculation
+function calculateInitialCount() {
+  console.log('Computing initial state');
+  return Math.floor(Math.random() * 100);
+}
+
+function Counter() {
+  // Bad: Recalculates on every render
+  // const [count, setCount] = useState(calculateInitialCount());
+  
+  // Good: Only calculates once on initial render
+  const [count, setCount] = useState(() => calculateInitialCount());
+  
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}</code></pre>
+        </div>
+        
+        <div class="mb-6">
+          <h3 class="text-xl font-bold mb-3">2. State Updates Based on Previous State</h3>
+          <p>When updating state based on its previous value, use the functional update form:</p>
+          
+          <pre><code>function Counter() {
+  const [count, setCount] = useState(0);
+  
+  const increment = () => {
+    // Bad: May not use latest state if there are multiple updates
+    // setCount(count + 1);
+    
+    // Good: Guarantees update is based on latest state
+    setCount(prevCount => prevCount + 1);
+  };
+  
+  const incrementTwice = () => {
+    // This will correctly increment by 2
+    increment();
+    increment();
+  };
+  
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={incrementTwice}>Increment Twice</button>
+    </div>
+  );
+}</code></pre>
+        </div>
+      </div>
       
-      <ul>
-        <li><strong>useState</strong>: For simple state that doesn&apos;t require complex logic.</li>
-        <li><strong>useReducer</strong>: For state that involves complex transitions or when the next state depends on the previous one.</li>
-        <li><strong>useContext</strong>: For sharing state that needs to be accessed by many components at different nesting levels.</li>
-        <li><strong>Custom Hooks</strong>: For extracting and reusing stateful logic across components.</li>
-      </ul>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Performance Optimizations</h2>
+        <p>React provides several hooks to optimize component performance:</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+          <div class="border border-foreground/10 rounded-lg overflow-hidden">
+            <div class="bg-foreground/5 p-3 font-bold">useMemo</div>
+            <div class="p-4">
+              <p class="text-sm mb-3">Memoize expensive calculations to prevent unnecessary recalculations on re-renders.</p>
+              <pre><code>const memoizedValue = useMemo(() => {
+  return computeExpensiveValue(a, b);
+}, [a, b]);</code></pre>
+            </div>
+          </div>
+          
+          <div class="border border-foreground/10 rounded-lg overflow-hidden">
+            <div class="bg-foreground/5 p-3 font-bold">useCallback</div>
+            <div class="p-4">
+              <p class="text-sm mb-3">Memoize callback functions to prevent unnecessary re-renders of child components.</p>
+              <pre><code>const memoizedCallback = useCallback(
+  () => {
+    doSomething(a, b);
+  },
+  [a, b]
+);</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
       
-      <h2>Conclusion</h2>
-      <p>React Hooks provide a powerful and flexible way to manage state in your applications. By combining useState, useReducer, useContext, and custom hooks, you can create clean, maintainable code while avoiding the complexity of external state management libraries in many cases.</p>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold mb-4">Conclusion</h2>
+        <p>React Hooks provide a powerful and elegant way to manage state and side effects in functional components. By understanding these patterns and best practices, you can write more maintainable and efficient React applications.</p>
+        
+        <div class="mt-6 p-5 bg-foreground/5 rounded-xl flex gap-4 items-start">
+          <div class="text-primary flex-shrink-0 mt-1">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          </div>
+          <div>
+            <h3 class="font-bold mb-2">Further Reading</h3>
+            <p>Want to dive deeper into React Hooks? Check out these resources:</p>
+            <ul class="list-disc pl-5 mt-2 space-y-1 text-sm">
+              <li><a href="https://reactjs.org/docs/hooks-intro.html" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">React Hooks Documentation</a></li>
+              <li><a href="https://reactjs.org/docs/hooks-rules.html" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Rules of Hooks</a></li>
+              <li><a href="https://reactjs.org/docs/hooks-reference.html" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline">Hooks API Reference</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     `,
     author,
     category: "React",
-    tags: ["React", "Hooks", "State Management", "JavaScript"],
-    publishDate: "2023-10-15",
+    tags: ["React", "Hooks", "JavaScript", "State Management"],
+    publishDate: "2023-11-15",
     readTime: "12 min read",
     image:
-      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+      "https://images.unsplash.com/photo-1555066931-bf19f8fd1085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     featured: false,
   },
   {

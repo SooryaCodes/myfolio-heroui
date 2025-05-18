@@ -8,6 +8,8 @@ import { Badge } from "@heroui/badge";
 import { Divider } from "@heroui/divider";
 import { Link } from "@heroui/link";
 import { Avatar } from "@heroui/avatar";
+import { Code } from "@heroui/code";
+import { Snippet } from "@heroui/snippet";
 import {
   FiArrowLeft,
   FiCalendar,
@@ -62,6 +64,20 @@ export default async function BlogPostPage({ params }: Props) {
     .filter((p) => p.id !== post.id && p.category === post.category)
     .sort(() => Math.random() - 0.5) // Shuffle array to get random related posts
     .slice(0, 2); // Take just 2 related posts
+
+  // Function to convert HTML content with custom handling for code blocks
+  const processContent = (content: string) => {
+    // Replace standard HTML code blocks with Snippet component
+    const processedContent = content.replace(
+      /<pre><code>([\s\S]*?)<\/code><\/pre>/g,
+      (match, codeContent) => {
+        // The code content is captured in the first group
+        return `<div class="snippet-container" data-code="${encodeURIComponent(codeContent.trim())}"></div>`;
+      }
+    );
+    
+    return processedContent;
+  };
 
   return (
     <main className="w-full min-h-screen pt-20 pb-16 bg-background/50">
@@ -165,8 +181,40 @@ export default async function BlogPostPage({ params }: Props) {
               <Card className="border-none shadow-lg bg-card/75 backdrop-blur-sm">
                 <CardBody className="px-5 md:px-12 py-12">
                   <div
-                    dangerouslySetInnerHTML={{ __html: post.content }}
+                    dangerouslySetInnerHTML={{ __html: processContent(post.content) }}
                     className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-p:text-foreground/80 prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-strong:text-foreground"
+                  />
+                  
+                  {/* Client component for rendering code snippets */}
+                  <script
+                    dangerouslySetInnerHTML={{
+                      __html: `
+                        document.addEventListener('DOMContentLoaded', function() {
+                          const containers = document.querySelectorAll('.snippet-container');
+                          containers.forEach(container => {
+                            const code = decodeURIComponent(container.getAttribute('data-code'));
+                            const language = code.includes('import ') || code.includes('export ') ? 'jsx' : 
+                                          code.includes('.css') ? 'css' : 
+                                          code.includes('<') && code.includes('>') ? 'html' : 'javascript';
+                            
+                            const snippet = document.createElement('div');
+                            snippet.className = 'my-6';
+                            snippet.innerHTML = \`
+                              <div class="rounded-lg overflow-hidden bg-black/80 dark:bg-white/10">
+                                <div class="px-4 py-2 bg-black/90 dark:bg-white/5 text-white/70 text-xs font-mono flex items-center justify-between">
+                                  <span>\${language}</span>
+                                  <button class="text-white/50 hover:text-white/90 transition-colors" onclick="navigator.clipboard.writeText(this.parentNode.nextSibling.textContent)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                  </button>
+                                </div>
+                                <pre class="p-4 overflow-x-auto text-sm font-mono text-white/90 dark:text-white/90">\${code}</pre>
+                              </div>
+                            \`;
+                            container.replaceWith(snippet);
+                          });
+                        });
+                      `,
+                    }}
                   />
                 </CardBody>
               </Card>
