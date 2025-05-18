@@ -21,7 +21,6 @@ import { Metadata } from "next";
 
 import { marketplaceProducts } from "@/datas/marketplace";
 import ProductTabs from "@/components/product-tabs";
-import { MarketplaceParams } from "@/types";
 
 // Define interfaces for marketplace product
 interface ProductFeature {
@@ -63,11 +62,13 @@ interface ExtendedMarketplaceProduct {
 }
 
 interface Props {
-  params: MarketplaceParams;
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const product = marketplaceProducts.find((p) => p.slug === params.slug);
+  const { slug } = await params;
+  const product = marketplaceProducts.find((p) => p.slug === slug);
 
   if (!product) {
     return {
@@ -82,9 +83,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ProductPage({ params }: Props) {
+export default async function ProductPage({ params }: Props) {
+  const { slug } = await params;
   const product = marketplaceProducts.find(
-    (p) => p.slug === params.slug,
+    (p) => p.slug === slug,
   ) as ExtendedMarketplaceProduct;
 
   if (!product) {

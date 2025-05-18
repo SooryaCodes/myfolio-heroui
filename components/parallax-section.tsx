@@ -89,7 +89,7 @@ export function AnimatedTextReveal({
                 ease: [0.33, 1, 0.68, 1],
                 delay: delay + i * 0.03,
               }}
-              viewport={{ once, threshold }}
+              viewport={{ once, amount: threshold }}
               whileInView={{ y: 0 }}
             >
               {word}

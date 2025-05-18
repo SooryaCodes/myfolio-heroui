@@ -39,6 +39,23 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
     onChange,
   });
 
+  // Get the wrapper props and extract only the needed properties
+  const wrapperProps = getWrapperProps();
+  const wrapperClassName = slots.wrapper({
+    class: clsx(
+      [
+        "w-10 h-10",
+        "glass-premium",
+        "hover:border-primary/30",
+        "rounded-full",
+        "flex items-center justify-center",
+        "transition-all duration-300",
+        "overflow-hidden",
+      ],
+      classNames?.wrapper,
+    ),
+  });
+
   return (
     <Component
       {...getBaseProps({
@@ -52,44 +69,32 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
       <VisuallyHidden>
         <input {...getInputProps()} />
       </VisuallyHidden>
-      <motion.div
-        {...getWrapperProps()}
-        className={slots.wrapper({
-          class: clsx(
-            [
-              "w-10 h-10",
-              "glass-premium",
-              "hover:border-primary/30",
-              "rounded-full",
-              "flex items-center justify-center",
-              "transition-all duration-300",
-              "overflow-hidden",
-            ],
-            classNames?.wrapper,
-          ),
-        })}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+
+      <div 
+        role={wrapperProps.role}
+        tabIndex={wrapperProps.tabIndex}
+        aria-hidden={wrapperProps["aria-hidden"]}
+        className={wrapperClassName}
       >
         <motion.div
+          className="absolute"
+          initial={false}
           animate={{
             y: isSelected && !isSSR ? 0 : -40,
             opacity: isSelected && !isSSR ? 1 : 0,
           }}
-          className="absolute"
-          initial={false}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           <MoonFilledIcon className="text-primary" size={20} />
         </motion.div>
 
         <motion.div
+          className="absolute"
+          initial={false}
           animate={{
             y: !isSelected || isSSR ? 0 : 40,
             opacity: !isSelected || isSSR ? 1 : 0,
           }}
-          className="absolute"
-          initial={false}
           transition={{ duration: 0.3, ease: "easeInOut" }}
         >
           <SunFilledIcon className="text-primary" size={20} />
@@ -97,7 +102,7 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
 
         {/* Fancy glow effect */}
         <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 rounded-full transition-opacity duration-300" />
-      </motion.div>
+      </div>
     </Component>
   );
 };

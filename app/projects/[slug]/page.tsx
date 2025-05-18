@@ -6,14 +6,15 @@ import { Metadata } from "next";
 import { FiExternalLink, FiGithub, FiArrowLeft, FiHome } from "react-icons/fi";
 
 import { projects } from "@/datas/projects";
-import { ProjectParams } from "@/types";
 
 interface Props {
-  params: ProjectParams;
+  params: Promise<{ slug: string }>;
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = projects.find((project) => project.slug === params.slug);
+  const { slug } = await params;
+  const project = projects.find((project) => project.slug === slug);
 
   if (!project) {
     return {
@@ -28,8 +29,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ProjectPage({ params }: Props) {
-  const project = projects.find((project) => project.slug === params.slug);
+export default async function ProjectPage({ params }: Props) {
+  const { slug } = await params;
+  const project = projects.find((project) => project.slug === slug);
 
   if (!project) {
     notFound();
