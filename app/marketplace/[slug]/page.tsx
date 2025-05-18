@@ -19,7 +19,6 @@ import {
   FiTag,
   FiCalendar,
 } from "react-icons/fi";
-import { Metadata } from "next";
 
 import { marketplaceProducts } from "@/datas/marketplace";
 import ProductTabs from "@/components/product-tabs";
@@ -68,22 +67,7 @@ interface Props {
   searchParams?: { [key: string]: string | string[] | undefined };
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = params;
-  const product = marketplaceProducts.find((p) => p.slug === slug);
 
-  if (!product) {
-    return {
-      title: "Product Not Found",
-      description: "The requested product could not be found.",
-    };
-  }
-
-  return {
-    title: `${product.title} | Marketplace`,
-    description: product.description,
-  };
-}
 
 const ProductPage = ({ params }: Props) => {
   const { slug } = params;
