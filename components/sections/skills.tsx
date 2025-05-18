@@ -9,7 +9,7 @@ import { Tabs, Tab } from "@heroui/tabs";
 import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
 import { Button } from "@heroui/button";
 import { RevealOnScroll } from "@/components/scroll-animations";
-import { FiCode, FiServer, FiPenTool, FiTool, FiChevronRight, FiExternalLink, FiGithub } from "react-icons/fi";
+import { FiCode, FiServer, FiPenTool, FiTool, FiChevronRight, FiExternalLink, FiGithub, FiClock, FiUsers } from "react-icons/fi";
 import Image from "next/image";
 
 // Define interface for skill type
@@ -420,10 +420,10 @@ export const Skills = () => {
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-16">
             {[
-              { label: "Years Experience", value: "6+", icon: "⏱️" },
-              { label: "Projects Completed", value: "75+", icon: "🚀" },
-              { label: "Satisfied Clients", value: "50+", icon: "🤝" },
-              { label: "GitHub Contributions", value: "1200+", icon: "🔥" }
+              { label: "Years Experience", value: "6+", icon: <FiClock className="text-primary" /> },
+              { label: "Projects Completed", value: "75+", icon: <FiCode className="text-primary" /> },
+              { label: "Satisfied Clients", value: "50+", icon: <FiUsers className="text-primary" /> },
+              { label: "GitHub Contributions", value: "1200+", icon: <FiGithub className="text-primary" /> }
             ].map((metric, index) => (
               <motion.div
                 key={metric.label}

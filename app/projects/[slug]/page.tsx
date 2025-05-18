@@ -6,14 +6,8 @@ import { Metadata } from "next";
 import { FiExternalLink, FiGithub, FiArrowLeft, FiHome } from "react-icons/fi";
 import { projects } from "@/datas/projects";
 
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const project = projects.find((p) => p.slug === params.slug);
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const project = projects.find(project => project.slug === params.slug);
   
   if (!project) {
     return {
@@ -28,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ProjectPage({ params }: Props) {
+export default function ProjectPage({ params }) {
   const project = projects.find(project => project.slug === params.slug);
 
   if (!project) {

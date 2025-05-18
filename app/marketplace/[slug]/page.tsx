@@ -51,13 +51,7 @@ interface ExtendedMarketplaceProduct {
   requirements?: ProductRequirement[];
 }
 
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
   const product = marketplaceProducts.find((p) => p.slug === params.slug);
   
   if (!product) {
@@ -73,7 +67,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ProductPage({ params }: Props) {
+export default function ProductPage({ params }: { params: { slug: string } }) {
   const product = marketplaceProducts.find((p) => p.slug === params.slug) as ExtendedMarketplaceProduct;
   
   if (!product) {

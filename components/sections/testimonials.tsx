@@ -110,7 +110,7 @@ const TestimonialCard = ({ testimonial, isActive = false, onClick }: { testimoni
       
       <blockquote className="mb-4 relative">
         <FiMessageCircle className="absolute -left-2 -top-2 text-primary/20 text-3xl opacity-50" />
-        <p className="text-muted text-sm leading-relaxed line-clamp-4 pl-4">"{testimonial.content}"</p>
+        <p className="text-muted text-sm leading-relaxed line-clamp-4 pl-4">&quot;{testimonial.content}&quot;</p>
         {!isActive && (
           <div className="absolute bottom-0 inset-x-0 h-8 bg-gradient-to-t from-background/80 to-transparent"></div>
         )}
@@ -250,7 +250,7 @@ export const Testimonials = () => {
                   
                   <blockquote className="mb-8 relative">
                     <FiMessageCircle className="absolute -left-2 -top-3 text-primary/20 text-4xl opacity-50 rotate-12" />
-                    <p className="text-foreground/80 text-lg leading-relaxed pl-6">"{activeTestimonial.content}"</p>
+                    <p className="text-foreground/80 text-lg leading-relaxed pl-6">&quot;{activeTestimonial.content}&quot;</p>
                   </blockquote>
                   
                   <div className="flex items-center justify-between">
