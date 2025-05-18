@@ -1,0 +1,15 @@
+This is a placeholder for the twitter-image.jpg file.
+
+To generate the actual image:
+1. Install dependencies: npm install canvas fs path mkdirp
+2. Run the script: node scripts/generate-og-images.js
+
+Or you can manually create a Twitter image with the following specifications:
+- Size: 800x800 pixels (square for better display on Twitter)
+- Format: JPEG or PNG
+- Include: 
+  - Your name "Johan Beker"
+  - Your title "Full-Stack Developer & Designer"
+  - Your photo (preferably centered)
+  - A gradient background
+  - Clear, legible text 
