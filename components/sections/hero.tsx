@@ -193,7 +193,7 @@ export const Hero = () => {
               variants={item}
               className="text-2xl md:text-3xl lg:text-4xl font-medium text-muted mb-6"
             >
-              I'm a <TextCycle phrases={skills} className="text-primary font-semibold" />
+              I&apos;m a <TextCycle phrases={skills} className="text-primary font-semibold" />
             </motion.h2>
 
             <motion.p 

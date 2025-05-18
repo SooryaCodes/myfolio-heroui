@@ -33,8 +33,8 @@ export interface AboutData {
 export const aboutData: AboutData = {
   name: "Johan Beker",
   title: "Developer & Designer",
-  bio: "I'm a passionate developer and designer with over 8 years of experience creating exceptional digital experiences.",
-  longBio: "I'm a passionate developer and designer with over 8 years of experience creating exceptional digital experiences. I specialize in building modern web applications, mobile apps, and crafting user-centered designs. My journey in technology began at a young age when I first discovered the power of creating things with code. Since then, I've worked with startups, agencies, and established companies to deliver products that users love.",
+  bio: "I&apos;m a passionate developer and designer with over 8 years of experience creating exceptional digital experiences.",
+  longBio: "I&apos;m a passionate developer and designer with over 8 years of experience creating exceptional digital experiences. I specialize in building modern web applications, mobile apps, and crafting user-centered designs. My journey in technology began at a young age when I first discovered the power of creating things with code. Since then, I&apos;ve worked with startups, agencies, and established companies to deliver products that users love.",
   image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80",
   email: "johan.beker@example.com",
   resumeLink: "/resume.pdf",
@@ -57,7 +57,7 @@ export const aboutData: AboutData = {
     {
       title: "Computer Science Degree",
       period: "2012 - 2016",
-      description: "Completed my Bachelor's degree in Computer Science from Berlin Technical University, focusing on software development and human-computer interaction."
+      description: "Completed my Bachelor&apos;s degree in Computer Science from Berlin Technical University, focusing on software development and human-computer interaction."
     }
   ],
   interests: [
@@ -73,7 +73,7 @@ export const aboutData: AboutData = {
     },
     {
       title: "Reading",
-      description: "I'm an avid reader of science fiction, technology books, and design thinking literature.",
+      description: "I&apos;m an avid reader of science fiction, technology books, and design thinking literature.",
       icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
     }
   ],

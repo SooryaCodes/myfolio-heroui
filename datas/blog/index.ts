@@ -32,13 +32,13 @@ export const blogPosts: BlogPost[] = [
   {
     id: 1,
     slug: "getting-started-with-nextjs",
-    title: "Getting Started with Next.js: A Beginner's Guide",
+    title: "Getting Started with Next.js: A Beginner&apos;s Guide",
     excerpt: "Learn the basics of Next.js and how to create your first app with this popular React framework.",
     content: `
-      <p>Next.js has become one of the most popular frameworks for building React applications. It provides a great developer experience with features like server-side rendering, static site generation, and easy API routes. In this guide, we'll walk through the basics of getting started with Next.js.</p>
+      <p>Next.js has become one of the most popular frameworks for building React applications. It provides a great developer experience with features like server-side rendering, static site generation, and easy API routes. In this guide, we&apos;ll walk through the basics of getting started with Next.js.</p>
       
       <h2>What is Next.js?</h2>
-      <p>Next.js is a React framework that enables functionality like server-side rendering, static site generation, and API routes. It's designed to provide the best developer experience with all the features you need for production.</p>
+      <p>Next.js is a React framework that enables functionality like server-side rendering, static site generation, and API routes. It&apos;s designed to provide the best developer experience with all the features you need for production.</p>
       
       <h2>Setting Up Your First Next.js Project</h2>
       <p>To create a new Next.js app, you can use the following command:</p>
@@ -53,9 +53,9 @@ npm run dev</code></pre>
       <p>Your Next.js app will now be running at <a href="http://localhost:3000">http://localhost:3000</a>.</p>
       
       <h2>Pages in Next.js</h2>
-      <p>Next.js uses a file-system based router. Each file in the 'pages' directory becomes a route in your application. For example, if you create a file at 'pages/about.js', it will be accessible at '/about'.</p>
+      <p>Next.js uses a file-system based router. Each file in the &apos;pages&apos; directory becomes a route in your application. For example, if you create a file at &apos;pages/about.js&apos;, it will be accessible at &apos;/about&apos;.</p>
       
-      <p>Here's a simple example of a page component:</p>
+      <p>Here&apos;s a simple example of a page component:</p>
       
       <pre><code>// pages/about.js
 export default function About() {
@@ -76,10 +76,10 @@ export default function About() {
         <li><strong>getStaticPaths</strong>: Specify dynamic routes to pre-render based on data</li>
       </ul>
       
-      <p>Here's an example using getStaticProps:</p>
+      <p>Here&apos;s an example using getStaticProps:</p>
       
       <pre><code>export async function getStaticProps() {
-  const res = await fetch('https://api.example.com/data');
+  const res = await fetch(&apos;https://api.example.com/data&apos;);
   const data = await res.json();
   
   return {
@@ -94,7 +94,7 @@ export default function Blog({ data }) {
 }</code></pre>
       
       <h2>Conclusion</h2>
-      <p>Next.js provides a great foundation for building modern web applications with React. Its features like server-side rendering, static site generation, and API routes make it a powerful choice for developers. As you continue learning, you'll discover more advanced features that can help you build better applications.</p>
+      <p>Next.js provides a great foundation for building modern web applications with React. Its features like server-side rendering, static site generation, and API routes make it a powerful choice for developers. As you continue learning, you&apos;ll discover more advanced features that can help you build better applications.</p>
     `,
     author,
     category: "Web Development",
@@ -110,13 +110,13 @@ export default function Blog({ data }) {
     title: "Mastering CSS Grid Layout: Tips and Tricks",
     excerpt: "Explore advanced techniques for using CSS Grid Layout to create complex web layouts with ease.",
     content: `
-      <p>CSS Grid Layout has revolutionized how we create web layouts. In this post, we'll explore some advanced techniques and best practices for working with CSS Grid.</p>
+      <p>CSS Grid Layout has revolutionized how we create web layouts. In this post, we&apos;ll explore some advanced techniques and best practices for working with CSS Grid.</p>
       
       <h2>Why CSS Grid?</h2>
       <p>CSS Grid Layout provides a two-dimensional layout system for the web, making it possible to lay out items in rows and columns. Unlike Flexbox, which is mostly one-dimensional, Grid is designed for two-dimensional layouts.</p>
       
       <h2>Basic Grid Setup</h2>
-      <p>To create a basic grid, you need to set the display property to 'grid' on the container element:</p>
+      <p>To create a basic grid, you need to set the display property to &apos;grid&apos; on the container element:</p>
       
       <pre><code>.container {
   display: grid;
@@ -134,9 +134,9 @@ export default function Blog({ data }) {
       <pre><code>.container {
   display: grid;
   grid-template-areas:
-    "header header header"
-    "sidebar content content"
-    "footer footer footer";
+    &quot;header header header&quot;
+    &quot;sidebar content content&quot;
+    &quot;footer footer footer&quot;;
   grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
@@ -170,7 +170,7 @@ export default function Blog({ data }) {
 }</code></pre>
       
       <h2>Practical Example: Magazine Layout</h2>
-      <p>Here's how you might create a magazine-style layout using CSS Grid:</p>
+      <p>Here&apos;s how you might create a magazine-style layout using CSS Grid:</p>
       
       <pre><code>.magazine-layout {
   display: grid;
@@ -214,7 +214,7 @@ export default function Blog({ data }) {
     title: "Effective State Management with React Hooks",
     excerpt: "Learn how to manage state effectively in your React applications using hooks.",
     content: `
-      <p>React Hooks have transformed how we manage state in React applications. In this article, we'll explore effective patterns for state management using hooks.</p>
+      <p>React Hooks have transformed how we manage state in React applications. In this article, we&apos;ll explore effective patterns for state management using hooks.</p>
       
       <h2>Introduction to React Hooks</h2>
       <p>Introduced in React 16.8, hooks allow you to use state and other React features without writing a class. The most commonly used hooks are useState, useEffect, useContext, and useReducer.</p>
@@ -349,10 +349,10 @@ function CountButtons() {
 }</code></pre>
       
       <h2>When to Use Each Hook</h2>
-      <p>Here's a quick guide on when to use different hooks for state management:</p>
+      <p>Here&apos;s a quick guide on when to use different hooks for state management:</p>
       
       <ul>
-        <li><strong>useState</strong>: For simple state that doesn't require complex logic.</li>
+        <li><strong>useState</strong>: For simple state that doesn&apos;t require complex logic.</li>
         <li><strong>useReducer</strong>: For state that involves complex transitions or when the next state depends on the previous one.</li>
         <li><strong>useContext</strong>: For sharing state that needs to be accessed by many components at different nesting levels.</li>
         <li><strong>Custom Hooks</strong>: For extracting and reusing stateful logic across components.</li>
@@ -534,167 +534,102 @@ export const CustomButton = (props) => {
   },
   {
     id: 5,
-    slug: "performance-optimization-techniques",
-    title: "Web Performance Optimization Techniques for 2023",
-    excerpt: "Improve your website's performance with these modern optimization techniques.",
+    slug: "ai-in-web-development",
+    title: "The Impact of AI on Modern Web Development",
+    excerpt: "Discover how artificial intelligence is transforming the web development landscape.",
     content: `
-      <p>Website performance has a direct impact on user experience, conversion rates, and SEO rankings. In this article, we'll explore modern web performance optimization techniques that can help make your websites faster and more efficient.</p>
+      <p>Artificial Intelligence is reshaping how we approach web development. From automated testing to intelligent design systems, AI&apos;s influence is growing rapidly. In this article, we&apos;ll explore how AI is changing web development and what it means for developers.</p>
       
-      <h2>Why Performance Matters</h2>
-      <p>Studies have consistently shown that better performance leads to:</p>
+      <h2>AI-Powered Development Tools</h2>
+      <p>Development environments are becoming smarter with AI integrations:</p>
+      
+      <h3>1. Intelligent Code Completion</h3>
+      <p>Tools like GitHub Copilot use AI to suggest code as you type, significantly speeding up development:</p>
+      
+      <pre><code>// Start typing and AI suggests completions
+function calculateTotalPrice(items) {
+  // AI might suggest the implementation
+}</code></pre>
+      
+      <h3>2. Automated Bug Detection</h3>
+      <p>AI systems can identify potential bugs before code is even deployed:</p>
+      
+      <pre><code>// AI might flag potential issues
+if (user.isLoggedIn == true) { // AI flags unnecessary equality check
+  // Code here
+}</code></pre>
+      
+      <h2>AI in Design Systems</h2>
+      
+      <h3>1. Generating UI Components</h3>
+      <p>AI can now generate entire UI components from simple descriptions:</p>
+      
+      <pre><code>// Example of an AI-generated component from description
+// &quot;Create a card component with an image, title, and description&quot;</code></pre>
+      
+      <h3>2. Design-to-Code Conversion</h3>
+      <p>Tools can convert design mockups directly into functional code:</p>
+      
+      <pre><code>&lt;div className=&quot;card&quot;&gt;
+  &lt;img src=&quot;product.jpg&quot; alt=&quot;Product&quot;&gt;
+  &lt;h3&gt;Product Name&lt;/h3&gt;
+  &lt;p&gt;Product description goes here...&lt;/p&gt;
+  &lt;button&gt;Add to Cart&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+      
+      <h2>Personalization Through AI</h2>
+      <p>AI enables sophisticated user personalization:</p>
+      
+      <h3>1. Dynamic Content</h3>
+      <p>Websites can adapt content based on user behavior and preferences:</p>
+      
+      <pre><code>// Pseudocode for AI-driven content selection
+function displayRecommendedContent(user) {
+  const userPreferences = analyzeUserBehavior(user.id);
+  const recommendedContent = aiRecommendationEngine.getRecommendations(userPreferences);
+  renderContent(recommendedContent);
+}</code></pre>
+      
+      <h3>2. Chatbots and Assistants</h3>
+      <p>AI-powered conversational interfaces are becoming more sophisticated:</p>
+      
+      <pre><code>// Example bot configuration
+const chatbot = new AIAssistant({
+  knowledgeBase: &apos;company-products&apos;,
+  personalityType: &apos;helpful&apos;,
+  capabilities: [&apos;orderLookup&apos;, &apos;productRecommendations&apos;, &apos;support&apos;]
+});</code></pre>
+      
+      <h2>The Future: AI-Generated Websites</h2>
+      <p>We&apos;re entering an era where entire websites can be generated from descriptions:</p>
+      
+      <pre><code>// Example of a prompt for AI website generation
+generateWebsite({
+  type: &apos;ecommerce&apos;,
+  products: &apos;handmade jewelry&apos;,
+  style: &apos;minimalist&apos;,
+  colorScheme: &apos;earth tones&apos;,
+  features: [&apos;product gallery&apos;, &apos;shopping cart&apos;, &apos;user reviews&apos;]
+});</code></pre>
+      
+      <h2>Ethical Considerations</h2>
+      <p>As AI becomes more prevalent in web development, we must consider:</p>
+      
       <ul>
-        <li>Higher user engagement and retention</li>
-        <li>Improved conversion rates</li>
-        <li>Better search engine rankings</li>
-        <li>Reduced bounce rates</li>
-      </ul>
-      
-      <h2>Core Web Vitals</h2>
-      <p>Google's Core Web Vitals are a set of specific factors that measure user experience on the web:</p>
-      
-      <h3>Largest Contentful Paint (LCP)</h3>
-      <p>LCP measures loading performance. To provide a good user experience, LCP should occur within 2.5 seconds of when the page first starts loading.</p>
-      
-      <h3>First Input Delay (FID)</h3>
-      <p>FID measures interactivity. Pages should have an FID of less than 100 milliseconds.</p>
-      
-      <h3>Cumulative Layout Shift (CLS)</h3>
-      <p>CLS measures visual stability. Pages should maintain a CLS of less than 0.1.</p>
-      
-      <h2>Image Optimization</h2>
-      
-      <h3>1. Modern Image Formats</h3>
-      <p>Use next-gen formats like WebP, AVIF, and JPEG XL which offer better compression and quality characteristics:</p>
-      
-      <pre><code>&lt;picture&gt;
-  &lt;source srcset="image.avif" type="image/avif"&gt;
-  &lt;source srcset="image.webp" type="image/webp"&gt;
-  &lt;img src="image.jpg" alt="Description" loading="lazy"&gt;
-&lt;/picture&gt;</code></pre>
-      
-      <h3>2. Responsive Images</h3>
-      <p>Serve different image sizes based on the user's device:</p>
-      
-      <pre><code>&lt;img 
-  src="small.jpg" 
-  srcset="small.jpg 500w, medium.jpg 1000w, large.jpg 1500w" 
-  sizes="(max-width: 600px) 500px, (max-width: 1200px) 1000px, 1500px" 
-  alt="Description"
-&gt;</code></pre>
-      
-      <h3>3. Lazy Loading</h3>
-      <p>Defer loading off-screen images until they're needed:</p>
-      
-      <pre><code>&lt;img src="image.jpg" alt="Description" loading="lazy"&gt;</code></pre>
-      
-      <h2>JavaScript Optimization</h2>
-      
-      <h3>1. Code Splitting</h3>
-      <p>Split your JavaScript bundles to load only what's needed:</p>
-      
-      <pre><code>// Using dynamic imports in React
-const SomeComponent = React.lazy(() => import('./SomeComponent'));
-
-function MyComponent() {
-  return (
-    &lt;React.Suspense fallback={&lt;Spinner /&gt;}&gt;
-      &lt;SomeComponent /&gt;
-    &lt;/React.Suspense&gt;
-  );
-}</code></pre>
-      
-      <h3>2. Tree Shaking</h3>
-      <p>Remove unused code from your bundles:</p>
-      
-      <pre><code>// Instead of
-import * as utils from './utils';
-
-// Use specific imports
-import { specificFunction } from './utils';</code></pre>
-      
-      <h3>3. Defer Non-Critical JavaScript</h3>
-      <p>Load non-essential scripts after the page has loaded:</p>
-      
-      <pre><code>&lt;script defer src="non-critical.js"&gt;&lt;/script&gt;</code></pre>
-      
-      <h2>CSS Optimization</h2>
-      
-      <h3>1. Critical CSS</h3>
-      <p>Inline critical CSS in the <head> and load the rest asynchronously:</p>
-      
-      <pre><code>&lt;style&gt;
-  /* Critical CSS goes here */
-  .header { /* ... */ }
-  .hero { /* ... */ }
-&lt;/style&gt;
-&lt;link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"&gt;
-&lt;noscript&gt;&lt;link rel="stylesheet" href="styles.css"&gt;&lt;/noscript&gt;</code></pre>
-      
-      <h3>2. Reduce Unused CSS</h3>
-      <p>Remove unused CSS with tools like PurgeCSS:</p>
-      
-      <pre><code>// postcss.config.js with PurgeCSS
-module.exports = {
-  plugins: [
-    require('autoprefixer'),
-    require('@fullhuman/postcss-purgecss')({
-      content: ['./src/**/*.html', './src/**/*.js'],
-      defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
-    })
-  ]
-}</code></pre>
-      
-      <h2>Font Optimization</h2>
-      
-      <h3>1. Font Display</h3>
-      <p>Prevent invisible text during font loading:</p>
-      
-      <pre><code>@font-face {
-  font-family: 'MyFont';
-  src: url('myfont.woff2') format('woff2');
-  font-display: swap;
-}</code></pre>
-      
-      <h3>2. Font Subsetting</h3>
-      <p>Only load the characters you need:</p>
-      
-      <pre><code>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
-&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
-&lt;link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&text=HelloWorld&display=swap" rel="stylesheet"&gt;</code></pre>
-      
-      <h2>Server Optimization</h2>
-      
-      <h3>1. Use a CDN</h3>
-      <p>Distribute your content globally to reduce latency.</p>
-      
-      <h3>2. HTTP/2 or HTTP/3</h3>
-      <p>Upgrade your server to use modern protocols for better multiplexing and faster connections.</p>
-      
-      <h3>3. Proper Caching</h3>
-      <p>Implement effective cache headers:</p>
-      
-      <pre><code>// Example cache headers
-Cache-Control: max-age=31536000, immutable</code></pre>
-      
-      <h2>Measuring Performance</h2>
-      
-      <p>Use these tools to measure and monitor your performance:</p>
-      <ul>
-        <li>Lighthouse (in Chrome DevTools)</li>
-        <li>PageSpeed Insights</li>
-        <li>Web Vitals report in Google Search Console</li>
-        <li>WebPageTest</li>
+        <li>Accessibility implications of AI-generated content</li>
+        <li>Bias in AI systems that might affect user experiences</li>
+        <li>Privacy concerns with data used to train AI models</li>
+        <li>Job displacement and the changing role of web developers</li>
       </ul>
       
       <h2>Conclusion</h2>
-      <p>Web performance optimization is an ongoing process that requires vigilance and frequent reassessment. By implementing these techniques, you can provide a faster, more efficient experience for your users while improving your site's SEO ranking and conversion rates.</p>
+      <p>AI is not replacing web developers but transforming how we work. By embracing these tools while maintaining human oversight and creativity, we can build better web experiences more efficiently than ever before.</p>
     `,
     author,
-    category: "Performance",
-    tags: ["Web Performance", "Optimization", "Core Web Vitals", "Frontend"],
-    publishDate: "2023-08-20",
-    readTime: "11 min read",
-    image: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80",
-    featured: true
+    category: "Technology",
+    tags: ["AI", "Web Development", "Future Tech", "Machine Learning"],
+    publishDate: "2023-09-15",
+    readTime: "7 min read",
+    image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
   }
 ]; 
