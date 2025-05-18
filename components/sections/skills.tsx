@@ -138,7 +138,7 @@ const AnimatedProgressBar = ({
   );
 };
 
-// Orbital Skill Visualization
+// Simplified OrbitalSkills component without complex hook patterns
 const OrbitalSkills = ({
   skills,
   color,
@@ -146,74 +146,19 @@ const OrbitalSkills = ({
   skills: Skill[];
   color: string;
 }) => {
-  // All hooks must be called unconditionally at the top level
-  const [mounted, setMounted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Create all the motion values and springs for each skill position upfront
-  const skillPositions = skills.map((skill, index) => {
+  // Calculate static positions for each skill
+  const positions = skills.map((_, index) => {
     const angle = index * (360 / skills.length) * (Math.PI / 180);
     const radius = 150;
-    const defaultX = Math.cos(angle) * radius;
-    const defaultY = Math.sin(angle) * radius;
-
-    const x = useTransform(mouseX, [-100, 100], [defaultX - 15, defaultX + 15]);
-    const y = useTransform(mouseY, [-100, 100], [defaultY - 15, defaultY + 15]);
-
-    const springX = useSpring(x, { stiffness: 100, damping: 30 });
-    const springY = useSpring(y, { stiffness: 100, damping: 30 });
-
-    return { x: springX, y: springY, defaultX, defaultY };
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+    return { x, y };
   });
 
-  const handleMouseMove = useCallback(
-    (e: React.MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-
-      mouseX.set(e.clientX - rect.left - rect.width / 2);
-      mouseY.set(e.clientY - rect.top - rect.height / 2);
-    },
-    [mouseX, mouseY],
-  );
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Static version for SSR
-  if (!mounted) {
-    return (
-      <div className="relative h-[400px] w-full rounded-2xl border border-border overflow-hidden glass-premium">
-        <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full flex items-center justify-center z-10"
-          style={{
-            background: `linear-gradient(135deg, ${color}, transparent)`,
-            boxShadow: `0 0 30px ${color}33`,
-          }}
-        >
-          <div className="text-foreground text-center">
-            <div className="text-2xl font-bold">{skills.length}</div>
-            <div className="text-xs">Skills</div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <motion.div
-      ref={containerRef}
-      className="relative h-[400px] w-full rounded-2xl border border-border overflow-hidden glass-premium"
-      initial={{ opacity: 0 }}
-      viewport={{ once: true }}
-      whileInView={{ opacity: 1 }}
-      onMouseMove={handleMouseMove}
-    >
+    <div className="relative h-[400px] w-full rounded-2xl border border-border overflow-hidden glass-premium">
       {/* Center core */}
-      <motion.div
+      <div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full flex items-center justify-center z-10"
         style={{
           background: `linear-gradient(135deg, ${color}, transparent)`,
@@ -224,64 +169,56 @@ const OrbitalSkills = ({
           <div className="text-2xl font-bold">{skills.length}</div>
           <div className="text-xs">Skills</div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Orbital skills */}
-      {skills.map((skill, index) => {
-        return (
+      {skills.map((skill, index) => (
+        <motion.div
+          key={skill.name}
+          className="absolute left-1/2 top-1/2 flex items-center justify-center"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ 
+            x: positions[index].x, 
+            y: positions[index].y,
+            opacity: 1,
+            scale: 1,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 100,
+            damping: 15,
+            delay: index * 0.05,
+          }}
+          whileHover={{ scale: 1.1, zIndex: 10 }}
+          style={{
+            translateX: "-50%",
+            translateY: "-50%",
+          }}
+        >
           <motion.div
-            key={skill.name}
-            className="absolute left-1/2 top-1/2 flex items-center justify-center"
-            initial={{ opacity: 0, scale: 0 }}
+            className="flex items-center justify-center rounded-full p-3 text-white"
             style={{
-              x: skillPositions[index].x,
-              y: skillPositions[index].y,
-              translateX: "-50%",
-              translateY: "-50%",
+              backgroundColor: skill.color || color,
+              boxShadow: `0 0 15px ${skill.color || color}80`,
             }}
-            viewport={{ once: true }}
-            whileHover={{ scale: 1.1, zIndex: 20 }}
-            whileInView={{
-              opacity: 1,
-              scale: 1,
-              transition: {
-                delay: index * 0.05,
-                duration: 0.5,
-              },
+            whileHover={{
+              scale: 1.1,
+              boxShadow: `0 0 20px ${skill.color || color}`,
             }}
           >
-            <div
-              className="flex items-center justify-center rounded-full glass-premium border border-border/50 w-16 h-16 transform-3d backface-hidden"
-              style={{
-                background: `radial-gradient(circle at center, ${skill.color}22, transparent)`,
-                boxShadow: `0 0 20px ${skill.color}22`,
-              }}
-            >
-              <div className="text-center">
-                <div className="text-[10px] line-clamp-1 px-1 font-medium">
-                  {skill.name}
-                </div>
-                <div className="text-[9px] text-muted">{skill.level}%</div>
-              </div>
-            </div>
+            <span className="text-lg">{skill.icon}</span>
           </motion.div>
-        );
-      })}
-
-      {/* Orbital paths */}
-      <div
-        className="absolute left-1/2 top-1/2 w-[300px] h-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/10"
-        style={{ opacity: 0.2 }}
-      />
-      <div
-        className="absolute left-1/2 top-1/2 w-[240px] h-[240px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/10"
-        style={{ opacity: 0.2 }}
-      />
-      <div
-        className="absolute left-1/2 top-1/2 w-[180px] h-[180px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/10"
-        style={{ opacity: 0.2 }}
-      />
-    </motion.div>
+          <motion.span
+            className="absolute top-full mt-2 text-xs font-medium text-foreground bg-background/75 backdrop-blur-sm px-2 py-1 rounded whitespace-nowrap"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: index * 0.05 + 0.2 }}
+          >
+            {skill.name}
+          </motion.span>
+        </motion.div>
+      ))}
+    </div>
   );
 };
 

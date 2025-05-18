@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint --fix ."
+    "lint": "next lint"
+  },
+  "eslintConfig": {
+    "extends": "next/core-web-vitals"
   },
   "dependencies": {
     "@heroui/button": "2.2.19",

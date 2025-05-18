@@ -22,12 +22,6 @@ const nextConfig = {
   },
   // Add stricter hydration settings to catch issues
   reactStrictMode: true,
-  experimental: {
-    // Use React 18's streaming and SSR features
-    serverComponents: true,
-    // Catch all SSR errors and show fallbacks automatically
-    missingSuspenseWithCSRboundary: 'warn',
-  }
 };
 
 export default nextConfig;
