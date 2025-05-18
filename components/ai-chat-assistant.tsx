@@ -243,7 +243,7 @@ export const AIChatAssistant: React.FC = () => {
                       }
                     />
                     <div>
-                      <p className="font-medium">{developerInfo.name}'s Assistant</p>
+                      <p className="font-medium">{developerInfo.name}&apos;s Assistant</p>
                       <p className="text-xs opacity-80">Ask me anything about {developerInfo.name}</p>
                     </div>
                   </div>
