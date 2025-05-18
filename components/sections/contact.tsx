@@ -175,7 +175,7 @@ export const Contact = () => {
                       </div>
                       <h3 className="text-2xl font-bold mb-3 text-foreground">Message Sent Successfully!</h3>
                       <p className="text-foreground/70 mb-8 max-w-md">
-                        Thank you for reaching out! I've received your message and will get back to you as soon as possible.
+                        Thank you for reaching out! I&apos;ve received your message and will get back to you as soon as possible.
                       </p>
                       <Button
                         color="primary"
