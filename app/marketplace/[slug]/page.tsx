@@ -1,17 +1,27 @@
-import React from 'react';
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
-import { marketplaceProducts } from '@/datas/marketplace';
-import { Card, CardBody, CardHeader, CardFooter } from '@heroui/card';
-import { Button } from '@heroui/button';
-import { Badge } from '@heroui/badge';
-import { Chip } from '@heroui/chip';
-import { Divider } from '@heroui/divider';
-import { Link } from '@heroui/link';
-import { FiArrowLeft, FiHome, FiExternalLink, FiDollarSign, FiShoppingCart, FiStar, FiTag, FiCalendar } from 'react-icons/fi';
-import { Metadata } from 'next';
-import ProductTabs from '@/components/product-tabs';
-import { MarketplaceParams } from '@/types';
+import React from "react";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { Card, CardBody, CardHeader } from "@heroui/card";
+import { Button } from "@heroui/button";
+import { Badge } from "@heroui/badge";
+import { Chip } from "@heroui/chip";
+import { Divider } from "@heroui/divider";
+import { Link } from "@heroui/link";
+import {
+  FiArrowLeft,
+  FiHome,
+  FiExternalLink,
+  FiDollarSign,
+  FiShoppingCart,
+  FiStar,
+  FiTag,
+  FiCalendar,
+} from "react-icons/fi";
+import { Metadata } from "next";
+
+import { marketplaceProducts } from "@/datas/marketplace";
+import ProductTabs from "@/components/product-tabs";
+import { MarketplaceParams } from "@/types";
 
 // Define interfaces for marketplace product
 interface ProductFeature {
@@ -58,14 +68,14 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = marketplaceProducts.find((p) => p.slug === params.slug);
-  
+
   if (!product) {
     return {
       title: "Product Not Found",
-      description: "The requested product could not be found."
+      description: "The requested product could not be found.",
     };
   }
-  
+
   return {
     title: `${product.title} | Marketplace`,
     description: product.description,
@@ -73,18 +83,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function ProductPage({ params }: Props) {
-  const product = marketplaceProducts.find((p) => p.slug === params.slug) as ExtendedMarketplaceProduct;
-  
+  const product = marketplaceProducts.find(
+    (p) => p.slug === params.slug,
+  ) as ExtendedMarketplaceProduct;
+
   if (!product) {
     notFound();
   }
 
   // Find related products (excluding current one)
   const relatedProducts = marketplaceProducts
-    .filter(p => p.id !== product.id && p.category === product.category)
+    .filter((p) => p.id !== product.id && p.category === product.category)
     .sort(() => Math.random() - 0.5) // Shuffle array
     .slice(0, 2); // Take just 2 related products
-  
+
   return (
     <main className="min-h-screen pt-20 pb-16 bg-background/50">
       <div className="container mx-auto px-4 md:px-8 max-w-screen-xl">
@@ -92,22 +104,22 @@ export default function ProductPage({ params }: Props) {
         <div className="mb-8 flex flex-wrap gap-3 items-center">
           <Button
             as={Link}
-            href="/"
-            variant="light"
             color="primary"
+            href="/"
             size="sm"
             startContent={<FiHome />}
+            variant="light"
           >
             Home
           </Button>
           <span className="text-foreground/30">•</span>
           <Button
             as={Link}
-            href="/marketplace"
-            variant="light"
             color="primary"
+            href="/marketplace"
             size="sm"
             startContent={<FiArrowLeft />}
+            variant="light"
           >
             Back to Marketplace
           </Button>
@@ -120,30 +132,33 @@ export default function ProductPage({ params }: Props) {
               <CardBody className="p-0">
                 <div className="relative aspect-[16/9] md:aspect-[3/2] w-full rounded-xl overflow-hidden">
                   <Image
-                    src={product.image}
-                    alt={product.title}
                     fill
                     priority
+                    alt={product.title}
+                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"
                     className="object-cover"
                     placeholder="blur"
-                    blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI2MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"
+                    src={product.image}
                   />
                 </div>
               </CardBody>
             </Card>
-            
+
             {/* Additional Images */}
-            {(product.gallery && product.gallery.length > 0) ? (
+            {product.gallery && product.gallery.length > 0 ? (
               <div className="grid grid-cols-3 gap-4 mt-4">
                 {product.gallery.map((img: string, index: number) => (
-                  <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
-                    <Image 
-                      src={img} 
-                      alt={`${product.title} gallery ${index+1}`}
+                  <div
+                    key={index}
+                    className="relative aspect-square rounded-lg overflow-hidden"
+                  >
+                    <Image
                       fill
+                      alt={`${product.title} gallery ${index + 1}`}
+                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
                       className="object-cover hover:scale-105 transition-transform duration-300"
                       placeholder="blur"
-                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
+                      src={img}
                     />
                   </div>
                 ))}
@@ -151,114 +166,127 @@ export default function ProductPage({ params }: Props) {
             ) : product.images && product.images.length > 0 ? (
               <div className="grid grid-cols-3 gap-4 mt-4">
                 {product.images.map((img: string, index: number) => (
-                  <div key={index} className="relative aspect-square rounded-lg overflow-hidden">
-                    <Image 
-                      src={img} 
-                      alt={`${product.title} gallery ${index+1}`}
+                  <div
+                    key={index}
+                    className="relative aspect-square rounded-lg overflow-hidden"
+                  >
+                    <Image
                       fill
+                      alt={`${product.title} gallery ${index + 1}`}
+                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
                       className="object-cover hover:scale-105 transition-transform duration-300"
                       placeholder="blur"
-                      blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAwIiBoZWlnaHQ9IjYwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4="
+                      src={img}
                     />
                   </div>
                 ))}
               </div>
             ) : null}
           </div>
-          
+
           {/* Product Info Section */}
           <div>
             <div className="sticky top-20">
               <Card className="shadow-sm bg-foreground/5 backdrop-blur-sm border-none border border-foreground/5">
                 <CardBody className="p-6">
-                  <Badge color="primary" variant="flat" className="mb-2">
+                  <Badge className="mb-2" color="primary" variant="flat">
                     {product.category}
                   </Badge>
-                  
-                  <h1 className="text-3xl font-bold mb-4 text-foreground">{product.title}</h1>
-                  
+
+                  <h1 className="text-3xl font-bold mb-4 text-foreground">
+                    {product.title}
+                  </h1>
+
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
-                        <FiStar key={i} className="text-yellow-500 fill-yellow-500" />
+                        <FiStar
+                          key={i}
+                          className="text-yellow-500 fill-yellow-500"
+                        />
                       ))}
                     </div>
-                    <span className="text-sm text-foreground/70">(Top-rated)</span>
+                    <span className="text-sm text-foreground/70">
+                      (Top-rated)
+                    </span>
                   </div>
-                  
+
                   <p className="text-foreground/70 mb-6">
                     {product.description}
                   </p>
-                  
+
                   <div className="flex flex-wrap gap-2 mb-6">
                     {product.tags.map((tag, index) => (
                       <Chip
                         key={index}
-                        startContent={<FiTag size={14} />}
-                        variant="flat"
+                        className="bg-foreground/5"
                         color="default"
                         size="sm"
-                        className="bg-foreground/5"
+                        startContent={<FiTag size={14} />}
+                        variant="flat"
                       >
                         {tag}
                       </Chip>
                     ))}
                   </div>
-                  
+
                   <Divider className="my-4" />
-                  
+
                   <div className="mb-6">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-foreground/70">Released</span>
                       <Chip
-                        startContent={<FiCalendar size={14} />}
-                        variant="flat"
                         color="default"
                         size="sm"
+                        startContent={<FiCalendar size={14} />}
+                        variant="flat"
                       >
-                        {new Date(product.publishDate).toLocaleDateString('en-US', {
-                          year: 'numeric',
-                          month: 'short',
-                        })}
+                        {new Date(product.publishDate).toLocaleDateString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "short",
+                          },
+                        )}
                       </Chip>
                     </div>
-                    
+
                     <div className="flex justify-between items-center">
                       <span className="text-foreground/70">Price</span>
                       <Chip
-                        startContent={<FiDollarSign size={14} />}
-                        variant="flat"
+                        className="font-bold"
                         color="success"
                         size="md"
-                        className="font-bold"
+                        startContent={<FiDollarSign size={14} />}
+                        variant="flat"
                       >
                         {product.price}
                       </Chip>
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-col gap-3">
                     <Button
-                      color="primary"
-                      size="lg"
-                      radius="full"
                       className="w-full shadow-md shadow-primary/20"
+                      color="primary"
+                      radius="full"
+                      size="lg"
                       startContent={<FiShoppingCart />}
                     >
                       Purchase Now
                     </Button>
-                    
+
                     <Button
                       as={Link}
-                      href={product.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      color="default"
-                      variant="flat"
-                      radius="full"
-                      size="lg"
                       className="w-full bg-foreground/5"
+                      color="default"
                       endContent={<FiExternalLink />}
+                      href={product.demo}
+                      radius="full"
+                      rel="noopener noreferrer"
+                      size="lg"
+                      target="_blank"
+                      variant="flat"
                     >
                       View Live Demo
                     </Button>
@@ -268,56 +296,68 @@ export default function ProductPage({ params }: Props) {
             </div>
           </div>
         </div>
-        
+
         {/* Product Details Section */}
         <div className="mt-16 max-w-4xl">
           <ProductTabs product={product} />
         </div>
-        
+
         {/* Related Products */}
         {relatedProducts.length > 0 && (
           <div className="mt-20">
-            <h2 className="text-2xl font-bold mb-8 text-foreground">Related Products</h2>
+            <h2 className="text-2xl font-bold mb-8 text-foreground">
+              Related Products
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {relatedProducts.map((relatedProduct) => (
-                <Card key={relatedProduct.id} className="shadow-sm hover:shadow-lg transition-shadow border-none bg-card/75 backdrop-blur-sm">
+                <Card
+                  key={relatedProduct.id}
+                  className="shadow-sm hover:shadow-lg transition-shadow border-none bg-card/75 backdrop-blur-sm"
+                >
                   <CardHeader className="p-0">
                     <div className="relative aspect-[4/3] w-full">
                       <Image
-                        src={relatedProduct.image}
-                        alt={relatedProduct.title}
                         fill
+                        alt={relatedProduct.title}
+                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"
                         className="object-cover"
                         placeholder="blur"
-                        blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwMCIgaGVpZ2h0PSI5MDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmVyc2lvbj0iMS4xIi8+"
+                        src={relatedProduct.image}
                       />
                       <div className="absolute bottom-0 w-full p-4 bg-gradient-to-t from-black/80 to-transparent">
-                        <Badge variant="flat" className="bg-white/20 text-white border-none">
+                        <Badge
+                          className="bg-white/20 text-white border-none"
+                          variant="flat"
+                        >
                           {relatedProduct.category}
                         </Badge>
                       </div>
                     </div>
                   </CardHeader>
                   <CardBody>
-                    <h3 className="text-xl font-bold mb-2 text-foreground">{relatedProduct.title}</h3>
-                    <p className="text-foreground/70 text-sm mb-4 line-clamp-2">{relatedProduct.description}</p>
-                    
+                    <h3 className="text-xl font-bold mb-2 text-foreground">
+                      {relatedProduct.title}
+                    </h3>
+                    <p className="text-foreground/70 text-sm mb-4 line-clamp-2">
+                      {relatedProduct.description}
+                    </p>
+
                     <div className="flex justify-between items-center">
-                      <Chip 
-                        color="success" 
-                        variant="flat" 
+                      <Chip
+                        color="success"
                         startContent={<FiDollarSign size={14} />}
+                        variant="flat"
                       >
                         {relatedProduct.price}
                       </Chip>
-                      
+
                       <Button
                         as={Link}
-                        href={`/marketplace/${relatedProduct.slug}`}
                         color="primary"
-                        variant="light"
                         endContent={<FiArrowLeft className="rotate-180" />}
+                        href={`/marketplace/${relatedProduct.slug}`}
                         size="sm"
+                        variant="light"
                       >
                         View Details
                       </Button>
@@ -328,18 +368,18 @@ export default function ProductPage({ params }: Props) {
             </div>
           </div>
         )}
-        
+
         {/* Back button */}
         <div className="mt-16 text-center">
           <Button
             as={Link}
-            href="/marketplace"
+            className="px-8 shadow-md"
             color="primary"
-            variant="flat"
+            href="/marketplace"
             radius="full"
             size="lg"
             startContent={<FiArrowLeft />}
-            className="px-8 shadow-md"
+            variant="flat"
           >
             Back to Marketplace
           </Button>

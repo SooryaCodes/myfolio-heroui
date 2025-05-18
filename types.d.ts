@@ -1,5 +1,3 @@
-import { NextPage } from 'next';
-
 // Define our own PageProps interface for Next.js App Router
 export interface PageProps {
   params?: any;
@@ -17,4 +15,4 @@ export interface ProjectParams {
 
 export interface MarketplaceParams {
   slug: string;
-} 
+}

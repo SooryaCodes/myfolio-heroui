@@ -2,7 +2,8 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Developer Portfolio",
-  description: "Showcase your skills, projects, and experience with this beautiful portfolio.",
+  description:
+    "Showcase your skills, projects, and experience with this beautiful portfolio.",
   navItems: [
     {
       label: "Home",

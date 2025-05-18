@@ -13,10 +13,11 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
   useEffect(() => {
     function onScrollToSection(event: CustomEvent) {
       if (!event.detail?.id) return;
-      
+
       const element = document.getElementById(event.detail.id);
+
       if (!element) return;
-      
+
       lenis?.scrollTo(element, {
         offset: event.detail.offset || 0,
         duration: 1.2,
@@ -25,14 +26,17 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
     }
 
     window.addEventListener("scrollto", onScrollToSection as EventListener);
-    
+
     // Ensure the scroll position is reset when the page loads
     setTimeout(() => {
       window.scrollTo(0, 0);
     }, 100);
-    
+
     return () => {
-      window.removeEventListener("scrollto", onScrollToSection as EventListener);
+      window.removeEventListener(
+        "scrollto",
+        onScrollToSection as EventListener,
+      );
     };
   }, [lenis]);
 
@@ -53,7 +57,5 @@ export function ScrollProvider({ children }: ScrollProviderProps) {
 }
 
 export function scrollToSection(id: string, offset = 0) {
-  window.dispatchEvent(
-    new CustomEvent("scrollto", { detail: { id, offset } })
-  );
-} 
+  window.dispatchEvent(new CustomEvent("scrollto", { detail: { id, offset } }));
+}

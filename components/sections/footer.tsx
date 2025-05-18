@@ -4,9 +4,17 @@ import React from "react";
 import { Link } from "@heroui/link";
 import { Divider } from "@heroui/divider";
 import { Spacer } from "@heroui/spacer";
-import { FiGithub, FiLinkedin, FiTwitter, FiMail, FiMapPin, FiPhone } from "react-icons/fi";
-import { scrollToSection } from "../scroll-provider";
+import {
+  FiGithub,
+  FiLinkedin,
+  FiTwitter,
+  FiMail,
+  FiMapPin,
+  FiPhone,
+} from "react-icons/fi";
 import Image from "next/image";
+
+import { scrollToSection } from "../scroll-provider";
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -18,8 +26,9 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="space-y-4 md:col-span-2">
             <div className="flex items-center gap-3 mb-3">
-             
-              <h2 className="text-2xl font-bold dark:text-white text-gray-900">{developerName}</h2>
+              <h2 className="text-2xl font-bold dark:text-white text-gray-900">
+                {developerName}
+              </h2>
             </div>
             <p className="dark:text-white/70 text-gray-600 max-w-md">
               A passionate developer and designer creating beautiful and
@@ -28,40 +37,48 @@ export const Footer = () => {
             <div className="flex gap-4 pt-2">
               <Link
                 isExternal
-                href="https://github.com/yourusername"
-                className="dark:bg-white/10 bg-black/5 hover:bg-primary/20 p-3 rounded-full transition-colors"
                 aria-label="GitHub"
+                className="dark:bg-white/10 bg-black/5 hover:bg-primary/20 p-3 rounded-full transition-colors"
+                href="https://github.com/yourusername"
               >
-                <FiGithub size={18} className="dark:text-white text-gray-900" />
+                <FiGithub className="dark:text-white text-gray-900" size={18} />
               </Link>
               <Link
                 isExternal
-                href="https://twitter.com/yourusername"
-                className="dark:bg-white/10 bg-black/5 hover:bg-primary/20 p-3 rounded-full transition-colors"
                 aria-label="Twitter"
+                className="dark:bg-white/10 bg-black/5 hover:bg-primary/20 p-3 rounded-full transition-colors"
+                href="https://twitter.com/yourusername"
               >
-                <FiTwitter size={18} className="dark:text-white text-gray-900" />
+                <FiTwitter
+                  className="dark:text-white text-gray-900"
+                  size={18}
+                />
               </Link>
               <Link
                 isExternal
-                href="https://linkedin.com/in/yourusername"
-                className="dark:bg-white/10 bg-black/5 hover:bg-primary/20 p-3 rounded-full transition-colors"
                 aria-label="LinkedIn"
+                className="dark:bg-white/10 bg-black/5 hover:bg-primary/20 p-3 rounded-full transition-colors"
+                href="https://linkedin.com/in/yourusername"
               >
-                <FiLinkedin size={18} className="dark:text-white text-gray-900" />
+                <FiLinkedin
+                  className="dark:text-white text-gray-900"
+                  size={18}
+                />
               </Link>
             </div>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4 dark:text-white text-gray-900">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4 dark:text-white text-gray-900">
+              Quick Links
+            </h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   className="dark:text-white/70 text-gray-600 hover:text-primary transition-colors flex items-center gap-2"
                   onClick={() => scrollToSection("hero")}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   Home
                 </Link>
               </li>
@@ -70,7 +87,7 @@ export const Footer = () => {
                   className="dark:text-white/70 text-gray-600 hover:text-primary transition-colors flex items-center gap-2"
                   onClick={() => scrollToSection("about")}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   About
                 </Link>
               </li>
@@ -79,7 +96,7 @@ export const Footer = () => {
                   className="dark:text-white/70 text-gray-600 hover:text-primary transition-colors flex items-center gap-2"
                   onClick={() => scrollToSection("projects")}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   Projects
                 </Link>
               </li>
@@ -88,7 +105,7 @@ export const Footer = () => {
                   className="dark:text-white/70 text-gray-600 hover:text-primary transition-colors flex items-center gap-2"
                   onClick={() => scrollToSection("skills")}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   Skills
                 </Link>
               </li>
@@ -97,7 +114,7 @@ export const Footer = () => {
                   className="dark:text-white/70 text-gray-600 hover:text-primary transition-colors flex items-center gap-2"
                   onClick={() => scrollToSection("contact")}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-primary" />
                   Contact
                 </Link>
               </li>
@@ -105,7 +122,9 @@ export const Footer = () => {
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold mb-4 dark:text-white text-gray-900">Contact</h3>
+            <h3 className="text-lg font-semibold mb-4 dark:text-white text-gray-900">
+              Contact
+            </h3>
             <ul className="space-y-3">
               <li className="dark:text-white/70 text-gray-600 flex items-start gap-3">
                 <FiMapPin className="mt-1 text-primary" />
@@ -142,11 +161,11 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10 rounded-full overflow-hidden">
-              <Image 
-                src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80" 
-                alt={developerName} 
+              <Image
                 fill
+                alt={developerName}
                 className="object-cover"
+                src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=150&q=80"
               />
             </div>
             <p className="text-sm dark:text-white/60 text-gray-500">
@@ -177,4 +196,4 @@ export const Footer = () => {
       </div>
     </footer>
   );
-}; 
+};

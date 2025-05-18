@@ -1,13 +1,24 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FiHome, FiGrid, FiCode, FiBriefcase, FiMessageCircle, FiLayers, FiStar, FiShoppingBag, FiSun, FiMoon, FiZap } from "react-icons/fi";
-import { scrollToSection } from "@/components/scroll-provider";
+import { motion } from "framer-motion";
+import {
+  FiHome,
+  FiGrid,
+  FiCode,
+  FiBriefcase,
+  FiMessageCircle,
+  FiLayers,
+  FiStar,
+  FiShoppingBag,
+  FiSun,
+  FiMoon,
+} from "react-icons/fi";
 import { useTheme } from "next-themes";
 import { Button } from "@heroui/button";
-import { Link } from "@heroui/link";
 import { Tooltip } from "@heroui/tooltip";
+
+import { scrollToSection } from "@/components/scroll-provider";
 
 export const FloatingNavbar = () => {
   const [activeSection, setActiveSection] = useState("hero");
@@ -22,13 +33,25 @@ export const FloatingNavbar = () => {
   useEffect(() => {
     // Determine which section is active
     const handleScroll = () => {
-      const sections = ["hero", "services", "projects", "skills", "experience", "testimonials", "marketplace", "blog", "contact"];
-      
+      const sections = [
+        "hero",
+        "services",
+        "projects",
+        "skills",
+        "experience",
+        "testimonials",
+        "marketplace",
+        "blog",
+        "contact",
+      ];
+
       for (const section of sections.reverse()) {
         const element = document.getElementById(section);
+
         if (!element) continue;
-        
+
         const rect = element.getBoundingClientRect();
+
         if (rect.top <= 100) {
           setActiveSection(section);
           break;
@@ -37,6 +60,7 @@ export const FloatingNavbar = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -47,10 +71,14 @@ export const FloatingNavbar = () => {
   const navItems = [
     { id: "hero", label: "Home", icon: <FiHome size={18} /> },
     { id: "services", label: "Services", icon: <FiLayers size={18} /> },
-    { id: "projects", label: "Projects", icon: <FiGrid size={18} />,  },
+    { id: "projects", label: "Projects", icon: <FiGrid size={18} /> },
     { id: "skills", label: "Skills", icon: <FiCode size={18} /> },
     { id: "experience", label: "Experience", icon: <FiBriefcase size={18} /> },
-    { id: "marketplace", label: "Marketplace", icon: <FiShoppingBag size={18} />,  },
+    {
+      id: "marketplace",
+      label: "Marketplace",
+      icon: <FiShoppingBag size={18} />,
+    },
     { id: "blog", label: "Blog", icon: <FiStar size={18} /> },
     { id: "contact", label: "Contact", icon: <FiMessageCircle size={18} /> },
   ];
@@ -64,55 +92,59 @@ export const FloatingNavbar = () => {
   };
 
   return (
-    <motion.div 
+    <motion.div
+      animate={{ y: 0, opacity: 1 }}
       className="fixed bottom-0 left-0 right-0 z-50 flex justify-center items-center pb-4"
       initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.2 }}
     >
       <div className="glass-premium rounded-full flex items-center justify-between px-4 py-3 gap-1 md:gap-2 border border-border w-auto shadow-lg">
         {navItems.map((item) => (
-          <div 
+          <div
             key={item.id}
             className="navbar-icon"
             onMouseEnter={() => setHoveredItem(item.id)}
             onMouseLeave={() => setHoveredItem(null)}
           >
-           
-              <Tooltip content={item.label}>
-                <Button
-                  isIconOnly
-                  variant={activeSection === item.id ? "flat" : "light"}
-                  color={activeSection === item.id ? "primary" : "default"}
-                  radius="full"
-                  size="sm"
-                  className="navbar-icon-inner w-9 h-9"
-                  onClick={() => handleNavigation(item.id)}
-                >
-                  {item.icon}
-                </Button>
-              </Tooltip>
-            
+            <Tooltip content={item.label}>
+              <Button
+                isIconOnly
+                className="navbar-icon-inner w-9 h-9"
+                color={activeSection === item.id ? "primary" : "default"}
+                radius="full"
+                size="sm"
+                variant={activeSection === item.id ? "flat" : "light"}
+                onClick={() => handleNavigation(item.id)}
+              >
+                {item.icon}
+              </Button>
+            </Tooltip>
           </div>
         ))}
-        
+
         {/* Theme switcher */}
-        <div 
+        <div
           className="navbar-icon"
           onMouseEnter={() => setHoveredItem("theme")}
           onMouseLeave={() => setHoveredItem(null)}
         >
-          <Tooltip content={mounted && theme === "dark" ? "Light Mode" : "Dark Mode"}>
+          <Tooltip
+            content={mounted && theme === "dark" ? "Light Mode" : "Dark Mode"}
+          >
             <Button
               isIconOnly
-              variant="light"
+              className="navbar-icon-inner w-9 h-9"
               color="default"
               radius="full"
               size="sm"
-              className="navbar-icon-inner w-9 h-9"
+              variant="light"
               onClick={toggleTheme}
             >
-              {mounted && theme === "dark" ? <FiSun size={18} /> : <FiMoon size={18} className="text-foreground" />}
+              {mounted && theme === "dark" ? (
+                <FiSun size={18} />
+              ) : (
+                <FiMoon className="text-foreground" size={18} />
+              )}
             </Button>
           </Tooltip>
         </div>

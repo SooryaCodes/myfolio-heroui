@@ -37,32 +37,32 @@ export function ToastExample() {
 
   return (
     <div className="flex flex-wrap gap-4 justify-center">
-      <Button 
-        color="success" 
-        variant="flat" 
+      <Button
+        color="success"
         radius="full"
+        variant="flat"
         onClick={showSuccessToast}
       >
         Show Success
       </Button>
-      
-      <Button 
-        color="danger" 
-        variant="flat" 
+
+      <Button
+        color="danger"
         radius="full"
+        variant="flat"
         onClick={showErrorToast}
       >
         Show Error
       </Button>
-      
-      <Button 
-        color="primary" 
-        variant="flat" 
+
+      <Button
+        color="primary"
         radius="full"
+        variant="flat"
         onClick={showInfoToast}
       >
         Show Info
       </Button>
     </div>
   );
-} 
+}

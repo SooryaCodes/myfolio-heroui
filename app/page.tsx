@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
 import { Projects } from "@/components/sections/projects";
@@ -15,7 +16,8 @@ import { BlogSection } from "@/components/sections/blog-section";
 
 export const metadata: Metadata = {
   title: "Johan Beker | Developer & Designer Portfolio",
-  description: "Premium portfolio showcasing the work of Johan Beker, a developer and designer specializing in creating exceptional digital experiences.",
+  description:
+    "Premium portfolio showcasing the work of Johan Beker, a developer and designer specializing in creating exceptional digital experiences.",
 };
 
 export default function Home() {

@@ -4,16 +4,19 @@ import type { ThemeProviderProps } from "next-themes";
 
 import * as React from "react";
 import { HeroUIProvider } from "@heroui/system";
-import { ToastProvider } from "@heroui/toast";
 import { useRouter } from "next/navigation";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
-import { ScrollProvider } from "@/components/scroll-provider";
 import dynamic from "next/dynamic";
 
+import { ScrollProvider } from "@/components/scroll-provider";
+
 // Import the custom cursor with no SSR to prevent hydration mismatch
-const CustomCursor = dynamic(() => import("@/components/custom-cursor").then(mod => mod.CustomCursor), {
-  ssr: false
-});
+const CustomCursor = dynamic(
+  () => import("@/components/custom-cursor").then((mod) => mod.CustomCursor),
+  {
+    ssr: false,
+  },
+);
 
 export interface ProvidersProps {
   children: React.ReactNode;

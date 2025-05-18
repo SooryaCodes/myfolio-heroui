@@ -72,31 +72,31 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
         whileTap={{ scale: 0.95 }}
       >
         <motion.div
-          initial={false}
           animate={{
             y: isSelected && !isSSR ? 0 : -40,
-            opacity: isSelected && !isSSR ? 1 : 0
+            opacity: isSelected && !isSSR ? 1 : 0,
           }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
           className="absolute"
-        >
-          <MoonFilledIcon size={20} className="text-primary" />
-        </motion.div>
-        
-        <motion.div
           initial={false}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          <MoonFilledIcon className="text-primary" size={20} />
+        </motion.div>
+
+        <motion.div
           animate={{
             y: !isSelected || isSSR ? 0 : 40,
-            opacity: !isSelected || isSSR ? 1 : 0
+            opacity: !isSelected || isSSR ? 1 : 0,
           }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
           className="absolute"
+          initial={false}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
         >
-          <SunFilledIcon size={20} className="text-primary" />
+          <SunFilledIcon className="text-primary" size={20} />
         </motion.div>
-        
+
         {/* Fancy glow effect */}
-        <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 rounded-full transition-opacity duration-300"></div>
+        <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 rounded-full transition-opacity duration-300" />
       </motion.div>
     </Component>
   );

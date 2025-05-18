@@ -10,72 +10,72 @@ interface ParallaxProps {
   className?: string;
 }
 
-export function ParallaxSection({ 
-  children, 
-  baseVelocity = 2, 
+export function ParallaxSection({
+  children,
+  baseVelocity = 2,
   direction = "up",
-  className = ""
+  className = "",
 }: ParallaxProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start end", "end start"]
+    offset: ["start end", "end start"],
   });
-  
+
   const isHorizontal = direction === "left" || direction === "right";
   const directionFactor = direction === "up" || direction === "left" ? -1 : 1;
-  
+
   const transformValue = useParallaxTransform(
     scrollYProgress,
     [0, 1],
-    [0, 100 * directionFactor * baseVelocity]
+    [0, 100 * directionFactor * baseVelocity],
   );
-  
-  const transform = isHorizontal 
-    ? `translateX(${transformValue}px)` 
+
+  const transform = isHorizontal
+    ? `translateX(${transformValue}px)`
     : `translateY(${transformValue}px)`;
 
   return (
     <motion.div
       ref={containerRef}
-      style={{ transform }}
       className={`will-change-transform ${className}`}
+      style={{ transform }}
     >
       {children}
     </motion.div>
   );
 }
 
-// Custom hook for smoother transform 
+// Custom hook for smoother transform
 function useParallaxTransform(
   value: MotionValue<number>,
   inputRange: number[],
-  outputRange: number[]
+  outputRange: number[],
 ) {
   return useTransform(value, inputRange, outputRange, {
-    clamp: false
+    clamp: false,
   });
 }
 
 // Animated text reveal component
-export function AnimatedTextReveal({ 
-  text, 
+export function AnimatedTextReveal({
+  text,
   className = "",
   delay = 0,
   once = true,
-  threshold = 0.1
-}: { 
-  text: string, 
-  className?: string,
-  delay?: number,
-  once?: boolean,
-  threshold?: number
+  threshold = 0.1,
+}: {
+  text: string;
+  className?: string;
+  delay?: number;
+  once?: boolean;
+  threshold?: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   const words = text.split(" ");
-  
+
   return (
     <div ref={containerRef} className={`overflow-hidden ${className}`}>
       <div className="flex flex-wrap">
@@ -84,13 +84,13 @@ export function AnimatedTextReveal({
             <motion.span
               className="inline-block"
               initial={{ y: "100%" }}
-              whileInView={{ y: 0 }}
-              transition={{ 
-                duration: 0.5, 
+              transition={{
+                duration: 0.5,
                 ease: [0.33, 1, 0.68, 1],
-                delay: delay + (i * 0.03)
+                delay: delay + i * 0.03,
               }}
               viewport={{ once, threshold }}
+              whileInView={{ y: 0 }}
             >
               {word}
             </motion.span>
@@ -101,7 +101,7 @@ export function AnimatedTextReveal({
   );
 }
 
-// Animated image parallax 
+// Animated image parallax
 export function ParallaxImage({
   src,
   alt,
@@ -124,11 +124,11 @@ export function ParallaxImage({
   return (
     <div ref={ref} className={`overflow-hidden ${className}`}>
       <motion.img
-        src={src}
         alt={alt}
-        style={{ y }}
         className="w-full h-full object-cover"
+        src={src}
+        style={{ y }}
       />
     </div>
   );
-} 
+}

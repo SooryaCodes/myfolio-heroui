@@ -23,8 +23,9 @@ export interface BlogPost {
 // Common author for all blog posts
 const author: Author = {
   name: "Johan Beker",
-  image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-  bio: "Full-stack developer and designer"
+  image:
+    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+  bio: "Full-stack developer and designer",
 };
 
 // Blog posts data array
@@ -33,7 +34,8 @@ export const blogPosts: BlogPost[] = [
     id: 1,
     slug: "getting-started-with-nextjs",
     title: "Getting Started with Next.js: A Beginner&apos;s Guide",
-    excerpt: "Learn the basics of Next.js and how to create your first app with this popular React framework.",
+    excerpt:
+      "Learn the basics of Next.js and how to create your first app with this popular React framework.",
     content: `
       <p>Next.js has become one of the most popular frameworks for building React applications. It provides a great developer experience with features like server-side rendering, static site generation, and easy API routes. In this guide, we&apos;ll walk through the basics of getting started with Next.js.</p>
       
@@ -101,14 +103,16 @@ export default function Blog({ data }) {
     tags: ["Next.js", "React", "JavaScript", "Tutorial"],
     publishDate: "2023-12-10",
     readTime: "8 min read",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    featured: true
+    image:
+      "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    featured: true,
   },
   {
     id: 2,
     slug: "mastering-css-grid-layout",
     title: "Mastering CSS Grid Layout: Tips and Tricks",
-    excerpt: "Explore advanced techniques for using CSS Grid Layout to create complex web layouts with ease.",
+    excerpt:
+      "Explore advanced techniques for using CSS Grid Layout to create complex web layouts with ease.",
     content: `
       <p>CSS Grid Layout has revolutionized how we create web layouts. In this post, we&apos;ll explore some advanced techniques and best practices for working with CSS Grid.</p>
       
@@ -205,14 +209,16 @@ export default function Blog({ data }) {
     tags: ["CSS", "Grid Layout", "Web Design", "Responsive Design"],
     publishDate: "2023-11-25",
     readTime: "10 min read",
-    image: "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    featured: true
+    image:
+      "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    featured: true,
   },
   {
     id: 3,
     slug: "state-management-with-react-hooks",
     title: "Effective State Management with React Hooks",
-    excerpt: "Learn how to manage state effectively in your React applications using hooks.",
+    excerpt:
+      "Learn how to manage state effectively in your React applications using hooks.",
     content: `
       <p>React Hooks have transformed how we manage state in React applications. In this article, we&apos;ll explore effective patterns for state management using hooks.</p>
       
@@ -366,14 +372,16 @@ function CountButtons() {
     tags: ["React", "Hooks", "State Management", "JavaScript"],
     publishDate: "2023-10-15",
     readTime: "12 min read",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    featured: false
+    image:
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    featured: false,
   },
   {
     id: 4,
     slug: "design-systems-for-developers",
     title: "Design Systems for Developers: A Practical Guide",
-    excerpt: "Learn how to implement and use design systems to improve consistency and development efficiency.",
+    excerpt:
+      "Learn how to implement and use design systems to improve consistency and development efficiency.",
     content: `
       <p>Design systems are collections of reusable components, guided by clear standards, that can be assembled to build any number of applications. For developers, a well-implemented design system can significantly improve workflow efficiency and code quality. This guide explores how developers can work with design systems effectively.</p>
       
@@ -529,14 +537,16 @@ export const CustomButton = (props) => {
     tags: ["Design Systems", "Frontend", "UI", "Components"],
     publishDate: "2023-09-05",
     readTime: "9 min read",
-    image: "https://images.unsplash.com/photo-1542744094-3a31f272c490?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-    featured: false
+    image:
+      "https://images.unsplash.com/photo-1542744094-3a31f272c490?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    featured: false,
   },
   {
     id: 5,
     slug: "ai-in-web-development",
     title: "The Impact of AI on Modern Web Development",
-    excerpt: "Discover how artificial intelligence is transforming the web development landscape.",
+    excerpt:
+      "Discover how artificial intelligence is transforming the web development landscape.",
     content: `
       <p>Artificial Intelligence is reshaping how we approach web development. From automated testing to intelligent design systems, AI&apos;s influence is growing rapidly. In this article, we&apos;ll explore how AI is changing web development and what it means for developers.</p>
       
@@ -630,6 +640,7 @@ generateWebsite({
     tags: ["AI", "Web Development", "Future Tech", "Machine Learning"],
     publishDate: "2023-09-15",
     readTime: "7 min read",
-    image: "https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-  }
-]; 
+    image:
+      "https://images.unsplash.com/photo-1589254065878-42c9da997008?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+  },
+];

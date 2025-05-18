@@ -24,7 +24,8 @@ export const marketplaceProducts: MarketplaceProduct[] = [
     title: "Modern Dashboard Template",
     category: "UI Template",
     price: 49,
-    description: "A clean and modern dashboard template built with React and Tailwind CSS.",
+    description:
+      "A clean and modern dashboard template built with React and Tailwind CSS.",
     fullDescription: `
       <p>Take your admin dashboard to the next level with this premium UI template built with React and Tailwind CSS. Perfect for SaaS applications, admin panels, and data-heavy applications.</p>
       
@@ -55,18 +56,19 @@ export const marketplaceProducts: MarketplaceProduct[] = [
       "Dark/light mode",
       "Responsive design",
       "Documentation",
-      "6 months updates"
+      "6 months updates",
     ],
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image:
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     images: [
       "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80",
-      "https://images.unsplash.com/photo-1591696205602-2f950c417cb9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+      "https://images.unsplash.com/photo-1591696205602-2f950c417cb9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
     ],
     demo: "https://example.com/demo/dashboard",
     publishDate: "2023-11-20",
     tags: ["React", "Tailwind CSS", "Dashboard", "Admin Panel"],
-    featured: true
+    featured: true,
   },
   {
     id: 2,
@@ -74,7 +76,8 @@ export const marketplaceProducts: MarketplaceProduct[] = [
     title: "E-Commerce Starter Kit",
     category: "Full Stack Template",
     price: 79,
-    description: "Complete e-commerce solution with React, Next.js, and Stripe integration.",
+    description:
+      "Complete e-commerce solution with React, Next.js, and Stripe integration.",
     fullDescription: `
       <p>Launch your online store quickly with this complete e-commerce starter kit. Built with Next.js, React, and integrated with Stripe for payments, this template provides everything you need to start selling online.</p>
       
@@ -108,18 +111,19 @@ export const marketplaceProducts: MarketplaceProduct[] = [
       "User authentication",
       "Shopping cart",
       "Product search",
-      "1 year updates"
+      "1 year updates",
     ],
-    image: "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
+    image:
+      "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
     images: [
       "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
       "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
-      "https://images.unsplash.com/photo-1556740758-90de374c12ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+      "https://images.unsplash.com/photo-1556740758-90de374c12ad?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     ],
     demo: "https://example.com/demo/ecommerce",
     publishDate: "2023-10-15",
     tags: ["Next.js", "E-commerce", "Stripe", "Full Stack"],
-    featured: true
+    featured: true,
   },
   {
     id: 3,
@@ -127,7 +131,8 @@ export const marketplaceProducts: MarketplaceProduct[] = [
     title: "Premium UI Component Library",
     category: "UI Components",
     price: 59,
-    description: "A comprehensive library of 50+ premium UI components for React applications.",
+    description:
+      "A comprehensive library of 50+ premium UI components for React applications.",
     fullDescription: `
       <p>Accelerate your development process with this premium library of 50+ beautifully crafted UI components for React applications. Each component is designed with attention to detail, accessibility, and performance.</p>
       
@@ -159,18 +164,19 @@ export const marketplaceProducts: MarketplaceProduct[] = [
       "Accessibility compliant",
       "Mobile-friendly",
       "TypeScript support",
-      "Storybook documentation"
+      "Storybook documentation",
     ],
-    image: "https://images.unsplash.com/photo-1605648916361-9bc12ad6a569?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image:
+      "https://images.unsplash.com/photo-1605648916361-9bc12ad6a569?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     images: [
       "https://images.unsplash.com/photo-1605648916361-9bc12ad6a569?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
       "https://images.unsplash.com/photo-1517292987719-0369a794ec0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
-      "https://images.unsplash.com/photo-1543966888-7c1dc482a810?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80"
+      "https://images.unsplash.com/photo-1543966888-7c1dc482a810?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
     ],
     demo: "https://example.com/demo/ui-components",
     publishDate: "2023-09-05",
     tags: ["React", "UI Components", "TypeScript", "Frontend"],
-    featured: false
+    featured: false,
   },
   {
     id: 4,
@@ -178,7 +184,8 @@ export const marketplaceProducts: MarketplaceProduct[] = [
     title: "Next.js Blog Starter",
     category: "Blog Template",
     price: 39,
-    description: "A feature-rich blog starter template built with Next.js and MDX.",
+    description:
+      "A feature-rich blog starter template built with Next.js and MDX.",
     fullDescription: `
       <p>Get your blog up and running quickly with this modern Next.js blog starter. Built with MDX for rich content creation, this template includes everything you need for a professional blog.</p>
       
@@ -212,18 +219,19 @@ export const marketplaceProducts: MarketplaceProduct[] = [
       "Responsive design",
       "Dark/light mode",
       "SEO optimization",
-      "Newsletter integration"
+      "Newsletter integration",
     ],
-    image: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image:
+      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     images: [
       "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
       "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
-      "https://images.unsplash.com/photo-1468779036391-52341f60b55d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80"
+      "https://images.unsplash.com/photo-1468779036391-52341f60b55d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80",
     ],
     demo: "https://example.com/demo/blog-starter",
     publishDate: "2023-07-22",
     tags: ["Next.js", "Blog", "MDX", "Content Creation"],
-    featured: false
+    featured: false,
   },
   {
     id: 5,
@@ -231,7 +239,8 @@ export const marketplaceProducts: MarketplaceProduct[] = [
     title: "React Design System",
     category: "UI Framework",
     price: 99,
-    description: "A comprehensive design system with 100+ components for building cohesive React applications.",
+    description:
+      "A comprehensive design system with 100+ components for building cohesive React applications.",
     fullDescription: `
       <p>Create consistent, beautiful user interfaces with this comprehensive React design system. With over 100 components, this system provides everything you need to build professional applications quickly.</p>
       
@@ -265,17 +274,18 @@ export const marketplaceProducts: MarketplaceProduct[] = [
       "Accessibility compliance",
       "TypeScript support",
       "Animation utilities",
-      "Form validation"
+      "Form validation",
     ],
-    image: "https://images.unsplash.com/photo-1481487196290-c152efe083f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2062&q=80",
+    image:
+      "https://images.unsplash.com/photo-1481487196290-c152efe083f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2062&q=80",
     images: [
       "https://images.unsplash.com/photo-1481487196290-c152efe083f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2062&q=80",
       "https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80",
-      "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+      "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     ],
     demo: "https://example.com/demo/design-system",
     publishDate: "2023-06-15",
     tags: ["React", "Design System", "UI", "Components", "TypeScript"],
-    featured: true
-  }
-]; 
+    featured: true,
+  },
+];

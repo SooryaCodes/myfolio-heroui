@@ -22,11 +22,17 @@ import { scrollToSection } from "@/components/scroll-provider";
 
 export const Navbar = () => {
   return (
-    <HeroUINavbar maxWidth="xl" position="sticky" className="backdrop-blur-md bg-background/70">
+    <HeroUINavbar
+      className="backdrop-blur-md bg-background/70"
+      maxWidth="xl"
+      position="sticky"
+    >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <div className="flex items-center justify-center w-10 h-10 bg-primary text-white rounded-full font-bold">D</div>
+            <div className="flex items-center justify-center w-10 h-10 bg-primary text-white rounded-full font-bold">
+              D
+            </div>
             <p className="font-bold text-inherit">Portfolio</p>
           </NextLink>
         </NavbarBrand>
@@ -70,7 +76,11 @@ export const Navbar = () => {
           <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
             <FiTwitter className="text-default-500" />
           </Link>
-          <Link isExternal aria-label="LinkedIn" href={siteConfig.links.linkedin}>
+          <Link
+            isExternal
+            aria-label="LinkedIn"
+            href={siteConfig.links.linkedin}
+          >
             <FiLinkedin className="text-default-500" />
           </Link>
           <Link isExternal aria-label="Github" href={siteConfig.links.github}>
@@ -82,8 +92,8 @@ export const Navbar = () => {
           <Button
             as={Link}
             className="text-sm bg-primary text-white"
-            onClick={() => scrollToSection("contact")}
             variant="solid"
+            onClick={() => scrollToSection("contact")}
           >
             Contact Me
           </Button>
@@ -104,6 +114,7 @@ export const Navbar = () => {
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 color="foreground"
+                size="lg"
                 onClick={() => {
                   if (item.href === "/") {
                     scrollToSection("hero");
@@ -119,7 +130,6 @@ export const Navbar = () => {
                     window.location.href = item.href;
                   }
                 }}
-                size="lg"
               >
                 {item.label}
               </Link>

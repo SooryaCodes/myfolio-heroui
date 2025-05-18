@@ -26,10 +26,13 @@ export const projects: ProjectType[] = [
     slug: "portfolio-website",
     title: "Portfolio Website",
     category: "Web Development",
-    description: "A modern portfolio website built with Next.js and Tailwind CSS.",
-    fullDescription: "This modern portfolio website showcases my work and skills in web development. Built with Next.js for server-side rendering and Tailwind CSS for styling, it features smooth animations, responsive design, and optimized performance. The site includes project showcases, a blog section, and contact information.",
+    description:
+      "A modern portfolio website built with Next.js and Tailwind CSS.",
+    fullDescription:
+      "This modern portfolio website showcases my work and skills in web development. Built with Next.js for server-side rendering and Tailwind CSS for styling, it features smooth animations, responsive design, and optimized performance. The site includes project showcases, a blog section, and contact information.",
     technologies: ["Next.js", "React", "Tailwind CSS", "Framer Motion"],
-    image: "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image:
+      "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     images: [
       "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
       "https://images.unsplash.com/photo-1547119957-637f8679db1e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2064&q=80",
@@ -42,17 +45,20 @@ export const projects: ProjectType[] = [
     featured: true,
     tags: ["Web", "Portfolio", "React", "Next.js", "Tailwind CSS"],
     services: ["Web Design", "Web Development", "UI/UX"],
-    location: "Berlin, Germany"
+    location: "Berlin, Germany",
   },
   {
     id: 2,
     slug: "e-commerce-platform",
     title: "E-Commerce Platform",
     category: "Web Development",
-    description: "A full-featured e-commerce platform with payment integration.",
-    fullDescription: "A comprehensive e-commerce solution built for a fashion retailer. This platform includes product listings, search functionality, user accounts, shopping cart, and secure checkout with Stripe integration. The admin panel allows for easy product and order management.",
+    description:
+      "A full-featured e-commerce platform with payment integration.",
+    fullDescription:
+      "A comprehensive e-commerce solution built for a fashion retailer. This platform includes product listings, search functionality, user accounts, shopping cart, and secure checkout with Stripe integration. The admin panel allows for easy product and order management.",
     technologies: ["React", "Node.js", "Express", "MongoDB", "Stripe"],
-    image: "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
+    image:
+      "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
     images: [
       "https://images.unsplash.com/photo-1557821552-17105176677c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2089&q=80",
       "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
@@ -64,16 +70,23 @@ export const projects: ProjectType[] = [
     client: "Fashion Retailer Ltd.",
     featured: true,
     tags: ["E-commerce", "React", "Node.js", "Stripe", "MongoDB"],
-    services: ["Web Design", "Web Development", "E-commerce", "Payment Integration"],
-    location: "Berlin, Germany"
+    services: [
+      "Web Design",
+      "Web Development",
+      "E-commerce",
+      "Payment Integration",
+    ],
+    location: "Berlin, Germany",
   },
   {
     id: 3,
     slug: "mobile-fitness-app",
     title: "Mobile Fitness App",
     category: "Mobile Development",
-    description: "A fitness tracking mobile application built with React Native.",
-    fullDescription: "This fitness tracking app helps users monitor their workouts, set goals, and track progress over time. Built with React Native for cross-platform compatibility, it features workout plans, exercise demonstrations, progress charts, and social sharing capabilities.",
+    description:
+      "A fitness tracking mobile application built with React Native.",
+    fullDescription:
+      "This fitness tracking app helps users monitor their workouts, set goals, and track progress over time. Built with React Native for cross-platform compatibility, it features workout plans, exercise demonstrations, progress charts, and social sharing capabilities.",
     technologies: ["React Native", "Firebase", "Redux", "Native APIs"],
     image: "https://source.unsplash.com/random/2069x1380/?fitness,app",
     images: [
@@ -87,16 +100,23 @@ export const projects: ProjectType[] = [
     client: "Healthy Living Co.",
     featured: true,
     tags: ["Mobile", "React Native", "Fitness", "iOS", "Android", "Firebase"],
-    services: ["Mobile App Design", "React Native Development", "Backend Integration", "Health & Fitness"],
-    location: "Berlin, Germany"
+    services: [
+      "Mobile App Design",
+      "React Native Development",
+      "Backend Integration",
+      "Health & Fitness",
+    ],
+    location: "Berlin, Germany",
   },
   {
     id: 4,
     slug: "ai-content-generator",
     title: "AI Content Generator",
     category: "AI Development",
-    description: "An AI-powered tool that generates high-quality content for marketing and blogs.",
-    fullDescription: "This AI-powered content generator helps content creators and marketers produce high-quality text for blogs, social media, and marketing materials. Using advanced natural language processing, the tool can generate content based on simple prompts, adjust tone and style to match brand guidelines, and even optimize content for SEO. The platform includes a user-friendly interface for managing and editing generated content.",
+    description:
+      "An AI-powered tool that generates high-quality content for marketing and blogs.",
+    fullDescription:
+      "This AI-powered content generator helps content creators and marketers produce high-quality text for blogs, social media, and marketing materials. Using advanced natural language processing, the tool can generate content based on simple prompts, adjust tone and style to match brand guidelines, and even optimize content for SEO. The platform includes a user-friendly interface for managing and editing generated content.",
     technologies: ["Python", "TensorFlow", "GPT-3", "React", "NextUI"],
     image: "https://source.unsplash.com/random/1932x1288/?ai,robot",
     images: [
@@ -110,16 +130,23 @@ export const projects: ProjectType[] = [
     client: "Digital Marketing Agency",
     featured: false,
     tags: ["AI", "Machine Learning", "Content Generation", "NLP", "SaaS"],
-    services: ["AI Development", "Web Application", "Product Design", "API Development"],
-    location: "Berlin, Germany"
+    services: [
+      "AI Development",
+      "Web Application",
+      "Product Design",
+      "API Development",
+    ],
+    location: "Berlin, Germany",
   },
   {
     id: 5,
     slug: "smart-home-automation",
     title: "Smart Home Automation System",
     category: "IoT Development",
-    description: "An IoT system that connects and automates home devices with a user-friendly mobile and voice interface.",
-    fullDescription: "This smart home automation system enables users to control and automate their home devices through a unified interface. The system includes a central hub that connects to various IoT devices, a mobile app for remote control, and voice integration with popular assistants like Alexa and Google Home. Features include scheduled routines, energy usage monitoring, and smart scenes based on user behavior.",
+    description:
+      "An IoT system that connects and automates home devices with a user-friendly mobile and voice interface.",
+    fullDescription:
+      "This smart home automation system enables users to control and automate their home devices through a unified interface. The system includes a central hub that connects to various IoT devices, a mobile app for remote control, and voice integration with popular assistants like Alexa and Google Home. Features include scheduled routines, energy usage monitoring, and smart scenes based on user behavior.",
     technologies: ["IoT", "React Native", "Node.js", "MQTT", "AWS IoT"],
     image: "https://source.unsplash.com/random/2070x1380/?smarthome,iot",
     images: [
@@ -133,18 +160,26 @@ export const projects: ProjectType[] = [
     client: "SmartLife Technologies",
     featured: false,
     tags: ["IoT", "Smart Home", "Mobile", "Voice Control", "Automation"],
-    services: ["IoT Development", "Mobile App", "Hardware Integration", "Cloud Infrastructure"],
-    location: "Berlin, Germany"
+    services: [
+      "IoT Development",
+      "Mobile App",
+      "Hardware Integration",
+      "Cloud Infrastructure",
+    ],
+    location: "Berlin, Germany",
   },
   {
     id: 6,
     slug: "ar-shopping-experience",
     title: "AR Shopping Experience",
     category: "AR Development",
-    description: "An augmented reality application that allows users to visualize products in their space before purchasing.",
-    fullDescription: "This augmented reality shopping application revolutionizes the online shopping experience by allowing users to visualize products in their own space before making a purchase. The app supports furniture, home decor, and fashion items with accurate size and appearance representation. Additional features include product customization, social sharing, and seamless integration with e-commerce platforms for direct purchases.",
+    description:
+      "An augmented reality application that allows users to visualize products in their space before purchasing.",
+    fullDescription:
+      "This augmented reality shopping application revolutionizes the online shopping experience by allowing users to visualize products in their own space before making a purchase. The app supports furniture, home decor, and fashion items with accurate size and appearance representation. Additional features include product customization, social sharing, and seamless integration with e-commerce platforms for direct purchases.",
     technologies: ["Unity", "ARKit/ARCore", "C#", "Blender", "RESTful API"],
-    image: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+    image:
+      "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
     images: [
       "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
       "https://images.unsplash.com/photo-1640176706899-25b8ef1fdd9d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80",
@@ -156,7 +191,12 @@ export const projects: ProjectType[] = [
     client: "Modern Retail Solutions",
     featured: true,
     tags: ["AR", "Mobile", "Unity", "3D", "E-commerce", "iOS", "Android"],
-    services: ["AR Development", "3D Modeling", "Mobile App", "E-commerce Integration"],
-    location: "Berlin, Germany"
-  }
-]; 
+    services: [
+      "AR Development",
+      "3D Modeling",
+      "Mobile App",
+      "E-commerce Integration",
+    ],
+    location: "Berlin, Germany",
+  },
+];

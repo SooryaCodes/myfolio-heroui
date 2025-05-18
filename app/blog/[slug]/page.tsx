@@ -1,22 +1,30 @@
-import React from 'react';
-import Image from 'next/image';
-import { notFound } from 'next/navigation';
-import { blogPosts } from '@/datas/blog';
-import { Card, CardBody } from '@heroui/card';
-import { Button } from '@heroui/button';
-import { Chip } from '@heroui/chip';
-import { Badge } from '@heroui/badge';
-import { Divider } from '@heroui/divider';
-import { Link } from '@heroui/link';
-import { Avatar } from '@heroui/avatar';
-import { FiArrowLeft, FiCalendar, FiClock, FiTag, FiHome, FiShare2 } from 'react-icons/fi';
-import { BlogParams, PageProps } from '@/types';
+import React from "react";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { Card, CardBody } from "@heroui/card";
+import { Button } from "@heroui/button";
+import { Chip } from "@heroui/chip";
+import { Badge } from "@heroui/badge";
+import { Divider } from "@heroui/divider";
+import { Link } from "@heroui/link";
+import { Avatar } from "@heroui/avatar";
+import {
+  FiArrowLeft,
+  FiCalendar,
+  FiClock,
+  FiTag,
+  FiHome,
+  FiShare2,
+} from "react-icons/fi";
+
+import { blogPosts } from "@/datas/blog";
+import { BlogParams, PageProps } from "@/types";
 
 // Fallback images for broken images
 const fallbackImages = [
   "https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
   "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80",
-  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
 ];
 
 interface Props extends PageProps {
@@ -25,14 +33,14 @@ interface Props extends PageProps {
 
 export async function generateMetadata({ params }: Props) {
   const post = blogPosts.find((post) => post.slug === params.slug);
-  
+
   if (!post) {
     return {
       title: "Blog Post Not Found",
       description: "The requested blog post could not be found.",
     };
   }
-  
+
   return {
     title: `${post.title} | Blog`,
     description: post.excerpt,
@@ -41,14 +49,14 @@ export async function generateMetadata({ params }: Props) {
 
 export default function BlogPostPage({ params }: Props) {
   const post = blogPosts.find((post) => post.slug === params.slug);
-  
+
   if (!post) {
     notFound();
   }
 
   // Find related posts (excluding current post)
   const relatedPosts = blogPosts
-    .filter(p => p.id !== post.id && p.category === post.category)
+    .filter((p) => p.id !== post.id && p.category === post.category)
     .sort(() => Math.random() - 0.5) // Shuffle array to get random related posts
     .slice(0, 2); // Take just 2 related posts
 
@@ -59,22 +67,22 @@ export default function BlogPostPage({ params }: Props) {
         <div className="mb-8 flex flex-wrap gap-3 items-center">
           <Button
             as={Link}
-            href="/"
-            variant="light"
             color="primary"
+            href="/"
             size="sm"
             startContent={<FiHome />}
+            variant="light"
           >
             Home
           </Button>
           <span className="text-foreground/30">•</span>
           <Button
             as={Link}
-            href="/blog"
-            variant="light"
             color="primary"
+            href="/blog"
             size="sm"
             startContent={<FiArrowLeft />}
+            variant="light"
           >
             Back to Blog
           </Button>
@@ -84,61 +92,67 @@ export default function BlogPostPage({ params }: Props) {
         <div className="w-full mb-12">
           <div className="relative aspect-[21/9] w-full rounded-xl overflow-hidden shadow-lg">
             <Image
-              src={post.image}
-              alt={post.title}
               fill
               priority
+              alt={post.title}
+              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
               className="object-cover"
               placeholder="blur"
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+              src={post.image}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           </div>
         </div>
 
         <div className="max-w-6xl mx-auto">
           {/* Article header */}
           <div className="mb-10">
-            <Badge color="primary" variant="flat" className="mb-4">
+            <Badge className="mb-4" color="primary" variant="flat">
               {post.category}
             </Badge>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-foreground">{post.title}</h1>
-            
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-foreground">
+              {post.title}
+            </h1>
+
             <div className="flex flex-wrap gap-6 items-center mb-6">
               <div className="flex items-center gap-3">
                 <Avatar
-                  src={post.author.image}
                   alt={post.author.name}
                   size="md"
+                  src={post.author.image}
                 />
                 <div>
-                  <p className="font-medium text-foreground">{post.author.name}</p>
-                  <div className="text-sm text-foreground/60">{post.author.bio}</div>
+                  <p className="font-medium text-foreground">
+                    {post.author.name}
+                  </p>
+                  <div className="text-sm text-foreground/60">
+                    {post.author.bio}
+                  </div>
                 </div>
               </div>
-              
+
               <div className="flex gap-3 md:ml-auto">
                 <Chip
-                  startContent={<FiCalendar size={14} />}
-                  variant="flat"
+                  className="bg-foreground/5"
                   color="default"
                   size="sm"
-                  className="bg-foreground/5"
+                  startContent={<FiCalendar size={14} />}
+                  variant="flat"
                 >
                   {post.publishDate}
                 </Chip>
                 <Chip
-                  startContent={<FiClock size={14} />}
-                  variant="flat"
+                  className="bg-foreground/5"
                   color="default"
                   size="sm"
-                  className="bg-foreground/5"
+                  startContent={<FiClock size={14} />}
+                  variant="flat"
                 >
                   {post.readTime}
                 </Chip>
               </div>
             </div>
-            
+
             <Divider className="my-6" />
           </div>
 
@@ -147,7 +161,10 @@ export default function BlogPostPage({ params }: Props) {
             <div className="md:col-span-8">
               <Card className="border-none shadow-lg bg-card/75 backdrop-blur-sm">
                 <CardBody className="px-5 md:px-12 py-12">
-                  <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-p:text-foreground/80 prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-strong:text-foreground" dangerouslySetInnerHTML={{ __html: post.content }} />
+                  <div
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                    className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-bold prose-p:text-foreground/80 prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-strong:text-foreground"
+                  />
                 </CardBody>
               </Card>
 
@@ -156,11 +173,11 @@ export default function BlogPostPage({ params }: Props) {
                 {post.tags.map((tag, index) => (
                   <Chip
                     key={index}
-                    startContent={<FiTag size={14} />}
-                    variant="flat"
+                    className="bg-foreground/5"
                     color="default"
                     size="sm"
-                    className="bg-foreground/5"
+                    startContent={<FiTag size={14} />}
+                    variant="flat"
                   >
                     {tag}
                   </Chip>
@@ -173,11 +190,11 @@ export default function BlogPostPage({ params }: Props) {
                 <div className="flex gap-2">
                   <Button
                     isIconOnly
-                    color="default"
-                    variant="flat"
                     aria-label="Share on Twitter"
+                    color="default"
                     radius="full"
                     size="sm"
+                    variant="flat"
                   >
                     <FiShare2 />
                   </Button>
@@ -191,25 +208,30 @@ export default function BlogPostPage({ params }: Props) {
                 <CardBody className="p-6">
                   <div className="flex flex-col items-center text-center mb-4">
                     <Avatar
-                      src={post.author.image}
                       alt={post.author.name}
-                      size="lg"
                       className="mb-3"
+                      size="lg"
+                      src={post.author.image}
                     />
-                    <h3 className="text-xl font-bold text-foreground">{post.author.name}</h3>
+                    <h3 className="text-xl font-bold text-foreground">
+                      {post.author.name}
+                    </h3>
                     <p className="text-sm text-foreground/70">
-                      {post.author.bio.split(' ').slice(0, 2).join(' ')} {/* Use the first two words of the bio */}
+                      {post.author.bio.split(" ").slice(0, 2).join(" ")}{" "}
+                      {/* Use the first two words of the bio */}
                     </p>
                   </div>
-                  <p className="text-sm text-foreground/70 mb-4">{post.author.bio}</p>
+                  <p className="text-sm text-foreground/70 mb-4">
+                    {post.author.bio}
+                  </p>
                   <Button
+                    fullWidth
                     as={Link}
-                    href={`/blog?author=${post.author.name}`}
                     color="primary"
-                    variant="flat"
+                    href={`/blog?author=${post.author.name}`}
                     radius="full"
                     size="sm"
-                    fullWidth
+                    variant="flat"
                   >
                     View All Posts
                   </Button>
@@ -220,29 +242,38 @@ export default function BlogPostPage({ params }: Props) {
               {relatedPosts.length > 0 && (
                 <Card className="shadow-sm bg-foreground/5 backdrop-blur-sm border-none sticky top-72">
                   <CardBody className="p-6">
-                    <h3 className="text-xl font-bold mb-4 text-foreground">Related Articles</h3>
+                    <h3 className="text-xl font-bold mb-4 text-foreground">
+                      Related Articles
+                    </h3>
                     <div className="space-y-6">
                       {relatedPosts.map((relatedPost) => (
-                        <div key={relatedPost.id} className="flex flex-col gap-2">
-                          <Link 
-                            href={`/blog/${relatedPost.slug}`} 
+                        <div
+                          key={relatedPost.id}
+                          className="flex flex-col gap-2"
+                        >
+                          <Link
                             className="relative aspect-video w-full overflow-hidden rounded-lg block mb-2"
+                            href={`/blog/${relatedPost.slug}`}
                           >
                             <Image
-                              src={relatedPost.image}
-                              alt={relatedPost.title}
                               fill
+                              alt={relatedPost.title}
+                              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
                               className="object-cover hover:scale-105 transition-transform duration-300"
                               placeholder="blur"
-                              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+                              src={relatedPost.image}
                             />
                           </Link>
-                          <Badge color="primary" variant="flat" className="self-start">
+                          <Badge
+                            className="self-start"
+                            color="primary"
+                            variant="flat"
+                          >
                             {relatedPost.category}
                           </Badge>
-                          <Link 
-                            href={`/blog/${relatedPost.slug}`}
+                          <Link
                             className="font-bold hover:text-primary transition-colors line-clamp-2 text-foreground"
+                            href={`/blog/${relatedPost.slug}`}
                           >
                             {relatedPost.title}
                           </Link>
@@ -263,13 +294,13 @@ export default function BlogPostPage({ params }: Props) {
         <div className="max-w-6xl mx-auto mt-16 text-center">
           <Button
             as={Link}
-            href="/blog"
+            className="px-8 shadow-md"
             color="primary"
-            variant="flat"
+            href="/blog"
             radius="full"
             size="lg"
             startContent={<FiArrowLeft />}
-            className="px-8 shadow-md"
+            variant="flat"
           >
             Back to All Articles
           </Button>

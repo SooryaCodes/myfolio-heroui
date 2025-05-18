@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect, useState } from "react";
-import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 // Reveals content with a sliding animation as you scroll
 export function RevealOnScroll({
@@ -30,11 +30,12 @@ export function RevealOnScroll({
 
   return (
     <motion.div
-      initial={{ 
+      initial={{
         opacity: 0,
         ...initialPosition,
       }}
-      whileInView={{ 
+      viewport={{ once, amount: threshold }}
+      whileInView={{
         opacity: 1,
         x: 0,
         y: 0,
@@ -42,9 +43,8 @@ export function RevealOnScroll({
           duration: 0.8,
           delay,
           ease: [0.21, 0.45, 0.15, 0.95],
-        }
+        },
       }}
-      viewport={{ once, amount: threshold }}
     >
       {children}
     </motion.div>
@@ -81,15 +81,15 @@ export function TrackScroll({
 
   // Prevent hydration mismatch by using default values during SSR
   if (!mounted) {
-    return <div ref={ref} className={className}>{children}</div>;
+    return (
+      <div ref={ref} className={className}>
+        {children}
+      </div>
+    );
   }
 
   return (
-    <motion.div
-      ref={ref}
-      style={{ opacity, scale }}
-      className={className}
-    >
+    <motion.div ref={ref} className={className} style={{ opacity, scale }}>
       {children}
     </motion.div>
   );
@@ -114,14 +114,14 @@ export function MaskReveal({
   const variants = {
     hidden: {
       opacity: 0,
-      clipPath: 
-        direction === "left" 
-          ? "inset(0 100% 0 0)" 
+      clipPath:
+        direction === "left"
+          ? "inset(0 100% 0 0)"
           : direction === "right"
-          ? "inset(0 0 0 100%)"
-          : direction === "up"
-          ? "inset(100% 0 0 0)"
-          : "inset(0 0 100% 0)",
+            ? "inset(0 0 0 100%)"
+            : direction === "up"
+              ? "inset(100% 0 0 0)"
+              : "inset(0 0 100% 0)",
     },
     visible: {
       opacity: 1,
@@ -137,10 +137,10 @@ export function MaskReveal({
   return (
     <motion.div
       className={className}
-      variants={variants}
       initial="hidden"
-      whileInView="visible"
+      variants={variants}
       viewport={{ amount: threshold, once: true }}
+      whileInView="visible"
     >
       {children}
     </motion.div>
@@ -164,11 +164,7 @@ export function HorizontalScrollSection({
     offset: ["start end", "end start"],
   });
 
-  const x = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [0, -scrollFactor * 100]
-  );
+  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollFactor * 100]);
 
   const springX = useSpring(x, {
     damping: 15,
@@ -190,10 +186,7 @@ export function HorizontalScrollSection({
 
   return (
     <div ref={targetRef} className={`relative overflow-hidden ${className}`}>
-      <motion.div
-        style={{ x: springX }}
-        className="flex w-fit"
-      >
+      <motion.div className="flex w-fit" style={{ x: springX }}>
         {children}
       </motion.div>
     </div>
@@ -223,4 +216,4 @@ export function Tilt3D({
       {children}
     </motion.div>
   );
-} 
+}
