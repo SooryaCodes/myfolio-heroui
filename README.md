@@ -20,6 +20,7 @@ This project was created for the HeroUI Hackathon in the **Portfolio Track**. My
 - 💼 **Experience Timeline** - Display your professional journey
 - 🛠️ **Skills Section** - Showcase your technical expertise
 - 📝 **Blog Integration** - Share your knowledge with the world
+- 🤖 **AI Chat Assistant** - Interactive chatbot for visitors to learn about you
 - 📬 **Contact Form** - Let potential clients reach out to you
 - 🧠 **SEO Optimized** - Get found on search engines
 
@@ -74,6 +75,7 @@ myfolio/
 │   │   ├── services.tsx    # Services section
 │   │   ├── skills.tsx      # Skills section
 │   │   └── testimonials.tsx # Testimonials section
+│   ├── ai-chat-assistant.tsx # AI Chat Assistant component
 │   ├── custom-cursor.tsx   # Custom cursor component
 │   ├── floating-navbar.tsx # Floating navigation bar
 │   ├── interactive-card.tsx # Interactive card component
@@ -84,9 +86,12 @@ myfolio/
 │   └── theme-switch.tsx    # Theme toggle switch
 ├── public/                 # Static assets
 │   ├── images/             # Image assets
+│   ├── favicon_io (1)/     # Favicon assets for better SEO
 │   └── logos/              # Logo assets
 ├── styles/                 # Global styles
 ├── types/                  # TypeScript type definitions
+├── scripts/                # Utility scripts
+│   └── generate-og-images.js # OpenGraph image generator
 └── datas/                  # Data for the portfolio
 ```
 
@@ -105,6 +110,30 @@ The portfolio template includes the following key sections:
 9. **Playground** - Interactive demonstrations of your skills
 10. **Marketplace** - Products or services you offer
 11. **Contact** - Form for potential clients to reach out
+12. **AI Chat** - Interactive assistant to engage with visitors
+
+## 🤖 AI Chat Assistant
+
+The portfolio includes an interactive AI Chat Assistant that helps visitors learn more about you without having to scroll through the entire site.
+
+### Features
+
+- Floating chat button that's accessible from anywhere on the site
+- Minimizable chat window with smooth animations
+- Pre-defined sample questions for visitors to quickly learn about you
+- Simulated AI responses based on your information
+- Mobile-friendly design with responsive layout
+
+### Customization
+
+You can easily customize the AI assistant by editing the `components/ai-chat-assistant.tsx` file:
+
+1. Update the `developerInfo` object with your personal information
+2. Modify the sample questions in the `sampleQuestions` array
+3. Customize the response logic in the `generateResponse` function
+4. Change the appearance by tweaking the styling attributes
+
+This feature enhances user engagement and provides a modern, interactive way for potential clients to get to know you better.
 
 ## 🛠️ Getting Started
 
