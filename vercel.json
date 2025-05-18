@@ -1,0 +1,26 @@
+{
+  "buildCommand": "next build",
+  "devCommand": "next dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "regions": ["bru1"],
+  "images": {
+    "sizes": [16, 32, 48, 64, 96, 128, 256, 384],
+    "domains": [],
+    "remotePatterns": [
+      {
+        "protocol": "https",
+        "hostname": "source.unsplash.com"
+      },
+      {
+        "protocol": "https",
+        "hostname": "images.unsplash.com"
+      },
+      {
+        "protocol": "https",
+        "hostname": "images.pexels.com"
+      }
+    ]
+  }
+} 

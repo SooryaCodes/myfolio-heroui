@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 
 // Define our own PageProps interface without trying to override Next.js type
 export interface PageProps {
-  params?: Record<string, string>;
+  params?: any;
   searchParams?: Record<string, string | string[]>;
 }
 

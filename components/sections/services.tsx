@@ -234,7 +234,7 @@ const services: Service[] = [
       "Deployment and DevOps"
     ],
     detailedFeatures: [],
-    image: "https://images.unsplash.com/photo-1517694712202-1482b7e1a5f8?q=80&w=1470&auto=format&fit=crop",
+    image: "https://source.unsplash.com/random/1470x980/?coding,developer",
     details: {
       longDescription: "As a full-stack developer, I can handle all aspects of your project from the user interface to the server infrastructure. This integrated approach ensures a cohesive product with seamless interaction between all components.",
       features: [
