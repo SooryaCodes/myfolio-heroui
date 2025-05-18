@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, useSpring, MotionValue } from "framer-motion";
 
 // Reveals content with a sliding animation as you scroll
@@ -44,7 +44,7 @@ export function RevealOnScroll({
           ease: [0.21, 0.45, 0.15, 0.95],
         }
       }}
-      viewport={{ once, threshold }}
+      viewport={{ once, amount: threshold }}
     >
       {children}
     </motion.div>
@@ -65,6 +65,7 @@ export function TrackScroll({
   outputScale?: number[];
   className?: string;
 }) {
+  const [mounted, setMounted] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -73,6 +74,15 @@ export function TrackScroll({
 
   const opacity = useTransform(scrollYProgress, inputRange, outputOpacity);
   const scale = useTransform(scrollYProgress, inputRange, outputScale);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent hydration mismatch by using default values during SSR
+  if (!mounted) {
+    return <div ref={ref} className={className}>{children}</div>;
+  }
 
   return (
     <motion.div
@@ -130,7 +140,7 @@ export function MaskReveal({
       variants={variants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ threshold, once: true }}
+      viewport={{ amount: threshold, once: true }}
     >
       {children}
     </motion.div>
@@ -147,6 +157,7 @@ export function HorizontalScrollSection({
   className?: string;
   scrollFactor?: number;
 }) {
+  const [mounted, setMounted] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -163,6 +174,19 @@ export function HorizontalScrollSection({
     damping: 15,
     stiffness: 150,
   });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Prevent hydration mismatch by using static content during SSR
+  if (!mounted) {
+    return (
+      <div ref={targetRef} className={`relative overflow-hidden ${className}`}>
+        <div className="flex w-fit">{children}</div>
+      </div>
+    );
+  }
 
   return (
     <div ref={targetRef} className={`relative overflow-hidden ${className}`}>

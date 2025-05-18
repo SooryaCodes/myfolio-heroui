@@ -6,7 +6,6 @@ import { Providers } from "./providers";
 
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/config/fonts";
-import { CustomCursor } from "@/components/custom-cursor";
 
 export const metadata: Metadata = {
   title: {
@@ -45,7 +44,6 @@ export default function RootLayout({
             <main className="flex-grow">
               {children}
             </main>
-            <CustomCursor />
           </div>
         </Providers>
       </body>

@@ -111,6 +111,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
     };
   }, [mouseX, mouseY]);
 
+  // Don't render anything during SSR or before mounting on client
   if (!mounted) return null;
 
   return (
@@ -127,7 +128,10 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
         }}
       >
         <motion.div
-          className={`relative flex items-center justify-center rounded-full ${hidden ? 'opacity-0' : 'opacity-100'}`}
+          className="relative flex items-center justify-center rounded-full"
+          style={{
+            opacity: hidden ? 0 : 1
+          }}
           variants={{
             default: {
               height: 18,
@@ -177,7 +181,7 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
       
       {/* Trailer effect */}
       <motion.div
-        className={`fixed top-0 left-0 pointer-events-none z-[9998] rounded-full ${hidden ? 'opacity-0' : 'opacity-100'}`}
+        className="fixed top-0 left-0 pointer-events-none z-[9998] rounded-full"
         style={{ 
           translateX: cursorX,
           translateY: cursorY,
@@ -187,7 +191,8 @@ export const CustomCursor: React.FC<CustomCursorProps> = () => {
           width: clicked ? 24 : linkHovered ? 44 : 34,
           backgroundColor: trailerBgColor,
           boxShadow: `0 0 30px ${glowColor}`,
-          mixBlendMode: isDarkMode ? "screen" : "normal"
+          mixBlendMode: isDarkMode ? "screen" : "normal",
+          opacity: hidden ? 0 : 1
         }}
         transition={{
           type: "spring",
