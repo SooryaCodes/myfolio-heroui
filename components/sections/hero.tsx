@@ -21,15 +21,21 @@ const cn = (...inputs: ClassValue[]) => {
 
 // Animated text cycling component with enhanced effects
 const TextCycle = ({ phrases, className = "" }: { phrases: string[], className?: string }) => {
+  const [mounted, setMounted] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState(0);
   
   useEffect(() => {
+    setMounted(true);
     const interval = setInterval(() => {
       setCurrentPhrase((prev) => (prev + 1) % phrases.length);
     }, 3000);
     
     return () => clearInterval(interval);
   }, [phrases.length]);
+  
+  if (!mounted) {
+    return <span className={className}>{phrases[0]}</span>;
+  }
   
   return (
     <div className={`relative inline-block overflow-hidden ${className}`}>
@@ -53,6 +59,7 @@ const TextCycle = ({ phrases, className = "" }: { phrases: string[], className?:
 };
 
 export const Hero = () => {
+  const [mounted, setMounted] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -67,6 +74,8 @@ export const Hero = () => {
   const smoothMouseY = useSpring(mouseY, { damping: 20, stiffness: 300 });
   
   useEffect(() => {
+    setMounted(true);
+    
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
       
@@ -118,6 +127,66 @@ export const Hero = () => {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { ease: [0.22, 1, 0.36, 1], duration: 0.85 } },
   };
+
+  // Simple non-animated version for server-side rendering
+  if (!mounted) {
+    return (
+      <section 
+        id="hero"
+        className="min-h-screen flex items-center justify-center px-6 md:px-8 relative overflow-hidden pt-24 pb-16"
+      >
+        <div className={cn(
+          "absolute inset-0",
+          "[background-size:40px_40px]",
+          "[background-image:linear-gradient(to_right,rgba(var(--color-foreground),0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(var(--color-foreground),0.05)_1px,transparent_1px)]"
+        )} />
+        
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
+        
+        <div className="max-w-7xl mx-auto w-full z-10 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
+            <div className="lg:col-span-7 flex flex-col items-start text-left">
+              <Badge className="mb-6 border border-primary/20 glass-premium" variant="flat" color="primary" size="lg">
+                <span className="px-2 py-1 text-primary">Developer & Designer</span>
+              </Badge>
+              
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6 text-foreground">
+                {developerName} <span className="text-primary premium-highlight">Digital</span> Experiences with Precision
+              </h1>
+              
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium text-muted mb-6">
+                I&apos;m a <span className="text-primary font-semibold">{skills[0]}</span>
+              </h2>
+              
+              <p className="text-lg text-muted mb-8 max-w-xl">
+                I create immersive digital experiences through intuitive designs and clean code, 
+                helping brands connect with their audience in meaningful ways.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 mb-10">
+                <Button
+                  className="btn-premium font-medium px-8 py-6 rounded-full"
+                  size="lg"
+                  variant="flat"
+                  color="primary"
+                >
+                  Explore My Work <FiArrowRight className="ml-2" />
+                </Button>
+                
+                <Button
+                  className="px-8 py-6 rounded-full border border-primary/20 text-primary font-medium hover:bg-primary/5"
+                  variant="ghost"
+                  size="lg"
+                >
+                  About Me
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section 
@@ -191,9 +260,9 @@ export const Hero = () => {
             
             <motion.h2
               variants={item}
-              className="text-2xl md:text-3xl lg:text-4xl font-medium text-muted mb-6"
+              className="text-2xl md:text-3xl relative lg:text-4xl font-medium text-muted mb-6"
             >
-              I&apos;m a <TextCycle phrases={skills} className="text-primary font-semibold" />
+              I&apos;m a <TextCycle phrases={skills} className="text-primary top-2 font-semibold" />
             </motion.h2>
 
             <motion.p 
@@ -326,7 +395,7 @@ export const Hero = () => {
                     alt={developerName} 
                     width={600} 
                     height={800}
-                    className="object-cover h-full w-full mix-blend-normal opacity-90"
+                    className="object-cover h-full w-full mix-blend-normal opacity-[0.9]"
                     priority
                   />
                   

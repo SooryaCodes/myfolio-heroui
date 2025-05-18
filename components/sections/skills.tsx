@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { Badge } from "@heroui/badge";
 import { Progress } from "@heroui/progress";
@@ -97,9 +97,27 @@ const AnimatedProgressBar = ({
 
 // Orbital Skill Visualization
 const OrbitalSkills = ({ skills, color }: { skills: Skill[], color: string }) => {
+  // All hooks must be called unconditionally at the top level
+  const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  
+  // Create all the motion values and springs for each skill position upfront
+  const skillPositions = skills.map((skill, index) => {
+    const angle = (index * (360 / skills.length)) * (Math.PI / 180);
+    const radius = 150;
+    const defaultX = Math.cos(angle) * radius;
+    const defaultY = Math.sin(angle) * radius;
+    
+    const x = useTransform(mouseX, [-100, 100], [defaultX - 15, defaultX + 15]);
+    const y = useTransform(mouseY, [-100, 100], [defaultY - 15, defaultY + 15]);
+    
+    const springX = useSpring(x, { stiffness: 100, damping: 30 });
+    const springY = useSpring(y, { stiffness: 100, damping: 30 });
+    
+    return { x: springX, y: springY, defaultX, defaultY };
+  });
   
   const handleMouseMove = useCallback(
     (e: React.MouseEvent) => {
@@ -110,6 +128,29 @@ const OrbitalSkills = ({ skills, color }: { skills: Skill[], color: string }) =>
     },
     [mouseX, mouseY]
   );
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  // Static version for SSR
+  if (!mounted) {
+    return (
+      <div className="relative h-[400px] w-full rounded-2xl border border-border overflow-hidden glass-premium">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full flex items-center justify-center z-10"
+          style={{
+            background: `linear-gradient(135deg, ${color}, transparent)`,
+            boxShadow: `0 0 30px ${color}33`
+          }}
+        >
+          <div className="text-foreground text-center">
+            <div className="text-2xl font-bold">{skills.length}</div>
+            <div className="text-xs">Skills</div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   
   return (
     <motion.div 
@@ -136,26 +177,13 @@ const OrbitalSkills = ({ skills, color }: { skills: Skill[], color: string }) =>
       
       {/* Orbital skills */}
       {skills.map((skill, index) => {
-        // Calculate orbital positions
-        const angle = (index * (360 / skills.length)) * (Math.PI / 180);
-        const radius = 150;
-        const defaultX = Math.cos(angle) * radius;
-        const defaultY = Math.sin(angle) * radius;
-        
-        // Use motion values for responsive movement
-        const x = useTransform(mouseX, [-100, 100], [defaultX - 15, defaultX + 15]);
-        const y = useTransform(mouseY, [-100, 100], [defaultY - 15, defaultY + 15]);
-        
-        const springX = useSpring(x, { stiffness: 100, damping: 30 });
-        const springY = useSpring(y, { stiffness: 100, damping: 30 });
-        
         return (
           <motion.div
             key={skill.name}
             className="absolute left-1/2 top-1/2 flex items-center justify-center"
             style={{
-              x: springX,
-              y: springY,
+              x: skillPositions[index].x,
+              y: skillPositions[index].y,
               translateX: "-50%",
               translateY: "-50%",
             }}
@@ -188,9 +216,9 @@ const OrbitalSkills = ({ skills, color }: { skills: Skill[], color: string }) =>
       })}
       
       {/* Orbital paths */}
-      <div className="absolute left-1/2 top-1/2 w-[300px] h-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/10 opacity-20" />
-      <div className="absolute left-1/2 top-1/2 w-[240px] h-[240px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/10 opacity-20" />
-      <div className="absolute left-1/2 top-1/2 w-[180px] h-[180px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/10 opacity-20" />
+      <div className="absolute left-1/2 top-1/2 w-[300px] h-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/10" style={{ opacity: 0.2 }} />
+      <div className="absolute left-1/2 top-1/2 w-[240px] h-[240px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/10" style={{ opacity: 0.2 }} />
+      <div className="absolute left-1/2 top-1/2 w-[180px] h-[180px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-border/10" style={{ opacity: 0.2 }} />
     </motion.div>
   );
 };
@@ -258,8 +286,13 @@ const SkillCard = ({ skill, index, color }: { skill: Skill, index: number, color
 };
 
 export const Skills = () => {
+  const [mounted, setMounted] = useState(false);
   const [skillType, setSkillType] = useState("frontend");
   const sectionRef = useRef<HTMLDivElement>(null);
+  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -272,6 +305,44 @@ export const Skills = () => {
   
   const currentCategory = skillCategories.find(category => category.key === skillType) || skillCategories[0];
 
+  // Simple static version for SSR
+  if (!mounted) {
+    return (
+      <section 
+        id="skills" 
+        className="py-24 md:py-32 px-6 relative overflow-hidden"
+      >
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16 md:mb-24">
+            <Badge 
+              variant="flat" 
+              color="primary" 
+              className="mb-4 border border-primary/20 glass-premium"
+            >
+              <span className="px-2 py-0.5 text-primary">My Expertise</span>
+            </Badge>
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
+              Technical Skills
+            </h2>
+            <p className="text-muted max-w-2xl mx-auto">
+              A showcase of my technical skills and proficiencies acquired through years of 
+              experience and continuous learning in various domains.
+            </p>
+          </div>
+          
+          {/* Simple tab list */}
+          <div className="flex justify-center mb-12">
+            {skillCategories.map(category => (
+              <div key={category.key} className="px-4 sm:px-6 py-2 text-sm">
+                {category.title}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section 
       id="skills" 
@@ -279,7 +350,7 @@ export const Skills = () => {
       className="py-24 md:py-32 px-6 relative overflow-hidden"
     >
       {/* Background Elements */}
-      <div className="absolute inset-0 grid-pattern opacity-5 z-0"></div>
+      <div className="absolute inset-0 grid-pattern z-0" style={{ opacity: 0.05 }}></div>
       
       <motion.div 
         className="absolute top-0 right-0 w-1/2 h-full bg-primary/5 blur-[150px] rounded-full z-0"
