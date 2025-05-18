@@ -246,15 +246,15 @@ export const Projects = () => {
   // Filter projects based on the category
   const filteredProjects = projects.filter((project) => {
     if (filterValue === "all") return true;
-    return project.category.toLowerCase() === filterValue.toLowerCase();
+    return project.category.toLowerCase().includes(filterValue.toLowerCase());
   });
 
   // Count projects by category
   const counts = {
     all: projects.length,
-    web: projects.filter((p) => p.category.toLowerCase() === "web").length,
-    mobile: projects.filter((p) => p.category.toLowerCase() === "mobile").length,
-    design: projects.filter((p) => p.category.toLowerCase() === "design").length,
+    web: projects.filter((p) => p.category.toLowerCase().includes("web")).length,
+    mobile: projects.filter((p) => p.category.toLowerCase().includes("mobile")).length,
+    design: projects.filter((p) => p.category.toLowerCase().includes("design")).length,
   };
 
   return (
@@ -301,20 +301,50 @@ export const Projects = () => {
         </RevealOnScroll>
 
         <RevealOnScroll delay={0.2}>
-          <Tabs
-            aria-label="Project categories"
-            className="justify-center mb-16"
-            color="primary"
-            radius="full"
-            selectedKey={filterValue}
-            variant="light"
-            onSelectionChange={(key) => setFilterValue(key as string)}
-          >
-            <Tab key="all" title={`All (${counts.all})`} />
-            <Tab key="web" title={`Web (${counts.web})`} />
-            <Tab key="mobile" title={`Mobile (${counts.mobile})`} />
-            <Tab key="design" title={`Design (${counts.design})`} />
-          </Tabs>
+          <div className="w-full overflow-x-auto pb-2 px-2 no-scrollbar">
+            <Tabs
+              aria-label="Project categories"
+              className="justify-center mb-16 min-w-max mx-auto"
+              color="primary"
+              radius="full"
+              selectedKey={filterValue}
+              variant="light"
+              onSelectionChange={(key) => setFilterValue(key as string)}
+            >
+              <Tab 
+                key="all" 
+                title={
+                  <div className="px-3 py-1 whitespace-nowrap font-medium">
+                    All ({counts.all})
+                  </div>
+                }
+              />
+              <Tab 
+                key="web" 
+                title={
+                  <div className="px-3 py-1 whitespace-nowrap font-medium">
+                    Web ({counts.web})
+                  </div>
+                }
+              />
+              <Tab 
+                key="mobile" 
+                title={
+                  <div className="px-3 py-1 whitespace-nowrap font-medium">
+                    Mobile ({counts.mobile})
+                  </div>
+                }
+              />
+              <Tab 
+                key="design" 
+                title={
+                  <div className="px-3 py-1 whitespace-nowrap font-medium">
+                    Design ({counts.design})
+                  </div>
+                }
+              />
+            </Tabs>
+          </div>
         </RevealOnScroll>
 
         <div className="space-y-16 overflow-hidden">

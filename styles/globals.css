@@ -522,6 +522,16 @@
     animation-delay: 4s;
   }
   
+  /* Hide scrollbar but keep scrolling functionality */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
   @keyframes blob {
     0% {
       transform: translate(0px, 0px) scale(1);
