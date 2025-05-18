@@ -1050,7 +1050,7 @@ export const Playground = () => {
                     
                     {typingStarted && typingTimeLeft <= 0 && (
                       <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 backdrop-blur-sm">
-                        <h3 className="text-2xl font-bold mb-4">Time's Up!</h3>
+                        <h3 className="text-2xl font-bold mb-4">Time&apos;s Up!</h3>
                         <div className="mb-6">
                           <p className="text-lg mb-2">Your Results:</p>
                           <div className="flex gap-6">
