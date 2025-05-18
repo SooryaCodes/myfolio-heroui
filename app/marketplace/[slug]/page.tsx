@@ -11,6 +11,7 @@ import { Link } from '@heroui/link';
 import { FiArrowLeft, FiHome, FiExternalLink, FiDollarSign, FiShoppingCart, FiStar, FiTag, FiCalendar } from 'react-icons/fi';
 import { Metadata } from 'next';
 import ProductTabs from '@/components/product-tabs';
+import { MarketplaceParams } from '@/types';
 
 // Define interfaces for marketplace product
 interface ProductFeature {
@@ -51,7 +52,11 @@ interface ExtendedMarketplaceProduct {
   requirements?: ProductRequirement[];
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+interface Props {
+  params: MarketplaceParams;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const product = marketplaceProducts.find((p) => p.slug === params.slug);
   
   if (!product) {
@@ -67,7 +72,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   };
 }
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
+export default function ProductPage({ params }: Props) {
   const product = marketplaceProducts.find((p) => p.slug === params.slug) as ExtendedMarketplaceProduct;
   
   if (!product) {

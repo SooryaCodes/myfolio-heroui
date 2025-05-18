@@ -5,8 +5,13 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { FiExternalLink, FiGithub, FiArrowLeft, FiHome } from "react-icons/fi";
 import { projects } from "@/datas/projects";
+import { ProjectParams } from '@/types';
 
-export async function generateMetadata({ params }): Promise<Metadata> {
+interface Props {
+  params: ProjectParams;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = projects.find(project => project.slug === params.slug);
   
   if (!project) {
@@ -22,7 +27,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   };
 }
 
-export default function ProjectPage({ params }) {
+export default function ProjectPage({ params }: Props) {
   const project = projects.find(project => project.slug === params.slug);
 
   if (!project) {

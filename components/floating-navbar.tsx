@@ -47,11 +47,11 @@ export const FloatingNavbar = () => {
   const navItems = [
     { id: "hero", label: "Home", icon: <FiHome size={18} /> },
     { id: "services", label: "Services", icon: <FiLayers size={18} /> },
-    { id: "projects", label: "Projects", icon: <FiGrid size={18} />, externalLink: "/projects" },
+    { id: "projects", label: "Projects", icon: <FiGrid size={18} />,  },
     { id: "skills", label: "Skills", icon: <FiCode size={18} /> },
     { id: "experience", label: "Experience", icon: <FiBriefcase size={18} /> },
-    { id: "marketplace", label: "Marketplace", icon: <FiShoppingBag size={18} />, externalLink: "/marketplace" },
-    { id: "blog", label: "Blog", icon: <FiStar size={18} />, externalLink: "/blog" },
+    { id: "marketplace", label: "Marketplace", icon: <FiShoppingBag size={18} />,  },
+    { id: "blog", label: "Blog", icon: <FiStar size={18} /> },
     { id: "contact", label: "Contact", icon: <FiMessageCircle size={18} /> },
   ];
 
@@ -78,22 +78,7 @@ export const FloatingNavbar = () => {
             onMouseEnter={() => setHoveredItem(item.id)}
             onMouseLeave={() => setHoveredItem(null)}
           >
-            {item.externalLink ? (
-              <Tooltip content={item.label}>
-                <Button
-                  as={Link}
-                  href={item.externalLink}
-                  isIconOnly
-                  variant={activeSection === item.id ? "flat" : "light"}
-                  color={activeSection === item.id ? "primary" : "default"}
-                  radius="full"
-                  size="sm"
-                  className="navbar-icon-inner w-9 h-9"
-                >
-                  {item.icon}
-                </Button>
-              </Tooltip>
-            ) : (
+           
               <Tooltip content={item.label}>
                 <Button
                   isIconOnly
@@ -107,7 +92,7 @@ export const FloatingNavbar = () => {
                   {item.icon}
                 </Button>
               </Tooltip>
-            )}
+            
           </div>
         ))}
         

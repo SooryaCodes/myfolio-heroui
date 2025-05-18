@@ -12,6 +12,7 @@ import { Tooltip } from "@heroui/tooltip";
 import { Divider } from "@heroui/divider";
 import { FiMail, FiMapPin, FiPhone, FiSend, FiCalendar, FiGithub, FiLinkedin, FiTwitter, FiArrowRight, FiUser, FiMessageSquare, FiVideo } from "react-icons/fi";
 import { addToast } from "@heroui/toast";
+import "@/styles/animations.css";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
@@ -95,10 +96,10 @@ export const Contact = () => {
           >
             <span className="px-3 py-1 text-primary">Get In Touch</span>
           </Badge>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">Let's Connect</h2>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/80">Let&apos;s Connect</h2>
           <p className="text-foreground/70 max-w-2xl mx-auto text-lg">
             Have a project in mind or want to discuss a potential collaboration?
-            Feel free to reach out, and I'll get back to you as soon as possible.
+            Feel free to reach out, and I&apos;ll get back to you as soon as possible.
           </p>
         </motion.div>
 
@@ -257,7 +258,7 @@ export const Contact = () => {
                   <div className="flex-grow">
                     <p className="text-foreground/70 mb-8">
                       Feel free to contact me through any of the following methods.
-                      I'm always open to discussing new projects, creative ideas, or
+                      I&apos;m always open to discussing new projects, creative ideas, or
                       opportunities to be part of your vision.
                     </p>
 
@@ -327,7 +328,7 @@ export const Contact = () => {
                     <Divider className="my-6 bg-foreground/10" />
 
                     <div>
-                      <p className="text-sm text-foreground/60 mb-4 font-medium">Let's connect:</p>
+                      <p className="text-sm text-foreground/60 mb-4 font-medium">Let&apos;s connect:</p>
                       <div className="flex gap-4">
                         <Tooltip content="GitHub">
                           <Link
@@ -384,43 +385,7 @@ export const Contact = () => {
         </div>
       </div>
       
-      {/* Animation definition for floating blobs */}
-      <style jsx global>{`
-        @keyframes blob {
-          0% { transform: scale(1) translate(0px, 0px); }
-          33% { transform: scale(1.1) translate(30px, -50px); }
-          66% { transform: scale(0.9) translate(-20px, 20px); }
-          100% { transform: scale(1) translate(0px, 0px); }
-        }
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
-          100% { transform: translateY(0px); }
-        }
-        @keyframes float-slow {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-          100% { transform: translateY(0px); }
-        }
-        .animate-blob {
-          animation: blob 10s infinite linear alternate;
-        }
-        .animate-float {
-          animation: float 6s infinite ease-in-out;
-        }
-        .animate-float-slow {
-          animation: float-slow 8s infinite ease-in-out;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-      `}</style>
+      {/* Animation styles imported from /styles/animations.css */}
     </section>
   );
 }; 
