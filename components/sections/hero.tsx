@@ -231,7 +231,7 @@ export const Hero = () => {
   return (
     <section
       ref={containerRef}
-      className="min-h-screen flex items-center justify-center px-6 md:px-8 relative overflow-hidden pt-24 pb-16"
+      className="min-h-screen flex items-center justify-center px-4 md:px-6 lg:px-8 relative overflow-hidden pt-24 pb-16"
       id="hero"
     >
       {/* Modern Grid Background */}
@@ -247,79 +247,55 @@ export const Hero = () => {
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" />
 
       <motion.div
-        className="absolute w-[600px] h-[600px] rounded-full bg-primary/5 blur-[80px] dark:bg-primary/5 z-0"
+        className="absolute w-[300px] md:w-[600px] h-[300px] md:h-[600px] rounded-full bg-primary/5 blur-[80px] dark:bg-primary/5 z-0"
         style={{
-          x: layer1X,
-          y: layer1Y,
-          top: "30%",
-          right: "0%",
-        }}
-      />
-
-      <motion.div
-        className="absolute w-[300px] h-[300px] rounded-full bg-primary/10 blur-[60px] z-0"
-        style={{
-          x: layer2X,
-          y: layer2Y,
-          bottom: "10%",
-          left: "5%",
+          x: translateX,
+          y: translateY,
+          opacity: 0.6,
         }}
       />
 
       <div className="max-w-7xl mx-auto w-full z-10 relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
-          {/* Text content - 7 columns */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
           <motion.div
+            variants={container}
+            initial="hidden"
             animate="show"
             className="lg:col-span-7 flex flex-col items-start text-left"
-            initial="hidden"
-            variants={container}
           >
             <motion.div variants={item}>
               <Badge
-                className="mb-6 border border-primary/20 glass-premium"
+                className="mb-4 md:mb-6 border border-primary/20 glass-premium"
                 color="primary"
                 size="lg"
                 variant="flat"
               >
-                <span className="px-2 py-1 text-primary">
+                <span className="px-2 py-1 text-primary text-sm md:text-base">
                   Developer & Designer
                 </span>
               </Badge>
             </motion.div>
 
             <motion.h1
-              className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-6 text-foreground"
-              style={{
-                rotateX,
-                rotateY,
-                transformStyle: "preserve-3d",
-              }}
               variants={item}
+              className="text-3xl md:text-5xl lg:text-7xl font-bold leading-[1.1] tracking-tight mb-4 md:mb-6 text-foreground"
             >
               {developerName}{" "}
               <span className="text-primary premium-highlight">Digital</span>{" "}
-              Experiences with Precision
+              <span className="block md:inline">Experiences with Precision</span>
             </motion.h1>
 
             <motion.h2
-              className="text-2xl md:text-3xl relative lg:text-4xl font-medium text-muted mb-6"
               variants={item}
+              className="text-xl md:text-2xl lg:text-4xl relative font-medium text-muted mb-4 md:mb-6"
             >
               I&apos;m a{" "}
-              <TextCycle
-                className="text-primary top-2 font-semibold"
-                phrases={skills}
-              />
+              <TextCycle className="text-primary font-semibold absoluteu top-2" phrases={skills} />
             </motion.h2>
 
             <motion.p
-              className="text-lg text-muted mb-8 max-w-xl"
-              style={{
-                x: translateX,
-                y: translateY,
-              }}
               variants={item}
+              className="text-base md:text-lg text-muted mb-6 md:mb-8 max-w-xl"
             >
               I create immersive digital experiences through intuitive designs
               and clean code, helping brands connect with their audience in
@@ -327,11 +303,11 @@ export const Hero = () => {
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 mb-10"
               variants={item}
+              className="flex flex-col sm:flex-row gap-4 mb-8 md:mb-10"
             >
               <Button
-                className="btn-premium font-medium px-8 py-6 rounded-full"
+                className="btn-premium font-medium px-6 md:px-8 py-5 md:py-6 rounded-full text-sm md:text-base"
                 color="primary"
                 size="lg"
                 variant="flat"
@@ -341,7 +317,7 @@ export const Hero = () => {
               </Button>
 
               <Button
-                className="px-8 py-6 rounded-full border border-primary/20 text-primary font-medium hover:bg-primary/5"
+                className="px-6 md:px-8 py-5 md:py-6 rounded-full border border-primary/20 text-primary font-medium hover:bg-primary/5 text-sm md:text-base"
                 size="lg"
                 variant="ghost"
                 onClick={() => scrollToSection("about")}
@@ -351,64 +327,48 @@ export const Hero = () => {
             </motion.div>
 
             <motion.div
-              className="flex items-center gap-6 mt-8"
               variants={item}
+              className="flex items-center gap-4 sm:gap-6"
             >
-              <div className="h-px w-12 bg-gradient-to-r from-primary/80 to-transparent" />
-              <div className="flex gap-6">
-                <Link
-                  isExternal
-                  aria-label="GitHub"
-                  className="group"
-                  href="https://github.com/yourusername"
-                >
-                  <div className="glass-premium p-3 rounded-full transition-all duration-300 relative overflow-hidden">
-                    <FiGithub
-                      className="text-muted group-hover:text-primary transition-colors duration-300"
-                      size={20}
-                    />
-                    <div className="absolute inset-0 bg-primary/10 scale-0 group-hover:scale-100 rounded-full transition-transform duration-300" />
-                  </div>
-                </Link>
-                <Link
-                  isExternal
-                  aria-label="Twitter"
-                  className="group"
-                  href="https://twitter.com/yourusername"
-                >
-                  <div className="glass-premium p-3 rounded-full transition-all duration-300 relative overflow-hidden">
-                    <FiTwitter
-                      className="text-muted group-hover:text-primary transition-colors duration-300"
-                      size={20}
-                    />
-                    <div className="absolute inset-0 bg-primary/10 scale-0 group-hover:scale-100 rounded-full transition-transform duration-300" />
-                  </div>
-                </Link>
-                <Link
-                  isExternal
-                  aria-label="LinkedIn"
-                  className="group"
-                  href="https://linkedin.com/in/yourusername"
-                >
-                  <div className="glass-premium p-3 rounded-full transition-all duration-300 relative overflow-hidden">
-                    <FiLinkedin
-                      className="text-muted group-hover:text-primary transition-colors duration-300"
-                      size={20}
-                    />
-                    <div className="absolute inset-0 bg-primary/10 scale-0 group-hover:scale-100 rounded-full transition-transform duration-300" />
-                  </div>
-                </Link>
-              </div>
+              <motion.a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted hover:text-primary transition-colors duration-200"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <FiTwitter size={20} />
+              </motion.a>
+              <motion.a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted hover:text-primary transition-colors duration-200"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <FiGithub size={20} />
+              </motion.a>
+              <motion.a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted hover:text-primary transition-colors duration-200"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <FiLinkedin size={20} />
+              </motion.a>
+              <div className="h-6 w-px bg-border" />
+              <p className="text-sm text-muted">
+                Based in {developerLocation}
+              </p>
             </motion.div>
           </motion.div>
 
-          {/* Image content - 5 columns */}
-          <motion.div
-            animate={{ opacity: 1, y: 0 }}
-            className="lg:col-span-5 hidden lg:flex justify-center lg:justify-end relative mt-8 lg:mt-0"
-            initial={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
+          {/* Hero 3D animated image section */}
+          <div className="lg:col-span-5 mt-8 lg:mt-0">
             <div className="relative w-full max-w-md">
               {/* Decorative elements */}
               <motion.div
@@ -454,8 +414,9 @@ export const Hero = () => {
                     alt={developerName}
                     className="object-cover h-full w-full mix-blend-normal opacity-[0.9]"
                     height={800}
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop"
+                    src="/images/profile.jpeg"
                     width={600}
+                   
                   />
 
                   {/* Overlay gradient */}
@@ -516,7 +477,7 @@ export const Hero = () => {
                 </div>
               </motion.div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 

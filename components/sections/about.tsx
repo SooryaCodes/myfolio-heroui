@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Badge } from "@heroui/badge";
 import { Button } from "@heroui/button";
@@ -45,6 +45,23 @@ const profileData = [
 
 export const About = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  
+  // Log when component mounts to verify loading
+  useEffect(() => {
+    console.log("About section mounted");
+    // Check if profile image exists
+    const img = new window.Image();
+    img.src = '/images/profile.jpeg';
+    img.onload = () => {
+      console.log("Profile image loaded successfully");
+      setImageLoaded(true);
+    };
+    img.onerror = () => {
+      console.log("Error loading profile image");
+      setImageLoaded(false);
+    };
+  }, []);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -93,7 +110,7 @@ export const About = () => {
       />
       
       <div className="max-w-7xl mx-auto relative z-10">
-        <RevealOnScroll>
+        <RevealOnScroll threshold={0.2}>
           <div className="text-center mb-16 md:mb-24">
             <Badge 
               variant="flat" 
@@ -112,7 +129,7 @@ export const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Image Column */}
           <div className="lg:col-span-5 relative">
-            <MaskReveal direction="left">
+            <RevealOnScroll direction="left" threshold={0.1} delay={0.3}>
               <div className="relative">
                 {/* Decorative elements */}
                 <motion.div 
@@ -129,13 +146,21 @@ export const About = () => {
                 />
                 
                 <div className="glass-premium p-3 rounded-2xl overflow-hidden border border-primary/10 relative z-10 shadow-xl">
-                  <div className="aspect-[4/5] rounded-lg overflow-hidden relative">
+                  <div className="aspect-[4/5] rounded-lg overflow-hidden relative bg-black/20">
                     <Image 
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop" 
+                      src="/images/profile.jpeg" 
                       alt={developerName} 
                       width={600} 
                       height={750}
                       className="object-cover w-full h-full"
+                      onError={(e) => {
+                        // Fallback to an external image if the local image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.src = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop";
+                        target.onerror = null; // Prevent infinite error loop
+                      }}
+                      onLoad={() => setImageLoaded(true)}
+                      priority
                     />
                     
                     {/* Gradient overlay */}
@@ -183,7 +208,7 @@ export const About = () => {
                   </div>
                 </motion.div>
               </div>
-            </MaskReveal>
+            </RevealOnScroll>
           </div>
           
           {/* Content Column */}

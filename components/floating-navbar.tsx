@@ -24,10 +24,19 @@ export const FloatingNavbar = () => {
   const [activeSection, setActiveSection] = useState("hero");
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     setMounted(true);
+    
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
   useEffect(() => {
@@ -68,20 +77,24 @@ export const FloatingNavbar = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
-  const navItems = [
-    { id: "hero", label: "Home", icon: <FiHome size={18} /> },
-    { id: "services", label: "Services", icon: <FiLayers size={18} /> },
-    { id: "projects", label: "Projects", icon: <FiGrid size={18} /> },
-    { id: "skills", label: "Skills", icon: <FiCode size={18} /> },
-    { id: "experience", label: "Experience", icon: <FiBriefcase size={18} /> },
-    {
-      id: "marketplace",
-      label: "Marketplace",
-      icon: <FiShoppingBag size={18} />,
-    },
-    { id: "blog", label: "Blog", icon: <FiStar size={18} /> },
-    { id: "contact", label: "Contact", icon: <FiMessageCircle size={18} /> },
-  ];
+  // Only show essential items on mobile
+  const navItems = isMobile 
+    ? [
+        { id: "hero", label: "Home", icon: <FiHome size={16} /> },
+        { id: "projects", label: "Projects", icon: <FiGrid size={16} /> },
+        { id: "marketplace", label: "Marketplace", icon: <FiShoppingBag size={16} /> },
+        { id: "contact", label: "Contact", icon: <FiMessageCircle size={16} /> },
+      ]
+    : [
+        { id: "hero", label: "Home", icon: <FiHome size={18} /> },
+        { id: "services", label: "Services", icon: <FiLayers size={18} /> },
+        { id: "projects", label: "Projects", icon: <FiGrid size={18} /> },
+        { id: "skills", label: "Skills", icon: <FiCode size={18} /> },
+        { id: "experience", label: "Experience", icon: <FiBriefcase size={18} /> },
+        { id: "marketplace", label: "Marketplace", icon: <FiShoppingBag size={18} /> },
+        { id: "blog", label: "Blog", icon: <FiStar size={18} /> },
+        { id: "contact", label: "Contact", icon: <FiMessageCircle size={18} /> },
+      ];
 
   const handleNavigation = (id: string, externalLink?: string) => {
     if (externalLink) {
@@ -98,7 +111,7 @@ export const FloatingNavbar = () => {
       initial={{ y: 100, opacity: 0 }}
       transition={{ type: "spring", stiffness: 300, damping: 30, delay: 0.2 }}
     >
-      <div className="glass-premium rounded-full flex items-center justify-between px-4 py-3 gap-1 md:gap-2 border border-border w-auto shadow-lg">
+      <div className="glass-premium rounded-full flex items-center justify-between px-3 md:px-4 py-2 md:py-3 gap-1 md:gap-2 border border-border w-auto shadow-lg">
         {navItems.map((item) => (
           <div
             key={item.id}
@@ -109,7 +122,7 @@ export const FloatingNavbar = () => {
             <Tooltip content={item.label}>
               <Button
                 isIconOnly
-                className="navbar-icon-inner w-9 h-9"
+                className="navbar-icon-inner w-8 h-8 md:w-9 md:h-9"
                 color={activeSection === item.id ? "primary" : "default"}
                 radius="full"
                 size="sm"
@@ -133,7 +146,7 @@ export const FloatingNavbar = () => {
           >
             <Button
               isIconOnly
-              className="navbar-icon-inner w-9 h-9"
+              className="navbar-icon-inner w-8 h-8 md:w-9 md:h-9"
               color="default"
               radius="full"
               size="sm"
@@ -141,9 +154,9 @@ export const FloatingNavbar = () => {
               onClick={toggleTheme}
             >
               {mounted && theme === "dark" ? (
-                <FiSun size={18} />
+                <FiSun size={isMobile ? 16 : 18} />
               ) : (
-                <FiMoon className="text-foreground" size={18} />
+                <FiMoon className="text-foreground" size={isMobile ? 16 : 18} />
               )}
             </Button>
           </Tooltip>

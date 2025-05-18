@@ -15,25 +15,47 @@ import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
+import { useState, useEffect } from "react";
 
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import { scrollToSection } from "@/components/scroll-provider";
 
 export const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // Close menu when scrolling or resizing
+  useEffect(() => {
+    const handleInteraction = () => {
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleInteraction);
+    window.addEventListener("resize", handleInteraction);
+
+    return () => {
+      window.removeEventListener("scroll", handleInteraction);
+      window.removeEventListener("resize", handleInteraction);
+    };
+  }, [isMenuOpen]);
+
   return (
     <HeroUINavbar
       className="backdrop-blur-md bg-background/70"
+      isMenuOpen={isMenuOpen}
       maxWidth="xl"
+      onMenuOpenChange={setIsMenuOpen}
       position="sticky"
     >
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
+        <NavbarBrand as="li" className="gap-2 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
-            <div className="flex items-center justify-center w-10 h-10 bg-primary text-white rounded-full font-bold">
+            <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-primary text-white rounded-full font-bold">
               D
             </div>
-            <p className="font-bold text-inherit">Portfolio</p>
+            <p className="font-bold text-sm sm:text-base text-inherit">Portfolio</p>
           </NextLink>
         </NavbarBrand>
         <ul className="hidden lg:flex gap-4 justify-start ml-2">
@@ -45,7 +67,8 @@ export const Navbar = () => {
                   "data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
                 color="foreground"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   if (item.href === "/") {
                     scrollToSection("hero");
                   } else if (item.href === "/projects") {
@@ -93,7 +116,10 @@ export const Navbar = () => {
             as={Link}
             className="text-sm bg-primary text-white"
             variant="solid"
-            onClick={() => scrollToSection("contact")}
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("contact");
+            }}
           >
             Contact Me
           </Button>
@@ -108,14 +134,16 @@ export const Navbar = () => {
         <NavbarMenuToggle />
       </NavbarContent>
 
-      <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2">
+      <NavbarMenu className="pt-6 backdrop-blur-md bg-background/90">
+        <div className="mx-4 mt-2 flex flex-col gap-4">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
               <Link
                 color="foreground"
                 size="lg"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsMenuOpen(false);
                   if (item.href === "/") {
                     scrollToSection("hero");
                   } else if (item.href === "/projects") {

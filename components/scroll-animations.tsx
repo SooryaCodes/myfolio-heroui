@@ -19,11 +19,23 @@ export function RevealOnScroll({
   threshold?: number;
   once?: boolean;
 }) {
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const directionMap = {
-    left: { x: -distance, y: 0 },
-    right: { x: distance, y: 0 },
-    top: { x: 0, y: -distance },
-    bottom: { x: 0, y: distance },
+    left: { x: isMobile ? -30 : -distance, y: 0 },
+    right: { x: isMobile ? 30 : distance, y: 0 },
+    top: { x: 0, y: isMobile ? -30 : -distance },
+    bottom: { x: 0, y: isMobile ? 30 : distance },
   };
 
   const initialPosition = directionMap[direction];
@@ -34,14 +46,14 @@ export function RevealOnScroll({
         opacity: 0,
         ...initialPosition,
       }}
-      viewport={{ once, amount: threshold }}
+      viewport={{ once, amount: threshold, margin: isMobile ? "-50px 0px" : "0px" }}
       whileInView={{
         opacity: 1,
         x: 0,
         y: 0,
         transition: {
-          duration: 0.8,
-          delay,
+          duration: isMobile ? 0.6 : 0.8,
+          delay: isMobile ? Math.min(delay, 0.1) : delay,
           ease: [0.21, 0.45, 0.15, 0.95],
         },
       }}
@@ -139,7 +151,7 @@ export function MaskReveal({
       className={className}
       initial="hidden"
       variants={variants}
-      viewport={{ amount: threshold, once: true }}
+      viewport={{ once: true, amount: threshold }}
       whileInView="visible"
     >
       {children}
@@ -158,17 +170,32 @@ export function HorizontalScrollSection({
   scrollFactor?: number;
 }) {
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start end", "end start"],
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollFactor * 100]);
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const x = useTransform(
+    scrollYProgress, 
+    [0, 1], 
+    [0, isMobile ? -scrollFactor * 60 : -scrollFactor * 100]
+  );
 
   const springX = useSpring(x, {
     damping: 15,
-    stiffness: 150,
+    stiffness: isMobile ? 100 : 150,
   });
 
   useEffect(() => {

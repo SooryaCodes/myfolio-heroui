@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect } from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Card, CardBody, CardHeader } from "@heroui/card";
@@ -62,12 +64,12 @@ interface ExtendedMarketplaceProduct {
 }
 
 interface Props {
-  params: Promise<{ slug: string }>;
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+  params: { slug: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   const product = marketplaceProducts.find((p) => p.slug === slug);
 
   if (!product) {
@@ -83,11 +85,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function ProductPage({ params }: Props) {
-  const { slug } = await params;
+const ProductPage = ({ params }: Props) => {
+  const { slug } = params;
   const product = marketplaceProducts.find(
     (p) => p.slug === slug,
   ) as ExtendedMarketplaceProduct;
+
+  useEffect(() => {
+    // Prevent auto scrolling by setting scroll position to top
+    window.scrollTo(0, 0);
+  }, []);
 
   if (!product) {
     notFound();
@@ -103,13 +110,13 @@ export default async function ProductPage({ params }: Props) {
     <main className="min-h-screen pt-20 pb-16 bg-background/50">
       <div className="container mx-auto px-4 md:px-8 max-w-screen-xl">
         {/* Navigation */}
-        <div className="mb-8 flex flex-wrap gap-3 items-center">
+        <div className="mb-5 md:mb-8 flex flex-wrap gap-2 md:gap-3 items-center">
           <Button
             as={Link}
             color="primary"
             href="/"
             size="sm"
-            startContent={<FiHome />}
+            startContent={<FiHome size={16} />}
             variant="light"
           >
             Home
@@ -120,14 +127,14 @@ export default async function ProductPage({ params }: Props) {
             color="primary"
             href="/marketplace"
             size="sm"
-            startContent={<FiArrowLeft />}
+            startContent={<FiArrowLeft size={16} />}
             variant="light"
           >
             Back to Marketplace
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
           {/* Product Image Section */}
           <div className="lg:col-span-2">
             <Card className="shadow-none border-none overflow-hidden bg-card/75 backdrop-blur-sm">
@@ -148,7 +155,7 @@ export default async function ProductPage({ params }: Props) {
 
             {/* Additional Images */}
             {product.gallery && product.gallery.length > 0 ? (
-              <div className="grid grid-cols-3 gap-4 mt-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 mt-3 md:mt-4">
                 {product.gallery.map((img: string, index: number) => (
                   <div
                     key={index}
@@ -166,7 +173,7 @@ export default async function ProductPage({ params }: Props) {
                 ))}
               </div>
             ) : product.images && product.images.length > 0 ? (
-              <div className="grid grid-cols-3 gap-4 mt-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4 mt-3 md:mt-4">
                 {product.images.map((img: string, index: number) => (
                   <div
                     key={index}
@@ -190,16 +197,16 @@ export default async function ProductPage({ params }: Props) {
           <div>
             <div className="sticky top-20">
               <Card className="shadow-sm bg-foreground/5 backdrop-blur-sm border-none border border-foreground/5">
-                <CardBody className="p-6">
+                <CardBody className="p-4 md:p-6">
                   <Badge className="mb-2" color="primary" variant="flat">
                     {product.category}
                   </Badge>
 
-                  <h1 className="text-3xl font-bold mb-4 text-foreground">
+                  <h1 className="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-foreground">
                     {product.title}
                   </h1>
 
-                  <div className="flex items-center gap-2 mb-4">
+                  <div className="flex items-center gap-2 mb-3 md:mb-4">
                     <div className="flex">
                       {[...Array(5)].map((_, i) => (
                         <FiStar
@@ -208,16 +215,16 @@ export default async function ProductPage({ params }: Props) {
                         />
                       ))}
                     </div>
-                    <span className="text-sm text-foreground/70">
+                    <span className="text-xs md:text-sm text-foreground/70">
                       (Top-rated)
                     </span>
                   </div>
 
-                  <p className="text-foreground/70 mb-6">
+                  <p className="text-sm md:text-base text-foreground/70 mb-4 md:mb-6">
                     {product.description}
                   </p>
 
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
                     {product.tags.map((tag, index) => (
                       <Chip
                         key={index}
@@ -389,4 +396,6 @@ export default async function ProductPage({ params }: Props) {
       </div>
     </main>
   );
-}
+};
+
+export default ProductPage;

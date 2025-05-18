@@ -310,7 +310,7 @@ const services: Service[] = [
       "Deployment and DevOps",
     ],
     detailedFeatures: [],
-    image: "https://source.unsplash.com/random/1470x980/?coding,developer",
+    image: "https://images.unsplash.com/photo-1637044527362-5ac1dc1d7446?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     details: {
       longDescription:
         "As a full-stack developer, I can handle all aspects of your project from the user interface to the server infrastructure. This integrated approach ensures a cohesive product with seamless interaction between all components.",
@@ -357,7 +357,7 @@ const services: Service[] = [
     ],
     detailedFeatures: [],
     image:
-      "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=1470&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1745270917331-787c80129680?q=80&w=2187&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     details: {
       longDescription:
         "I help optimize the performance of existing web and mobile applications by identifying bottlenecks and implementing solutions to improve speed, responsiveness, and resource usage.",
