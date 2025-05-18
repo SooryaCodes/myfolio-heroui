@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
 
-// Define our own PageProps interface without trying to override Next.js type
+// Define our own PageProps interface for Next.js App Router
 export interface PageProps {
   params?: any;
-  searchParams?: Record<string, string | string[]>;
+  searchParams?: { [key: string]: string | string[] | undefined };
 }
 
 // Declare the custom parameter types for our dynamic routes

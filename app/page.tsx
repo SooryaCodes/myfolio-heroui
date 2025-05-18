@@ -7,12 +7,11 @@ import { Experience } from "@/components/sections/experience";
 import { Contact } from "@/components/sections/contact";
 import { Footer } from "@/components/sections/footer";
 import { Testimonials } from "@/components/sections/testimonials";
-import { Blogs } from "@/components/sections/blogs";
 import { Services } from "@/components/sections/services";
 import { Marketplace } from "@/components/sections/marketplace";
 import { Playground } from "@/components/sections/playground";
 import { FloatingNavbar } from "@/components/floating-navbar";
-import { Blog } from "@/components/sections/blog";
+import { BlogSection } from "@/components/sections/blog-section";
 
 export const metadata: Metadata = {
   title: "Johan Beker | Developer & Designer Portfolio",
@@ -29,10 +28,9 @@ export default function Home() {
       <Experience />
       <Services />
       <Testimonials />
-      <Blogs />
+      <BlogSection />
       <Playground />
       <Marketplace />
-      <Blog />
       <Contact />
       <Footer />
       <FloatingNavbar />

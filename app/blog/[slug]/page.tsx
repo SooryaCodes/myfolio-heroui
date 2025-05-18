@@ -10,7 +10,7 @@ import { Divider } from '@heroui/divider';
 import { Link } from '@heroui/link';
 import { Avatar } from '@heroui/avatar';
 import { FiArrowLeft, FiCalendar, FiClock, FiTag, FiHome, FiShare2 } from 'react-icons/fi';
-import { BlogParams } from '@/types';
+import { BlogParams, PageProps } from '@/types';
 
 // Fallback images for broken images
 const fallbackImages = [
@@ -19,7 +19,7 @@ const fallbackImages = [
   "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
 ];
 
-interface Props {
+interface Props extends PageProps {
   params: BlogParams;
 }
 
