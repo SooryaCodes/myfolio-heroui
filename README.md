@@ -1,53 +1,221 @@
-# Next.js & HeroUI Template
+# MyFolio - Developer Portfolio Template
 
-This is a template for creating applications using Next.js 14 (app directory) and HeroUI (v2).
+<p align="center">
+  <img src="public/images/demo-preview.png" alt="MyFolio Preview" width="800"/>
+</p>
 
-[Try it on CodeSandbox](https://githubbox.com/heroui-inc/heroui/next-app-template)
+> A modern, customizable portfolio template for developers built as part of the HeroUI Hackathon.
 
-## Technologies Used
+## 🏆 HeroUI Hackathon Project
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [HeroUI v2](https://heroui.com/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+This project was created for the HeroUI Hackathon in the **Portfolio Track**. MyFolio showcases the power and flexibility of HeroUI components to create a stunning developer portfolio template.
 
-## How to Use
+## ✨ Features
 
-### Use the template with create-next-app
+- 📱 **Fully Responsive** - Looks great on any device
+- 🌓 **Dark/Light Mode** - Supports both themes with smooth transitions
+- 🏃‍♂️ **Smooth Animations** - Beautiful scroll animations and interactions
+- 🧩 **Modular Structure** - Easy to customize and extend
+- 📊 **Project Showcase** - Highlight your best work with interactive cards
+- 💼 **Experience Timeline** - Display your professional journey
+- 🛠️ **Skills Section** - Showcase your technical expertise
+- 📝 **Blog Integration** - Share your knowledge with the world
+- 📬 **Contact Form** - Let potential clients reach out to you
+- 🧠 **SEO Optimized** - Get found on search engines
 
-To create a new project based on this template using `create-next-app`, run the following command:
+## 🖼️ Preview
 
-```bash
-npx create-next-app -e https://github.com/heroui-inc/next-app-template
+<p align="center">
+  <img src="public/images/dark-mode.png" alt="Dark Mode" width="400"/>
+  <img src="public/images/light-mode.png" alt="Light Mode" width="400"/>
+</p>
+
+<p align="center">
+  <img src="public/images/mobile-view.png" alt="Mobile View" width="250"/>
+  <img src="public/images/projects-section.png" alt="Projects Section" width="550"/>
+</p>
+
+## 🚀 Tech Stack
+
+- [Next.js 15](https://nextjs.org/) - React framework for production
+- [HeroUI v2](https://heroui.com/) - Modern UI component library
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Framer Motion](https://www.framer.com/motion/) - Animation library
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [GSAP](https://greensock.com/gsap/) - Advanced animations
+- [react-lenis](https://github.com/studio-freight/react-lenis) - Smooth scrolling
+- [next-themes](https://github.com/pacocoursey/next-themes) - Theme management
+
+## 📂 Project Structure
+
+```
+myfolio/
+├── app/                    # Next.js app directory
+│   ├── about/              # About page
+│   ├── blog/               # Blog page
+│   ├── contact/            # Contact page
+│   ├── docs/               # Documentation
+│   ├── marketplace/        # Marketplace page
+│   ├── pricing/            # Pricing page
+│   ├── projects/           # Projects page
+│   ├── layout.tsx          # Root layout component
+│   └── page.tsx            # Home page component
+├── components/             # Reusable components
+│   ├── sections/           # Main page sections
+│   │   ├── about.tsx       # About section
+│   │   ├── blog-section.tsx # Blog section
+│   │   ├── contact.tsx     # Contact section
+│   │   ├── experience.tsx  # Experience section
+│   │   ├── footer.tsx      # Footer section
+│   │   ├── hero.tsx        # Hero section
+│   │   ├── marketplace.tsx # Marketplace section
+│   │   ├── playground.tsx  # Playground section
+│   │   ├── projects.tsx    # Projects section
+│   │   ├── services.tsx    # Services section
+│   │   ├── skills.tsx      # Skills section
+│   │   └── testimonials.tsx # Testimonials section
+│   ├── custom-cursor.tsx   # Custom cursor component
+│   ├── floating-navbar.tsx # Floating navigation bar
+│   ├── interactive-card.tsx # Interactive card component
+│   ├── magnetic-button.tsx # Magnetic button component
+│   ├── navbar.tsx          # Main navigation bar
+│   ├── parallax-section.tsx # Parallax scrolling component
+│   ├── scroll-animations.tsx # Scroll animation utilities
+│   └── theme-switch.tsx    # Theme toggle switch
+├── public/                 # Static assets
+│   ├── images/             # Image assets
+│   └── logos/              # Logo assets
+├── styles/                 # Global styles
+├── types/                  # TypeScript type definitions
+└── datas/                  # Data for the portfolio
 ```
 
-### Install dependencies
+## 📋 Key Sections
 
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+The portfolio template includes the following key sections:
+
+1. **Hero** - Eye-catching introduction with animated elements
+2. **About** - Personal information and background
+3. **Projects** - Showcase of your work with interactive cards
+4. **Skills** - Visual representation of your technical expertise
+5. **Experience** - Timeline of your professional journey
+6. **Services** - What you offer to clients
+7. **Testimonials** - Feedback from clients and colleagues
+8. **Blog** - Integration with your blog posts
+9. **Playground** - Interactive demonstrations of your skills
+10. **Marketplace** - Products or services you offer
+11. **Contact** - Form for potential clients to reach out
+
+## 🛠️ Getting Started
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/SooryaCodes/myfolio-heroui.git
+
+# Navigate to the project directory
+cd myfolio-heroui
+
+# Install dependencies
 npm install
+# or
+yarn install
+# or
+pnpm install
 ```
 
-### Run the development server
+### Development
 
 ```bash
+# Run the development server
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
 ```
 
-### Setup pnpm (optional)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+### Building for Production
 
 ```bash
-public-hoist-pattern[]=*@heroui/*
+# Build the project
+npm run build
+# or
+yarn build
+# or
+pnpm build
+
+# Start the production server
+npm start
+# or
+yarn start
+# or
+pnpm start
 ```
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+## 🎨 Customization
 
-## License
+### Personal Information
 
-Licensed under the [MIT license](https://github.com/heroui-inc/next-app-template/blob/main/LICENSE).
+Edit the data files in the `datas` directory to update your personal information:
+
+- `about.ts` - About section content
+- `experience.ts` - Professional experience
+- `projects.ts` - Your portfolio projects
+- `skills.ts` - Technical skills
+- `testimonials.ts` - Client testimonials
+
+### Theme Customization
+
+Modify the theme in `tailwind.config.js` to match your personal brand:
+
+```js
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          // Your primary color palette
+        },
+        // Additional custom colors
+      },
+      // Other theme customizations
+    },
+  },
+  // ...
+};
+```
+
+## 📱 Responsive Design
+
+The portfolio template is fully responsive and works well on all devices:
+
+- **Desktop** - Full-featured experience with advanced animations
+- **Tablet** - Optimized layout with adjusted components
+- **Mobile** - Streamlined interface with touch-friendly elements
+
+## 🌐 Deployment
+
+This project can be easily deployed to Vercel, the platform created by the makers of Next.js:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSooryaCodes%2Fmyfolio-heroui)
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## 🙏 Acknowledgements
+
+- [HeroUI](https://heroui.com/) for organizing the hackathon and providing the UI components
+- [Next.js](https://nextjs.org/) team for the amazing framework
+- All open-source contributors whose work made this possible
+
+---
+
+<p align="center">
+  Made with ❤️ for the HeroUI Hackathon
+</p>
