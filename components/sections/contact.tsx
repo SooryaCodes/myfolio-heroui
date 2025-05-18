@@ -34,6 +34,7 @@ export const Contact = () => {
     message: "",
   });
   const [loading, setLoading] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -56,6 +57,7 @@ export const Contact = () => {
         subject: "",
         message: "",
       });
+      setFormSubmitted(true);
 
       // Show success message using Toast
       addToast({
@@ -66,6 +68,10 @@ export const Contact = () => {
         radius: "full",
       });
     }, 1500);
+  };
+
+  const resetForm = () => {
+    setFormSubmitted(false);
   };
 
   const container = {
@@ -144,114 +150,154 @@ export const Contact = () => {
                 <div className="absolute -left-16 -top-16 w-48 h-48 rounded-full bg-secondary/5 blur-3xl z-0 animate-float-slow" />
 
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-bold text-foreground mb-8 inline-flex items-center">
-                    <span className="mr-3 p-2 rounded-full bg-primary/10">
-                      <FiSend className="text-primary" />
-                    </span>
-                    Send Me a Message
-                  </h3>
-
-                  <form className="space-y-6" onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <Input
-                        isRequired
-                        classNames={{
-                          label: "text-foreground/70 font-medium",
-                          input: "bg-foreground/5",
-                          inputWrapper:
-                            "bg-foreground/5 hover:bg-foreground/10 border-none shadow-sm",
-                        }}
-                        label="Your Name"
-                        labelPlacement="outside"
-                        name="name"
-                        placeholder="John Doe"
-                        radius="lg"
-                        startContent={
-                          <FiUser className="text-primary mr-2 flex-shrink-0" />
-                        }
-                        type="text"
-                        value={formData.name}
-                        variant="flat"
-                        onChange={handleChange}
-                      />
-                      <Input
-                        isRequired
-                        classNames={{
-                          label: "text-foreground/70 font-medium",
-                          input: "bg-foreground/5",
-                          inputWrapper:
-                            "bg-foreground/5 hover:bg-foreground/10 border-none shadow-sm",
-                        }}
-                        label="Your Email"
-                        labelPlacement="outside"
-                        name="email"
-                        placeholder="john@example.com"
-                        radius="lg"
-                        startContent={
-                          <FiMail className="text-primary mr-2 flex-shrink-0" />
-                        }
-                        type="email"
-                        value={formData.email}
-                        variant="flat"
-                        onChange={handleChange}
-                      />
-                    </div>
-
-                    <Input
-                      isRequired
-                      classNames={{
-                        label: "text-foreground/70 font-medium",
-                        input: "bg-foreground/5",
-                        inputWrapper:
-                          "bg-foreground/5 hover:bg-foreground/10 border-none shadow-sm",
-                      }}
-                      label="Subject"
-                      labelPlacement="outside"
-                      name="subject"
-                      placeholder="Project Inquiry"
-                      radius="lg"
-                      startContent={
-                        <FiMessageSquare className="text-primary mr-2 flex-shrink-0" />
-                      }
-                      type="text"
-                      value={formData.subject}
-                      variant="flat"
-                      onChange={handleChange}
-                    />
-
-                    <Textarea
-                      isRequired
-                      classNames={{
-                        label: "text-foreground/70 font-medium",
-                        input: "bg-foreground/5",
-                        inputWrapper:
-                          "bg-foreground/5 hover:bg-foreground/10 border-none shadow-sm",
-                      }}
-                      label="Your Message"
-                      labelPlacement="outside"
-                      minRows={5}
-                      name="message"
-                      placeholder="Tell me about your project, timeline, and budget..."
-                      radius="lg"
-                      value={formData.message}
-                      variant="flat"
-                      onChange={handleChange}
-                    />
-
-                    <Button
-                      fullWidth
-                      className="bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 transition-all shadow-lg shadow-primary/20"
-                      color="primary"
-                      isLoading={loading}
-                      radius="full"
-                      size="lg"
-                      startContent={!loading && <FiSend />}
-                      type="submit"
-                      variant="shadow"
+                  {formSubmitted ? (
+                    <motion.div 
+                      className="flex flex-col items-center justify-center text-center py-10"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5 }}
                     >
-                      {loading ? "Sending..." : "Send Message"}
-                    </Button>
-                  </form>
+                      <div className="w-20 h-20 bg-success/20 rounded-full flex items-center justify-center mb-6">
+                        <svg 
+                          className="w-10 h-10 text-success" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth={2} 
+                            d="M5 13l4 4L19 7" 
+                          />
+                        </svg>
+                      </div>
+                      <h3 className="text-2xl font-bold mb-3 text-foreground">Message Sent Successfully!</h3>
+                      <p className="text-foreground/70 mb-8 max-w-md">
+                        Thank you for reaching out! I've received your message and will get back to you as soon as possible.
+                      </p>
+                      <Button
+                        color="primary"
+                        radius="full"
+                        variant="flat"
+                        onClick={resetForm}
+                      >
+                        Send Another Message
+                      </Button>
+                    </motion.div>
+                  ) : (
+                    <>
+                      <h3 className="text-2xl font-bold text-foreground mb-8 inline-flex items-center">
+                        <span className="mr-3 p-2 rounded-full bg-primary/10">
+                          <FiSend className="text-primary" />
+                        </span>
+                        Send Me a Message
+                      </h3>
+
+                      <form className="space-y-6" onSubmit={handleSubmit}>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <Input
+                            isRequired
+                            classNames={{
+                              label: "text-foreground/70 font-medium",
+                              input: "bg-foreground/5",
+                              inputWrapper:
+                                "bg-foreground/5 hover:bg-foreground/10 border-none shadow-sm",
+                            }}
+                            label="Your Name"
+                            labelPlacement="outside"
+                            name="name"
+                            placeholder="John Doe"
+                            radius="lg"
+                            startContent={
+                              <FiUser className="text-primary mr-2 flex-shrink-0" />
+                            }
+                            type="text"
+                            value={formData.name}
+                            variant="flat"
+                            onChange={handleChange}
+                          />
+                          <Input
+                            isRequired
+                            classNames={{
+                              label: "text-foreground/70 font-medium",
+                              input: "bg-foreground/5",
+                              inputWrapper:
+                                "bg-foreground/5 hover:bg-foreground/10 border-none shadow-sm",
+                            }}
+                            label="Your Email"
+                            labelPlacement="outside"
+                            name="email"
+                            placeholder="john@example.com"
+                            radius="lg"
+                            startContent={
+                              <FiMail className="text-primary mr-2 flex-shrink-0" />
+                            }
+                            type="email"
+                            value={formData.email}
+                            variant="flat"
+                            onChange={handleChange}
+                          />
+                        </div>
+
+                        <Input
+                          isRequired
+                          classNames={{
+                            label: "text-foreground/70 font-medium",
+                            input: "bg-foreground/5",
+                            inputWrapper:
+                              "bg-foreground/5 hover:bg-foreground/10 border-none shadow-sm",
+                          }}
+                          label="Subject"
+                          labelPlacement="outside"
+                          name="subject"
+                          placeholder="Project Inquiry"
+                          radius="lg"
+                          startContent={
+                            <FiMessageSquare className="text-primary mr-2 flex-shrink-0" />
+                          }
+                          type="text"
+                          value={formData.subject}
+                          variant="flat"
+                          onChange={handleChange}
+                        />
+
+                        <Textarea
+                          isRequired
+                          classNames={{
+                            label: "text-foreground/70 font-medium",
+                            input: "bg-foreground/5",
+                            inputWrapper:
+                              "bg-foreground/5 hover:bg-foreground/10 border-none shadow-sm",
+                          }}
+                          label="Your Message"
+                          labelPlacement="outside"
+                          minRows={5}
+                          name="message"
+                          placeholder="Tell me about your project, timeline, and budget..."
+                          radius="lg"
+                          value={formData.message}
+                          variant="flat"
+                          onChange={handleChange}
+                        />
+
+                        <Button
+                          fullWidth
+                          className="bg-gradient-to-r from-primary to-primary/80 hover:opacity-90 transition-all shadow-lg shadow-primary/20"
+                          color="primary"
+                          isLoading={loading}
+                          radius="full"
+                          size="lg"
+                          startContent={!loading && <FiSend />}
+                          type="submit"
+                          variant="shadow"
+                        >
+                          {loading ? "Sending..." : "Send Message"}
+                        </Button>
+                      </form>
+                    </>
+                  )}
                 </div>
               </div>
             </Card>

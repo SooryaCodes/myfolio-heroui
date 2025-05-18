@@ -17,7 +17,7 @@ import {
 } from "react-icons/fi";
 
 // Game type definition
-type GameType = "target-game" | "stack-game" | "typing-test";
+type GameType = "target-game" | "typing-test";
 
 export const Playground = () => {
   // Game selection state
@@ -36,30 +36,6 @@ export const Playground = () => {
   const [allTimeHighScore, setAllTimeHighScore] = useState(0);
   const [recentScores, setRecentScores] = useState<number[]>([]);
   const [gameDimensions, setGameDimensions] = useState({ width: 0, height: 0 });
-
-  // Stack Game states
-  const [stackGameStarted, setStackGameStarted] = useState(false);
-  const [stackScore, setStackScore] = useState(0);
-  const [stackHighScore, setStackHighScore] = useState(0);
-  const [currentBlock, setCurrentBlock] = useState<string | null>(null);
-  const [stackedBlocks, setStackedBlocks] = useState<string[]>([]);
-  const [techStacks, setTechStacks] = useState<
-    { name: string; techs: string[] }[]
-  >([
-    { name: "MERN Stack", techs: ["MongoDB", "Express", "React", "Node.js"] },
-    {
-      name: "Modern Frontend",
-      techs: ["React", "TypeScript", "Tailwind CSS", "Next.js"],
-    },
-    {
-      name: "Fullstack JS",
-      techs: ["Node.js", "Express", "PostgreSQL", "React"],
-    },
-  ]);
-  const [currentStackIdx, setCurrentStackIdx] = useState(0);
-  const [fallingSpeed, setFallingSpeed] = useState(3000);
-  const blockTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const gameOverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Typing Test states
   const [typingStarted, setTypingStarted] = useState(false);
@@ -205,7 +181,6 @@ export const Playground = () => {
   useEffect(() => {
     const savedHighScore = localStorage.getItem("playgroundHighScore");
     const savedRecentScores = localStorage.getItem("playgroundRecentScores");
-    const savedStackHighScore = localStorage.getItem("stackGameHighScore");
     const savedTypingHighScore = localStorage.getItem("typingTestHighScore");
 
     if (savedHighScore) {
@@ -225,10 +200,6 @@ export const Playground = () => {
       } catch (e) {
         console.error("Failed to parse recent scores:", e);
       }
-    }
-
-    if (savedStackHighScore) {
-      setStackHighScore(parseInt(savedStackHighScore, 10));
     }
 
     if (savedTypingHighScore) {
@@ -362,131 +333,6 @@ export const Playground = () => {
         setTimeout(generateTarget, 200);
       }
     }, 100);
-  };
-
-  // STACK GAME FUNCTIONS
-
-  // Start the stack game
-  const startStackGame = () => {
-    setStackGameStarted(true);
-    setStackScore(0);
-    setCurrentStackIdx(Math.floor(Math.random() * techStacks.length));
-    setStackedBlocks([]);
-    setFallingSpeed(3000);
-    setCurrentBlock(null);
-
-    // Start dropping blocks with a very short delay
-    setTimeout(() => {
-      console.log("Starting to drop blocks");
-      dropNextBlock();
-    }, 100);
-  };
-
-  // Drop the next tech block
-  const dropNextBlock = () => {
-    if (!stackGameStarted) return;
-
-    // Clear any existing timeouts
-    if (blockTimeoutRef.current) {
-      clearTimeout(blockTimeoutRef.current);
-      blockTimeoutRef.current = null;
-    }
-
-    if (gameOverTimeoutRef.current) {
-      clearTimeout(gameOverTimeoutRef.current);
-      gameOverTimeoutRef.current = null;
-    }
-
-    const currentStack = techStacks[currentStackIdx];
-
-    // If all blocks are stacked, move to the next tech stack
-    if (stackedBlocks.length === currentStack.techs.length) {
-      setStackScore((prev) => prev + 100); // Bonus for completing a stack
-      setStackedBlocks([]);
-      setCurrentStackIdx((prevIdx) => (prevIdx + 1) % techStacks.length);
-      setFallingSpeed((prev) => Math.max(prev * 0.9, 1000)); // Increase speed
-
-      // Schedule next block
-      blockTimeoutRef.current = setTimeout(dropNextBlock, 1000);
-
-      return;
-    }
-
-    // Ensure current block is null first (to force a re-render)
-    setCurrentBlock(null);
-
-    // Use a small delay to ensure React processes the null state before setting the new block
-    blockTimeoutRef.current = setTimeout(() => {
-      if (!stackGameStarted) return; // Check again in case game ended during timeout
-
-      const nextBlock = currentStack.techs[stackedBlocks.length];
-
-      setCurrentBlock(nextBlock);
-
-      // Set a timeout to end the game if block is not stacked
-      gameOverTimeoutRef.current = setTimeout(() => {
-        if (stackGameStarted) {
-          // Check if we're still on the same block index
-          const currentStackNow = techStacks[currentStackIdx];
-
-          if (
-            stackedBlocks.length < currentStackNow.techs.length &&
-            nextBlock === currentStackNow.techs[stackedBlocks.length]
-          ) {
-            endStackGame();
-          }
-        }
-      }, fallingSpeed);
-    }, 50); // Small delay to ensure state updates properly
-  };
-
-  // Handle stacking a block
-  const handleStackBlock = () => {
-    if (!currentBlock) return;
-
-    // Clear the game over timeout since we're handling the block
-    if (gameOverTimeoutRef.current) {
-      clearTimeout(gameOverTimeoutRef.current);
-      gameOverTimeoutRef.current = null;
-    }
-
-    const currentStack = techStacks[currentStackIdx];
-    const correctBlock = currentStack.techs[stackedBlocks.length];
-
-    // Check if the stacked block is correct for this position
-    if (currentBlock === correctBlock) {
-      setStackedBlocks((prev) => [...prev, currentBlock]);
-      setStackScore((prev) => prev + 10);
-      setCurrentBlock(null);
-
-      // Schedule the next block
-      blockTimeoutRef.current = setTimeout(dropNextBlock, 500);
-    } else {
-      endStackGame();
-    }
-  };
-
-  // End the stack game
-  const endStackGame = () => {
-    setStackGameStarted(false);
-    setCurrentBlock(null);
-
-    // Clear all timeouts
-    if (blockTimeoutRef.current) {
-      clearTimeout(blockTimeoutRef.current);
-      blockTimeoutRef.current = null;
-    }
-
-    if (gameOverTimeoutRef.current) {
-      clearTimeout(gameOverTimeoutRef.current);
-      gameOverTimeoutRef.current = null;
-    }
-
-    // Update high score if needed
-    if (stackScore > stackHighScore) {
-      setStackHighScore(stackScore);
-      localStorage.setItem("stackGameHighScore", stackScore.toString());
-    }
   };
 
   // TYPING TEST FUNCTIONS
@@ -632,14 +478,6 @@ export const Playground = () => {
       if (gameIntervalRef.current) {
         clearInterval(gameIntervalRef.current);
       }
-
-      if (blockTimeoutRef.current) {
-        clearTimeout(blockTimeoutRef.current);
-      }
-
-      if (gameOverTimeoutRef.current) {
-        clearTimeout(gameOverTimeoutRef.current);
-      }
     };
   }, []);
 
@@ -688,16 +526,7 @@ export const Playground = () => {
               if (gameIntervalRef.current) {
                 clearInterval(gameIntervalRef.current);
               }
-              if (blockTimeoutRef.current) {
-                clearTimeout(blockTimeoutRef.current);
-                blockTimeoutRef.current = null;
-              }
-              if (gameOverTimeoutRef.current) {
-                clearTimeout(gameOverTimeoutRef.current);
-                gameOverTimeoutRef.current = null;
-              }
               setGameStarted(false);
-              setStackGameStarted(false);
               setTypingStarted(false);
             }}
           >
@@ -707,15 +536,6 @@ export const Playground = () => {
                 <div className="flex items-center gap-2">
                   <FiMousePointer className="text-lg" />
                   <span>Target Game</span>
-                </div>
-              }
-            />
-            <Tab
-              key="stack-game"
-              title={
-                <div className="flex items-center gap-2">
-                  <FiLayers className="text-lg" />
-                  <span>Stack the Stack</span>
                 </div>
               }
             />
@@ -869,226 +689,6 @@ export const Playground = () => {
                         />
                       ))}
                     </AnimatePresence>
-                  </div>
-                </>
-              )}
-
-              {/* STACK THE STACK GAME */}
-              {selectedGame === "stack-game" && (
-                <>
-                  <div className="flex flex-col md:flex-row justify-between items-center mb-4">
-                    <div className="flex gap-4 md:gap-6 mb-4 md:mb-0">
-                      <div className="text-center">
-                        <p className="text-sm text-foreground/70 mb-1">Score</p>
-                        <p className="text-2xl font-bold text-primary">
-                          {stackScore}
-                        </p>
-                      </div>
-                      <div className="text-center">
-                        <p className="text-sm text-foreground/70 mb-1">
-                          Current Stack
-                        </p>
-                        <p className="text-2xl font-bold text-foreground">
-                          {stackGameStarted
-                            ? techStacks[currentStackIdx].name
-                            : "—"}
-                        </p>
-                      </div>
-                      <div className="text-center">
-                        <p className="text-sm text-foreground/70 mb-1">
-                          High Score
-                        </p>
-                        <p className="text-2xl font-bold text-warning">
-                          {stackHighScore}
-                        </p>
-                      </div>
-                    </div>
-
-                    <Button
-                      color="primary"
-                      radius="full"
-                      startContent={
-                        stackGameStarted ? <FiRefreshCw /> : <FiPlay />
-                      }
-                      variant="flat"
-                      onClick={stackGameStarted ? endStackGame : startStackGame}
-                    >
-                      {stackGameStarted ? "End Game" : "Start Game"}
-                    </Button>
-                  </div>
-
-                  <div className="w-full h-[400px] bg-background/40 rounded-xl border border-border relative overflow-hidden">
-                    {!stackGameStarted && (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-                        <h3 className="text-2xl font-bold mb-4">
-                          Stack the Stack
-                        </h3>
-                        <p className="text-lg mb-6 max-w-xl">
-                          Build tech stacks by clicking the falling blocks in
-                          the right order to complete the project!
-                        </p>
-                        <Button
-                          color="primary"
-                          radius="full"
-                          size="lg"
-                          startContent={<FiPlay />}
-                          variant="flat"
-                          onClick={startStackGame}
-                        >
-                          Start Game
-                        </Button>
-                      </div>
-                    )}
-
-                    {stackGameStarted && (
-                      <>
-                        {/* Game State Display */}
-                        <div className="absolute top-4 left-4 right-4 flex justify-between items-center">
-                          <div className="bg-background/30 backdrop-blur-sm rounded-lg p-2">
-                            <p className="text-xs text-foreground/70">Speed</p>
-                            <p className="text-sm font-bold">
-                              {Math.round(10000 / fallingSpeed)}×
-                            </p>
-                          </div>
-
-                          <div className="glass-premium border border-border p-2 rounded-lg">
-                            <h4 className="text-sm font-medium mb-1 text-center">
-                              Complete: {techStacks[currentStackIdx].name}
-                            </h4>
-                            <div className="flex gap-2 justify-center flex-wrap">
-                              {techStacks[currentStackIdx].techs.map(
-                                (tech, idx) => (
-                                  <Chip
-                                    key={idx}
-                                    className={
-                                      idx < stackedBlocks.length
-                                        ? "opacity-30"
-                                        : ""
-                                    }
-                                    color={
-                                      idx < stackedBlocks.length
-                                        ? "success"
-                                        : "primary"
-                                    }
-                                    size="sm"
-                                    variant="flat"
-                                  >
-                                    {tech}
-                                  </Chip>
-                                ),
-                              )}
-                            </div>
-                          </div>
-
-                          <div className="bg-background/30 backdrop-blur-sm rounded-lg p-2">
-                            <p className="text-xs text-foreground/70">
-                              Progress
-                            </p>
-                            <p className="text-sm font-bold">
-                              {stackedBlocks.length}/
-                              {techStacks[currentStackIdx].techs.length}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Stacked Blocks */}
-                        <div className="absolute bottom-20 left-0 right-0 flex justify-center">
-                          <div className="flex flex-col-reverse items-center">
-                            {stackedBlocks.map((block, idx) => (
-                              <motion.div
-                                key={idx}
-                                animate={{ y: 0, opacity: 1 }}
-                                className="mb-1 glass-premium p-3 w-48 text-center rounded-lg border border-border bg-success/10"
-                                initial={{ y: -40, opacity: 0 }}
-                                style={{
-                                  borderColor:
-                                    techColors[
-                                      block as keyof typeof techColors
-                                    ] || "rgba(var(--color-primary))",
-                                  borderWidth: "2px",
-                                }}
-                              >
-                                {block}
-                              </motion.div>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Falling Block */}
-                        <AnimatePresence mode="wait">
-                          {currentBlock && (
-                            <motion.div
-                              key={`falling-${currentBlock}-${stackedBlocks.length}-${Date.now()}`}
-                              animate={{ y: 250 }}
-                              className="absolute left-1/2 transform -translate-x-1/2 glass-premium p-3 w-48 text-center rounded-lg border-2 z-10"
-                              exit={{ opacity: 0, scale: 0.8 }}
-                              initial={{ y: -100 }}
-                              style={{
-                                borderColor:
-                                  techColors[
-                                    currentBlock as keyof typeof techColors
-                                  ] || "rgba(var(--color-primary))",
-                                backgroundColor:
-                                  `${techColors[currentBlock as keyof typeof techColors]}15` ||
-                                  "rgba(var(--color-primary), 0.1)",
-                              }}
-                              transition={{
-                                duration: fallingSpeed / 1000,
-                                ease: "linear",
-                              }}
-                            >
-                              {currentBlock}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-
-                        {/* Stack Button */}
-                        <Button
-                          className="absolute bottom-4 left-1/2 transform -translate-x-1/2"
-                          color="primary"
-                          disabled={!currentBlock}
-                          radius="full"
-                          size="lg"
-                          variant="solid"
-                          onClick={handleStackBlock}
-                        >
-                          Stack It!
-                        </Button>
-                      </>
-                    )}
-
-                    {/* Game Over State */}
-                    {stackGameStarted === false && stackScore > 0 && (
-                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/90 backdrop-blur-sm">
-                        <h3 className="text-2xl font-bold mb-4">Game Over!</h3>
-                        <div className="mb-6">
-                          <p className="text-lg mb-2">
-                            Your Score:{" "}
-                            <span className="text-primary font-bold">
-                              {stackScore}
-                            </span>
-                          </p>
-                        </div>
-
-                        {stackScore > stackHighScore && stackScore > 0 && (
-                          <div className="mb-6 p-3 bg-warning/10 text-warning rounded-lg font-medium animate-pulse">
-                            <FiAward className="inline-block mr-2" />
-                            New High Score!
-                          </div>
-                        )}
-
-                        <Button
-                          color="primary"
-                          radius="full"
-                          size="lg"
-                          startContent={<FiPlay />}
-                          variant="flat"
-                          onClick={startStackGame}
-                        >
-                          Play Again
-                        </Button>
-                      </div>
-                    )}
                   </div>
                 </>
               )}
@@ -1316,12 +916,6 @@ export const Playground = () => {
             <p>
               Hint: Smaller targets give more points! Try to click them as fast
               as you can.
-            </p>
-          )}
-          {selectedGame === "stack-game" && (
-            <p>
-              Hint: Pay attention to the correct order of technologies in each
-              stack!
             </p>
           )}
           {selectedGame === "typing-test" && (
