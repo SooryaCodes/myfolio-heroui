@@ -350,7 +350,7 @@ export default function MarketplacePage() {
                 </Badge>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">Looking for Custom Solutions?</h2>
                 <p className="text-foreground/70 mb-10 text-lg">
-                  If you need a custom template or development service, I'm here to help. Let's discuss your project requirements and create something amazing together.
+                  If you need a custom template or development service, I&apos;m here to help. Let&apos;s discuss your project requirements and create something amazing together.
                 </p>
                 <Button
                   as={Link}

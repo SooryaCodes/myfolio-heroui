@@ -45,7 +45,7 @@ const testimonials: Testimonial[] = [
     name: "Elena Kowalski",
     role: "Marketing Director",
     company: "Nexus Media",
-    content: "Johan's work on our e-commerce platform was transformative. He created a shopping experience that not only looks beautiful but converts at a much higher rate than our previous site. His insights on user experience and technical implementation were invaluable.",
+    content: "Johan&apos;s work on our e-commerce platform was transformative. He created a shopping experience that not only looks beautiful but converts at a much higher rate than our previous site. His insights on user experience and technical implementation were invaluable.",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop",
     rating: 4,
     logo: "https://images.unsplash.com/photo-1516876437184-593fda40c7ce?q=80&w=2072&auto=format&fit=crop",
@@ -183,11 +183,11 @@ export const Testimonials = () => {
               color="primary" 
               className="mb-4 border border-primary/20 glass-premium"
             >
-              <span className="px-2 py-0.5 text-primary">Clients' Words</span>
+              <span className="px-2 py-0.5 text-primary">Clients&apos; Words</span>
             </Badge>
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 mb-6">Client Testimonials</h2>
             <p className="text-muted max-w-xl mx-auto text-lg">
-              Feedback from clients who've experienced the impact of my work firsthand.
+              Feedback from clients who&apos;ve experienced the impact of my work firsthand.
             </p>
           </div>
         </RevealOnScroll>

@@ -200,11 +200,11 @@ export default function ProjectsPage() {
             <CardBody className="p-10 md:p-16">
               <div className="text-center max-w-3xl mx-auto">
                 <Badge color="primary" variant="flat" className="mb-4">
-                  <span className="px-2 py-0.5">Let's Collaborate</span>
+                  <span className="px-2 py-0.5">Let&apos;s Collaborate</span>
                 </Badge>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">Have a Project in Mind?</h2>
                 <p className="text-foreground/70 mb-10 text-lg">
-                  I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.
+                  I&apos;m always open to discussing new projects, creative ideas or opportunities to be part of your vision.
                 </p>
                 <Button
                   as={Link}

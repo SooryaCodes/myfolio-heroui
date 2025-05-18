@@ -731,7 +731,7 @@ export const Services = () => {
                     </div>
                     <h3 className="text-2xl lg:text-3xl font-bold mb-4 text-foreground">Ready to Transform Your Digital Presence?</h3>
                     <p className="text-muted mb-8 max-w-lg mx-auto">
-                      I'm available for freelance projects and full-time opportunities. Let's discuss how we can create something exceptional together.
+                      I&apos;m available for freelance projects and full-time opportunities. Let&apos;s discuss how we can create something exceptional together.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                       <Button

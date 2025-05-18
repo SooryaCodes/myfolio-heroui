@@ -328,7 +328,7 @@ export const Projects = () => {
                 <div className="relative z-10">
                   <h3 className="text-2xl md:text-3xl font-bold mb-4 text-center">Interested in working together?</h3>
                   <p className="text-foreground/70 mb-8 mx-auto max-w-xl text-center">
-                    I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.
+                    I&apos;m always open to discussing new projects, creative ideas or opportunities to be part of your vision.
                   </p>
                   <div className="flex justify-center">
                     <Button

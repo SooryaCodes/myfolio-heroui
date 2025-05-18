@@ -14,7 +14,7 @@ export default function ContactPage() {
         <div className="max-w-5xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-8 text-center">Get in Touch</h1>
           <p className="text-lg text-center max-w-3xl mx-auto mb-16 text-gray-600 dark:text-gray-300">
-            Have a project in mind or want to collaborate? I'm always open to discussing new opportunities and ideas.
+            Have a project in mind or want to collaborate? I&apos;m always open to discussing new opportunities and ideas.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
@@ -105,7 +105,7 @@ export default function ContactPage() {
               <div className="p-8 lg:p-12">
                 <h2 className="text-2xl font-bold mb-6">Send Me a Message</h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-8">
-                  Fill out the form below and I'll get back to you as soon as possible.
+                  Fill out the form below and I&apos;ll get back to you as soon as possible.
                 </p>
                 
                 <Contact />
@@ -118,9 +118,9 @@ export default function ContactPage() {
                   </svg>
                 </div>
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-12">
-                  <h3 className="text-2xl font-bold mb-4">Let's Work Together</h3>
+                  <h3 className="text-2xl font-bold mb-4">Let&apos;s Work Together</h3>
                   <p className="text-center opacity-90 mb-8">
-                    I'm currently available for freelance work, collaborations, and consulting. Whether you have a specific project in mind or just want to explore possibilities, I'd love to hear from you.
+                    I&apos;m currently available for freelance work, collaborations, and consulting. Whether you have a specific project in mind or just want to explore possibilities, I&apos;d love to hear from you.
                   </p>
                   <div className="flex flex-col gap-4 w-full max-w-md">
                     <div className="flex items-center gap-3">

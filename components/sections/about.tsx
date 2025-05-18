@@ -196,20 +196,20 @@ export const About = () => {
           >
             <motion.div variants={item}>
               <h3 className="text-3xl font-bold text-foreground mb-6">
-                Hello! I'm <span className="text-primary premium-highlight">{developerName}</span>,<br />
+                Hello! I&apos;m <span className="text-primary premium-highlight">{developerName}</span>,<br />
                 a Developer & Designer based in {developerLocation}
               </h3>
             </motion.div>
             
             <motion.div variants={item}>
               <p className="text-muted mb-5">
-                I specialize in creating exceptional digital experiences through a combination of clean code and intuitive design. With over 5 years of experience in the field, I've helped businesses of all sizes transform their online presence and connect with their audience in meaningful ways.
+                I specialize in creating exceptional digital experiences through a combination of clean code and intuitive design. With over 5 years of experience in the field, I&apos;ve helped businesses of all sizes transform their online presence and connect with their audience in meaningful ways.
               </p>
             </motion.div>
             
             <motion.div variants={item}>
               <p className="text-muted mb-8">
-                My approach combines technical expertise with creative problem-solving. I believe in building solutions that are not just visually impressive, but also functional, accessible, and user-centered. Whether you need a stunning website, a complex web application, or a comprehensive digital strategy, I'm here to help you achieve your goals.
+                My approach combines technical expertise with creative problem-solving. I believe in building solutions that are not just visually impressive, but also functional, accessible, and user-centered. Whether you need a stunning website, a complex web application, or a comprehensive digital strategy, I&apos;m here to help you achieve your goals.
               </p>
             </motion.div>
             

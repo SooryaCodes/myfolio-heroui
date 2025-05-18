@@ -26,7 +26,7 @@ const experiences: ExperienceItem[] = [
     company: "Meta",
     role: "Senior Frontend Developer",
     duration: "2022 - Present",
-    description: "Leading the development of user-facing features for Meta's new productivity suite. Focusing on accessibility, performance optimization, and elegant user experiences.",
+    description: "Leading the development of user-facing features for Meta&apos;s new productivity suite. Focusing on accessibility, performance optimization, and elegant user experiences.",
     achievements: [
       "Reduced initial page load time by 40% through code splitting and lazy loading",
       "Led the migration from CSS-in-JS to a custom design system",
@@ -41,9 +41,9 @@ const experiences: ExperienceItem[] = [
     company: "Shopify",
     role: "UI Engineer",
     duration: "2019 - 2022",
-    description: "Designed and developed user interfaces for Shopify's merchant platform. Collaborated with product teams to create intuitive, efficient, and beautiful user experiences.",
+    description: "Designed and developed user interfaces for Shopify&apos;s merchant platform. Collaborated with product teams to create intuitive, efficient, and beautiful user experiences.",
     achievements: [
-      "Built key components for Shopify's Polaris design system",
+      "Built key components for Shopify&apos;s Polaris design system",
       "Created a new checkout flow that increased conversion by 15%",
       "Implemented complex data visualization features for merchant analytics",
     ],
@@ -69,7 +69,7 @@ const experiences: ExperienceItem[] = [
   {
     id: 4,
     company: "University of Berlin",
-    role: "Master's in Human-Computer Interaction",
+    role: "Master&apos;s in Human-Computer Interaction",
     duration: "2016 - 2018",
     description: "Specialized in human-computer interaction with a focus on user experience design and research methodologies. Thesis on gesture-based interfaces for immersive environments.",
     achievements: [
